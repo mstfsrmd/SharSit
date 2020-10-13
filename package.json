@@ -12,7 +12,8 @@
     "express": "^4.15.2",
     "file-system": "^2.2.2",
     "mysql": "^2.18.1",
-    "nodemailer": "^6.4.13"
+    "nodemailer": "^6.4.13",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
