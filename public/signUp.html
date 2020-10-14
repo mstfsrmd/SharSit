@@ -39,12 +39,40 @@
     </div>
     <div class="addprofpic">
       <div class="ufcon">
+        <img src="profile.png" alt="Add your profile pic here">
         <input id="ufile" type="file" name="simpleFile" value=""><br>
       </div>
-      <button class="profpic"></button><br>
+      <button class="profpic">Set profile pic!</button><br>
       <div class="desc">
-        <p></p>
+        <p>Setting a profile picture is useful!</p>
       </div>
+    </div>
+    <div class="skip">
+      <p>>Skip</p>
+    </div>
+    <div class="Uinfo">
+      <form class="uinfo">
+        <div class="d" id="userfn">
+          <input class="in" id="usrfn" type="text" name="usrfn" placeholder="Enter your first name">
+        </div>
+        <div class="d" id="userln">
+          <input class="in" id="usrln" type="text" name="usrln" placeholder="Enter your last name">
+        </div>
+        <div class="d" id="uuser">
+          <input class="in" id="usrnameu" type="text" name="user" disabled value="">
+        </div>
+        <div class="d" id="uemail">
+          <input class="in" id="emailu" type="email" name="email" disabled value="">
+        </div>
+        <div class="d" id="bio">
+          <textarea class="in" id="bios" maxlength="100" type="text" name="bio" placeholder="Add a bio in 100 character!"></textarea>
+        </div>
+        <div class="Serror"></div>
+        <div class="chars">
+          <span id="char">100</span> <span>/100</span><br>
+        </div>
+        <button id="Ss">Submit!</button><br>
+      </form>
     </div>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

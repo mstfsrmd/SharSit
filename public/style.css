@@ -374,10 +374,10 @@ font-family: 'Piazzolla', serif;
   text-align: center;
   border: solid black;
   border-radius: 30px;
-  display: none;
-  opacity: 0;
   transition: opacity .4s;
   border-color: #aaa;
+  display: none;
+  opacity: 0;
 }
 #ufile{
   cursor: pointer;
@@ -398,7 +398,7 @@ font-family: 'Piazzolla', serif;
   background-color: #f1f1f1;
   display: block;
   position: absolute;
-  top: 0%;
+  top: -20%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 250px;
@@ -406,5 +406,100 @@ font-family: 'Piazzolla', serif;
   border-radius: 50%;
   border: solid black;
   border-color: #c60021;
+  text-align: center;
+  overflow: hidden;
+}
+.ufcon img{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110%;
+  height:110%;
+  filter: opacity(.4);
+}
+.profpic{
+  font-family: 'Nunito', sans-serif;
+  color: white;
+  background-color: #c60021;
+  position: absolute;
+  top: 69%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  width: 50%;
+  height: 21%;
+  border-radius: 10px;
+  border: solid .3px #999;
+  padding: 0 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.desc{
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 26px;
+  width: 80%;
+  height: 21%;
+  padding: 0 20px;
 
+}
+.skip{
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  top: 90%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  font-size: 26px;
+  width: 8%;
+  height: 5%;
+  padding: 0 20px;
+  color: #c60021;
+  cursor: pointer;
+  display: none;
+}
+.skip:hover{
+  opacity: .6;
+}
+.Uinfo{
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  transform: translate(-50%, 0);
+  width: 30%;
+  height: 0;
+  border-right: solid #eee;
+  transition: height .5s;
+}
+.Uinfo{
+  width: 50%;
+}
+#bios{
+  max-width: 600px;
+  height:100px;
+  resize: none;
+}
+.chars{
+  position: absolute;
+  top: 100%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  width: 20%;
+  height: 5%;
+  opacity: .3;
+  text-align: right;
+  background: none;
+}
+.uinfo{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  opacity: 0;
+  transition: all .5s;
 }
