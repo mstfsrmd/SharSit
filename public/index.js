@@ -16,19 +16,11 @@ $(document).ready(function () {
       $('.Sheader').css('opacity','0');
       $('.sinfo').css('opacity','0');
       $('.Sp').html('');
-      setTimeout("$('.Sform').remove()",2000);
-      setTimeout("$('.Sheader').css({'left':'50%','top':'60%'})",2000);
-      setTimeout("$('.Shed').html('<h1>wellcome!</h1>')",2500);
-      setTimeout("$('.Sheader').css('opacity','1')",2500);
-      setTimeout("$('.Sheader').css('transition','all .2')",2900);
-      setTimeout("$('.Sheader').css({'top':'40%'})",4000);
       setTimeout(function () {
-        $('.addprofpic').css({'display':'block'});
-      },4000);
-      setTimeout(function () {
-        $('.addprofpic').css({'opacity':'1'});
-        $('.skip').css({'display':'block'});
-      },4500);
+        $('.Sform').css('display','none');
+        $('.Sform2').css('display','block');
+      },2000);
+      setTimeout("$('.Sform2').css('opacity','1')",2500);
     }
   });
   $('.skip').click(function (e) {
@@ -81,4 +73,31 @@ $(document).ready(function () {
     var c = $('#bios').val().split('').length;
     $("#char").html(100-c)
   });
+
+
+  //getting Authentication code
+  socket.on('code', function (code) {
+  });
+
 });
+
+
+
+/*
+setTimeout("$('.Shed').html('<h1>wellcome!</h1>')",2500);
+setTimeout("$('.Sheader').css('opacity','1')",2500);
+setTimeout("$('.Sheader').css('transition','all .2')",2900);
+setTimeout("$('.Sheader').css({'top':'40%'})",4000);
+
+setTimeout("$('.Sheader').css({'left':'50%','top':'60%'})",2000);
+setTimeout("$('.Shed').html('<h1>wellcome!</h1>')",2500);
+setTimeout("$('.Sheader').css('opacity','1')",2500);
+setTimeout("$('.Sheader').css('transition','all .2')",2900);
+setTimeout("$('.Sheader').css({'top':'40%'})",4000);
+setTimeout(function () {
+  $('.addprofpic').css({'display':'block'});
+},4000);
+setTimeout(function () {
+  $('.addprofpic').css({'opacity':'1'});
+  $('.skip').css({'display':'block'});
+},4500);*/

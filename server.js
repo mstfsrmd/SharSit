@@ -42,6 +42,18 @@ con2.connect(function (err) {
 app.use(express.static('public'));
 app.use(express.static('src'));
 
+//code generator
+function codeGenerator() {
+  var a = Math.round(Math.random()*10);
+  var b = Math.round(Math.random()*10);
+  var c = Math.round(Math.random()*10);
+  var d = Math.round(Math.random()*10);
+  var e = Math.round(Math.random()*10);
+  var code = a+''+b+''+c+''+d+''+e;
+  return code;
+}
+
+
 //socket connection
 io.on('connection', function (socket) {
   console.log('A user connected');
@@ -51,6 +63,29 @@ io.on('connection', function (socket) {
     console.log(usrinfo.email);
     console.log(usrinfo.pass);
     console.log(usrinfo.rpass);
+
+    //sending Authentication email
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'mostafasarmad96@gmail.com',
+        pass: 'm09370030491' // naturally, replace both with your real credentials or an application-specific password
+      }
+    });
+    const mailOptions = {
+      from: 'mostafasarmad96@gmail.com',
+      to: usrinfo.email ,
+      subject: 'Authentication Email From SharSit',
+      text: 'Hi! your code is '+ codeGenerator()
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+	       console.log(error);
+       } else {
+         console.log('Email sent: ' + info.response);
+         socket.emit('code', codeGenerator());
+       }
+    });
   });
 
   //usr disconnection
