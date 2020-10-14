@@ -2,13 +2,70 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Social</title>
+    <title>Sharsit!</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="src/favicon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+    <nav>
+      <ul class="nul">
+        <li class="nli" id="nli1" onclick="location.href='signUp.html';">
+          <div id="nlia1" >
+            <a href="signUp.html">sign up</a>
+          </div> </li>
+        <li class="nli" id="nli2">
+          <div id="nlia2">
+            <a href="#">sign in</a>
+          </div></li>
+      </ul>
+    </nav>
+    <header>
+      <h1 class="hed_h1">Share your situation with others!</h1>
+      <p class="hed_discrip">A friendly platform for sharing your content!</p>
+    </header>
+    <footer>
+      <div class="fcontainer">
+        <div class="ucont">
+          <div class="fhed">Sharsit!</div>
+          <div class="legal">
+            &copy Copyright 2020 Copyright Sharsit. All Rights Reserved.
+          </div>
+        </div>
+        <div class="mcont">
+          <div class="row">
+            <ul class="ful">
+              <li class="findex"> <a class="fia" href="#">Explore</a> </li>
+              <li class="findex"> <a class="fia" href="#">Create yours!</a> </li>
+              <li class="findex"> <a class="fia" href="#">Blog</a> </li>
+              <li class="findex"> <a class="fia" href="#">About us</a> </li>
+              <li class="findex"> <a class="fia" href="#">Contact us</a> </li>
+              <li class="findex"> <a class="fia" href="#">Report a Bug</a> </li>
+            </ul>
+          </div>
+          <div class="row">
+            <ul class="ful">
+              <li class="findex"> <a class="fia" href="#">About PressTV</a> </li>
+              <li class="findex"> <a class="fia" href="#">Frequencies</a> </li>
+              <li class="findex"> <a class="fia" href="#">Privacy Policy</a> </li>
+              <li class="findex"> <a class="fia" href="#">Contact Info</a> </li>
+              <li class="findex"> <a class="fia" href="#">How to Watch</a> </li>
+            </ul>
+          </div>
+        </div>
+        <div class="dcont">
+          <div class="socialmedia">
+            <div class="slogo"><i style='font-size:24px;color:#999' class='fab'>&#xf167;</i></div>
+            <div class="slogo"><i style='font-size:24px;color:#999' class='fab'>&#xf39e;</i></div>
+            <div class="slogo" ><i style='font-size:24px;color:#999' class='fab'>&#xf099;</i></div>
+          </div>
+        </div>
+      </div>
+    </footer>
 
-    <script type="text/javascript" src="index.js" defer></script>
+
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
+    <script type="text/javascript" src="index.js" defer></script>
   </body>
 </html>

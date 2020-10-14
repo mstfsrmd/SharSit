@@ -6,6 +6,8 @@ const mysql = require('mysql');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 const io = require('socket.io')(http);
+const formidable = require('formidable');
+const fileUpload = require('express-fileupload');
 
 //server connection
 console.log('Connecting to server...');
@@ -39,3 +41,45 @@ con2.connect(function (err) {
 //use other folders
 app.use(express.static('public'));
 app.use(express.static('src'));
+
+//socket connection
+io.on('connection', function (socket) {
+  console.log('A user connected');
+
+  socket.on('usrinfo', function (usrinfo) {
+    console.log(usrinfo.usrname);
+    console.log(usrinfo.email);
+    console.log(usrinfo.pass);
+    console.log(usrinfo.rpass);
+  });
+
+  //usr disconnection
+  socket.on("disconnect", function (dis) {
+    console.log('a usr disconnected.');
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//upload a file

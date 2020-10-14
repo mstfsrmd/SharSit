@@ -5,9 +5,406 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Piazzolla:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Piazzolla:wght@200;800&display=swap');
 *{
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+input:required {
+    box-shadow:none;
 }
 body{
+  font-family: 'Nunito', sans-serif;
+  background-color: #fff;
+}
+
+nav{
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  height: 10%;
+  width: 100%;
+  transform: translate(-50%, 0);
+}
+
+.nul{
+  list-style: none;
+  position: absolute;
+  left: 85%;
+  top: 50%;
+  height: 100%;
+  width: 20%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nli{
+  position: relative;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.nli a{
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #888;
+}
+
+#nlia1, #nlia2{
+  transition: all .4s cubic-bezier(0.96,0.24,0.27,0.99);
+}
+#nli1:hover #nlia1, #nli2:hover #nlia2{
+  transform: translate(0, -100%);
+}
+#nli1:hover::before, #nli2:hover::before{
+  transform: translate(-50%, -150%);
+}
+
+
+#nli1::before{
+  cursor: pointer;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 20px;
+  content:'sign up';
+  position: absolute;
+  left: 50%;
+  top: 150%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  transition: all .4s cubic-bezier(0.96,0.24,0.27,0.99);
+}
+#nli2::before{
+  cursor: pointer;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 20px;
+  content:'sign in';
+  position: absolute;
+  left: 50%;
+  top: 150%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  transition: all .4s cubic-bezier(0.96,0.24,0.27,0.99);
+}
+
+header{
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
+
+.hed_h1{
+  font-family: 'Piazzolla', serif;
+  font-size: 100px;
+  text-transform: capitalize;
+}
+.hed_discrip{
+  font-family: 'Nunito', sans-serif;
+  font-weight: bolder;
+  font-size: 30px;
+  color: #c60021;
+  letter-spacing: 3px;
+  text-transform: capitalize;
+}
+footer{
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  top: 1000px;
+  height: 80%;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f8f9fa;
+}
+.fcontainer{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 90%;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+  align-items: flex-start;
+  box-sizing: border-box;
+
+}
+.mcont{
+  margin: 22px 0;
+  position: relative;
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content:  flex-start;
+  box-sizing: border-box;
+  border-top: solid #f2f2f2;
+  border-bottom: solid #f2f2f2;
+}
+.dcont{
+  position: relative;
+  width: 35%;
+  height: 10%;
+  box-sizing: border-box;
+}
+.ucont{
+  position: relative;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+.legal{
+  width: 45%;
+  height: 50%;
+  text-align: center;
+  color: #999;
+  box-sizing: border-box;
+}
+.fhed{
+  cursor: pointer;
+  width: 45%;
+  line-height: 30px;
+  height: 80%;
+  font-size: 35px;
+  box-sizing: border-box;
+  color: #5f6368;
+}
+.row{
+  font-size: 20px;
+  position: relative;
+  width: 25%;
+  height: 100%;
+}
+.ful{
+  list-style: none;
+  margin: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.findex{
+  margin: 20px 0;
+  transition: all .4s;
+}
+.findex a{
+  text-decoration: none;
+  color: #777;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: all .2s;
+}
+.findex a:hover{
+  color: #333;
+}
+.fiheader{
+  color: #e2e2e2 !important;
+  font-weight: bolder;
+  font-size: 20px;
+}
+.socialmedia{
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Sheader{
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 80%;
+  transition: all .4s;
+}
+
+.Shed{
+  position: absolute;
+  width: 100%;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Piazzolla', serif;
+  font-size: 60px;
+  text-transform: capitalize;
+  transition: all .4s;
+}
+.Sp{
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  font-family: 'Nunito', sans-serif;
+  font-weight: bolder;
+  font-size: 30px;
+  color: #c60021;
+  letter-spacing: 9px;
+  text-transform: capitalize;
+}
+
+.Sform{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 80%;
+  transition: all .5s;
+}
+.sform{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 80%;
+  text-align: center;
+}
+.in{
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+  width: 100%;
+  height: 60px;
+  border: none;
+  border-bottom: solid .3px #999;
+  padding: 0 20px;
+  outline: none;
+}
+.d{
+  position: relative;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 60%;
+  margin-bottom: 40px;
+}
+.d::before{
+  content: '';
+  position: absolute;
+  top: 97.5%;
+  transform: translate(-50%, -50%);
+  width: 0%;
+  left: 50%;
+  bottom: 0;
+  height: 5px;
+  background-color: #c60021;
+  transition: all .4s cubic-bezier(0.92,0.23,0.42,0.99);
+}
+.d:focus-within::before{
+  width: 100%;
+}
+
+.sform button{
+  font-family: 'Nunito', sans-serif;
+  color: white;
+  background-color: #c60021;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  width: 50%;
+  height: 10%;
+  border-radius: 10px;
+  border: solid .3px #999;
+  padding: 0 20px;
+  margin-top: 20px;
+}
+
+.Serror{
+font-family: 'Piazzolla', serif;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  width: 60%;
+  height: 60px;
+  color: #c60021;
+}
+.sinfo{
+  opacity: .6;
+  font-family: 'Piazzolla', serif;
+  position: absolute;
+  top: 70%;
+  left: 78%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  width: 20%;
+  height: 60px;
+}
+.sinfo a{
+  color: black;
+  transition: all .2s;
+}
+.sinfo a:hover{
+  opacity: .4;
+}
+.addprofpic{
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 30%;
+  text-align: center;
+  border: solid black;
+  border-radius: 30px;
+  display: none;
+  opacity: 0;
+  transition: opacity .4s;
+  border-color: #aaa;
+}
+#ufile{
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: solid black;
+  opacity: 0;
+  border-color: #c60021;
+}
+.ufcon{
+  cursor: pointer;
+  background-color: #f1f1f1;
+  display: block;
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: solid black;
+  border-color: #c60021;
+
 }

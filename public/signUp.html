@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Sharsit!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="src/favicon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <header class="Sheader">
+      <div class="Shed">
+        <h1>Sign up!</h1>
+      </div>
+      <p class="Sp">one time for ever!</p>
+      <input type="hidden" name="" value="">
+      <input type=" hidden" name="" value="" hidden>
+    </header>
+    <div class="Sform">
+      <form class="sform">
+        <div class="d" id="suser">
+          <input class="in" id="usrname" type="text" name="user" placeholder="Enter a username" required>
+        </div>
+        <div class="d" id="semail">
+          <input class="in" id="email" type="email" name="email" placeholder="Enter a valid email" required>
+        </div>
+        <div class="d" id="spass">
+          <input class="in" id="pass" type="password" name="pass" placeholder="Enter a password" required>
+        </div>
+        <div class="d" id="srpass">
+          <input class="in" id="rpass" type="password" name="rpass" placeholder="Confirm your password" required>
+        </div>
+        <div class="Serror"></div>
+        <button id="Ss">Sign up!</button><br>
+      </form>
+    </div>
+    <div class="sinfo">
+      By signing up you agree to our<br> <a href="#">Privecy Policy</a> and <a href="#">Terms of Service</a>.
+    </div>
+    <div class="addprofpic">
+      <div class="ufcon">
+        <input id="ufile" type="file" name="simpleFile" value=""><br>
+      </div>
+      <button class="profpic"></button><br>
+      <div class="desc">
+        <p></p>
+      </div>
+    </div>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='index.js'></script>
+  </body>
+</html>
