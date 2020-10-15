@@ -21,13 +21,13 @@ const con1 = mysql.createConnection({
   host:'localhost',
   user:'root',
   password:'Mo137777',
-  db: 'usersinfo'
+  database: 'usersinfo'
 });
 const con2 = mysql.createConnection({
   host:'localhost',
   user:'root',
   password:'Mo137777',
-  db: 'contents'
+  database: 'contents'
 });
 con1.connect(function (err) {
   if (err) throw err;
@@ -37,6 +37,16 @@ con2.connect(function (err) {
   if (err) throw err;
   console.log('Connected to Database2');
 })
+
+//creating user info table
+var table = 'CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,username  VARCHAR(255) NOT NULL, email MEDIUMTEXT NOT NULL, password VARCHAR(255) NOT NULL, fname VARCHAR(255), lname VARCHAR(255) , bio VARCHAR(100)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci';
+con1.query(table,function (err, res) {
+  if (err) {
+    throw err;
+  }
+  console.log(res);
+})
+
 
 //use other folders
 app.use(express.static('public'));
@@ -61,6 +71,23 @@ var id = {};
 io.on('connection', function (socket) {
   console.log('A user connected');
 
+  //search if user have account or not
+  socket.on('onusrname', function (onusrname) {
+    var isAcount = 'SELECT * FROM users WHERE username LIKE "%'+onusrname+'"';
+    con1.query(isAcount, function (err, res) {
+      if (err) {
+        throw err
+      }
+      var isUsr
+      if (res != '') {
+        isUsr = 'User Exists'
+      }else {
+        isUsr = ''
+      }
+      socket.emit('isUsr', isUsr);
+    })
+  })
+
   socket.on('usrinfo', function (usrinfo) {
     var username = usrinfo.usrname;
     var useremail = usrinfo.email;
@@ -70,6 +97,17 @@ io.on('connection', function (socket) {
     id[username] = socket.id;
     id[socket.id] = username;
     console.log(id);
+
+    //insert information to database if email confirmed
+    socket.on('emailIsOk',function (emailIsOk) {
+      var insertinfo = 'INSERT INTO users (username, email, password) VALUES ("'+username+'", "'+useremail+'", "'+userpass+'")';
+      con1.query(insertinfo, function (err, res) {
+        if (err) {
+          throw err;
+        }
+        console.log(res);
+      })
+    });
 
 //_____________________________________________________________________________
     //sending Authentication email

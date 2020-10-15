@@ -2,6 +2,25 @@ $(document).ready(function () {
   var socket = io();
 
   var usrname;
+
+  $('#usrname').on('input', function () {
+    var onusrname = $(this).val();
+    console.log(onusrname);
+    socket.emit('onusrname', onusrname);
+    socket.on('isUsr', function (isUsr) {
+      if (onusrname != '') {
+        if (isUsr != '') {
+          $('.Serror').html('>'+isUsr+'<')
+        }else {
+          $('.Serror').html('');
+        }
+      }else {
+        $('.Serror').html('');
+      }
+    })
+  });
+
+
   $('.sform').submit(function (event) {
     usrname = $('#usrname').val();
     var email = $('#email').val();
@@ -39,6 +58,8 @@ $(document).ready(function () {
       alert('Your code is not match');
     }
     else {
+      var emailIsOk = 'email is ok';
+      socket.emit('emailIsOk', emailIsOk);
       $('.form2').css('opacity','0');
       $('.Sheader').css({'top':'40%','left':'50%','transition':'all .2'})
       setTimeout(function () {
@@ -114,6 +135,15 @@ $(document).mousemove(function (e) {
   $('.sun').css('transform','translate('+x/100+'px,'+y/33+'px)');
   $('.sun2').css('transform','translate('+x/100+'px,'+y/33+'px)');
 });
+
+  $('#Ss').mousedown(function (e) {
+    var x = e.pageX-$('#Ss').offset().left ;
+    var y = e.pageY-$('#Ss').offset().top;
+    $("#Ssi").css({"height":"1000px","width":"1000px","opacity":"0"});
+    setTimeout('$("#Ssi").css({"height":"0px","width":"0px","transition":"none"})',900);
+    setTimeout('$("#Ssi").css({"opacity":"1","transition":"all .9s"})',950);
+  });
+
 
   /*var move = 0;
   setInterval(function () {

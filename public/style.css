@@ -507,13 +507,29 @@ font-family: 'Piazzolla', serif;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
-  width: 50%;
-  height: 10%;
+  width: 290px;
+  height: 55px;
   border-radius: 10px;
-  border: solid .3px #999;
+  border: none;
   padding: 0 20px;
   margin-top: 20px;
+  overflow: hidden;
 }
+
+#Ssi, #Ssi2{
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  height: 0;
+  width: 0;
+  background-color: #85091e;
+  transition: all .9s;
+}
+
+
 #Ss2{
   top: 110%;
 }
@@ -662,7 +678,6 @@ font-family: 'Piazzolla', serif;
   filter: invert(.935) drop-shadow(15px 15px 15px  #d1cdc7) drop-shadow(-10px -10px 10px #fff);
   animation: saturn 2s infinite alternate ease-in-out;
 }
-
 @keyframes saturn {
   from{top:-100px;}
   to{top: -75px;}
