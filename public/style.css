@@ -18,7 +18,8 @@ input:required {
 }
 body{
   font-family: 'Nunito', sans-serif;
-  background-color: #fff;
+  background-color: #efeeee;
+  overflow-x: hidden;
 }
 
 nav{
@@ -134,6 +135,8 @@ footer{
   width: 100%;
   box-sizing: border-box;
   background-color: #f8f9fa;
+  z-index: 3;
+  box-shadow: 0 -20px 40px -15px #d1cdc7;
 }
 .fcontainer{
   position: absolute;
@@ -300,6 +303,7 @@ footer{
   border-bottom: solid .3px #999;
   padding: 0 20px;
   outline: none;
+  background-color: #efeeee;
 }
 .d{
   position: relative;
@@ -323,24 +327,6 @@ footer{
 }
 .d:focus-within::before{
   width: 100%;
-}
-
-.sform button{
-  font-family: 'Nunito', sans-serif;
-  color: white;
-  background-color: #c60021;
-  position: absolute;
-  top: 90%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
-  width: 50%;
-  height: 10%;
-  border-radius: 10px;
-  border: solid .3px #999;
-  padding: 0 20px;
-  margin-top: 20px;
-  cursor: pointer;
 }
 
 .Serror{
@@ -511,13 +497,13 @@ font-family: 'Piazzolla', serif;
   opacity: 0;
   transition: all .5s;
 }
-#Ss{
+#Ss, #Ss2{
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
   color: white;
   background-color: #c60021;
   position: absolute;
-  top: 110%;
+  top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
@@ -527,6 +513,9 @@ font-family: 'Piazzolla', serif;
   border: solid .3px #999;
   padding: 0 20px;
   margin-top: 20px;
+}
+#Ss2{
+  top: 110%;
 }
 .form2{
   position: absolute;
@@ -578,4 +567,103 @@ font-family: 'Piazzolla', serif;
 .form2 label{
   font-family: 'Piazzolla', serif;
   font-size: 60px;
+}
+.c1{
+  position: absolute;
+  top: 90%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 900px;
+  height: 900px;
+  box-shadow: inset 10px 10px 10px -7px #d1cdc7, inset -10px 10px 10px -7px #fff;
+}
+.c2{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 700px;
+  height: 700px;
+  box-shadow: inset 10px 10px 10px -7px #d1cdc7, inset -10px 10px 10px -7px #fff;
+}
+.c3{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 500px;
+  height: 500px;
+  box-shadow: inset 8px 8px 8px -7px #d1cdc7, inset -8px 8px 8px -7px #fff;
+}
+.c4{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  box-shadow: inset 4px 4px 4px #d1cdc7, inset -4px 4px 4px #fff;
+}
+.c5{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  box-shadow: inset 2px 2px 2px #d1cdc7, inset -2px 2px 2px #fff;
+}
+.sun{
+  position: absolute;
+  top: 40%;
+  left: 0%;
+  width: 100px;
+  height: 100px;
+  z-index: 2;
+  perspective: 100px;
+  transition: all .2s;
+}
+.sun2{
+  position: absolute;
+  top: 20%;
+  left: 68%;
+  width: 100px;
+  height: 100px;
+  z-index: 2;
+  perspective: 100px;
+  transition: all .2s linear;
+}
+.cloud{
+  font-size:700px;
+  color: #efeeee;
+  text-shadow: 17px 17px 17px #d1cdc7, -7px -7px 17px #fff;
+}
+.saturn{
+  position: absolute;
+  top: 10%;
+  left: 60%;
+  width: 100px;
+  height: 100px;
+  z-index: 2;
+  transition: all .2s linear;
+}
+.saturn img{
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transition: all .2s linear;
+  filter: invert(.935) drop-shadow(15px 15px 15px  #d1cdc7) drop-shadow(-10px -10px 10px #fff);
+  animation: saturn 2s infinite alternate ease-in-out;
+}
+
+@keyframes saturn {
+  from{top:-100px;}
+  to{top: -75px;}
 }

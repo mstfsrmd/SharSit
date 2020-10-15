@@ -1,12 +1,13 @@
 $(document).ready(function () {
   var socket = io();
 
+  var usrname;
   $('.sform').submit(function (event) {
-    event.preventDefault();
-    var usrname = $('#usrname').val();
+    usrname = $('#usrname').val();
     var email = $('#email').val();
     var pass = $("#pass").val();
     var rpass = $("#rpass").val();
+    event.preventDefault();
     if (pass != rpass) {
       $('.Serror').html('>Passwords do not match<');
     }
@@ -23,6 +24,39 @@ $(document).ready(function () {
       setTimeout("$('.Sform2').css('opacity','1')",2500);
     }
   });
+
+  var vcode;
+  //getting Authentication code
+  socket.on('id', function (id) {
+    vcode = id[usrname];
+  });
+  //verification
+  $('.form2').submit(function (event) {
+    $(this).val('');
+    event.preventDefault();
+    var getcode = $('#getcode').val();
+    if (getcode != vcode) {
+      alert('Your code is not match');
+    }
+    else {
+      $('.form2').css('opacity','0');
+      $('.Sheader').css({'top':'40%','left':'50%','transition':'all .2'})
+      setTimeout(function () {
+        $('.form2').remove();
+        $('.Shed').html('<h1>wellcome!</h1>');
+        $('.Sheader').css('opacity','1')
+      },2500);
+      setTimeout(function () {
+        $('.addprofpic').css({'display':'block'});
+      },4000);
+      setTimeout(function () {
+        $('.addprofpic').css({'opacity':'1'});
+        $('.skip').css({'display':'block'});
+      },4500);
+      }
+  });
+
+
   $('.skip').click(function (e) {
     $('.addprofpic').css({'opacity':'0'});
     $('.Sheader').css('opacity','0');
@@ -74,30 +108,28 @@ $(document).ready(function () {
     $("#char").html(100-c)
   });
 
+$(document).mousemove(function (e) {
+  var x = -e.pageX+940;
+  var y = -e.pageY+380;
+  $('.sun').css('transform','translate('+x/100+'px,'+y/33+'px)');
+  $('.sun2').css('transform','translate('+x/100+'px,'+y/33+'px)');
+});
 
-  //getting Authentication code
-  socket.on('code', function (code) {
-  });
+  /*var move = 0;
+  setInterval(function () {
+    move++;
+    $('.sun').css('transform','translate('+move+'px,0px)');
+    $('.sun2').css('transform','translate('+2*move+'px,0px)');
+    var e = $('.sun2').position().left;
+    if (e > 2000) {
+      $('.sun2').css('left','-100%');
+      $('.sun2').css('transform','translate('+2*move+'px,0px)');
+    }
+  },100)*/
+
 
 });
 
 
 
-/*
-setTimeout("$('.Shed').html('<h1>wellcome!</h1>')",2500);
-setTimeout("$('.Sheader').css('opacity','1')",2500);
-setTimeout("$('.Sheader').css('transition','all .2')",2900);
-setTimeout("$('.Sheader').css({'top':'40%'})",4000);
-
-setTimeout("$('.Sheader').css({'left':'50%','top':'60%'})",2000);
-setTimeout("$('.Shed').html('<h1>wellcome!</h1>')",2500);
-setTimeout("$('.Sheader').css('opacity','1')",2500);
-setTimeout("$('.Sheader').css('transition','all .2')",2900);
-setTimeout("$('.Sheader').css({'top':'40%'})",4000);
-setTimeout(function () {
-  $('.addprofpic').css({'display':'block'});
-},4000);
-setTimeout(function () {
-  $('.addprofpic').css({'opacity':'1'});
-  $('.skip').css({'display':'block'});
-},4500);*/
+/**/

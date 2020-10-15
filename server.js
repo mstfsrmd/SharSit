@@ -54,39 +54,52 @@ function codeGenerator() {
 }
 
 
+//define an array for storing socket id
+var id = {};
+
 //socket connection
 io.on('connection', function (socket) {
   console.log('A user connected');
 
   socket.on('usrinfo', function (usrinfo) {
-    console.log(usrinfo.usrname);
-    console.log(usrinfo.email);
-    console.log(usrinfo.pass);
-    console.log(usrinfo.rpass);
+    var username = usrinfo.usrname;
+    var useremail = usrinfo.email;
+    var userpass = usrinfo.pass;
 
+    //store socket id in array
+    id[username] = socket.id;
+    id[socket.id] = username;
+    console.log(id);
+
+//_____________________________________________________________________________
     //sending Authentication email
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'mostafasarmad96@gmail.com',
-        pass: 'm09370030491' // naturally, replace both with your real credentials or an application-specific password
+        pass: 'm09370030491'
       }
     });
+    var gen = codeGenerator();
+    id[usrinfo.usrname] = gen;
+    console.log(id);
     const mailOptions = {
       from: 'mostafasarmad96@gmail.com',
-      to: usrinfo.email ,
+      to: useremail ,
       subject: 'Authentication Email From SharSit',
-      text: 'Hi! your code is '+ codeGenerator()
+      text: 'Hi! your code is '+ gen
     };
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
 	       console.log(error);
        } else {
          console.log('Email sent: ' + info.response);
-         socket.emit('code', codeGenerator());
+         console.log(id);
+         socket.emit('id', id);
        }
     });
   });
+//_____________________________________________________________________________
 
   //usr disconnection
   socket.on("disconnect", function (dis) {
