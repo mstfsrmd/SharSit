@@ -139,6 +139,30 @@ io.on('connection', function (socket) {
   });
 //_____________________________________________________________________________
 
+
+  //update user data
+  socket.on('otherinfo', function (otherinfo) {
+    var usr = otherinfo.usr;
+    var fname = otherinfo.fname;
+    var lname = otherinfo.lname;
+    var bio = otherinfo.bio;
+    //record datas
+    var updateprof = 'UPDATE users SET fname = "'+fname+'", lname="'+lname+'", bio="'+bio+'" WHERE username="'+usr+'"';
+    con1.query(updateprof, function (err, res) {
+      if (err) {
+        throw err
+      }
+      console.log(res);
+    });
+    var up = 'SELECT * FROM users WHERE username="'+usr+'"';
+    con1.query(up, function (err, res) {
+      if (err) {
+        throw err
+      }
+      console.log(res);
+    });
+  });
+
   //usr disconnection
   socket.on("disconnect", function (dis) {
     console.log('a usr disconnected.');

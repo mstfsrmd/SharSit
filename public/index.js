@@ -3,6 +3,10 @@ $(document).ready(function () {
 
   var usrname;
 
+  $('#usrname').val('');
+  $('#email').val('');
+  $("#pass").val('');
+  $("#rpass").val('');
   $('#usrname').on('input', function () {
     var onusrname = $(this).val();
     console.log(onusrname);
@@ -10,12 +14,18 @@ $(document).ready(function () {
     socket.on('isUsr', function (isUsr) {
       if (onusrname != '') {
         if (isUsr != '') {
-          $('.Serror').html('>'+isUsr+'<')
+          $('.Serror').html('>'+isUsr+'<');
+          $('#Ss').prop('disabled', true);
+          $('#Ss').css({'opacity': '.4', 'cursor': 'not-allowed'});
         }else {
           $('.Serror').html('');
+          $('#Ss').prop('disabled', false);
+          $('#Ss').css({'opacity': '1', 'cursor': 'pointer'});
         }
       }else {
         $('.Serror').html('');
+        $('#Ss').prop('disabled', false);
+        $('#Ss').css({'opacity': '1', 'cursor': 'pointer'});
       }
     })
   });
@@ -58,35 +68,41 @@ $(document).ready(function () {
       alert('Your code is not match');
     }
     else {
+      $('#CodeS').prop('disabled', false);
       var emailIsOk = 'email is ok';
       socket.emit('emailIsOk', emailIsOk);
       $('.form2').css('opacity','0');
+      $('.saturn').css('opacity','0');
       $('.Sheader').css({'top':'40%','left':'50%','transition':'all .2'})
       setTimeout(function () {
+        $('.saturn').css({'display':'none'});
         $('.form2').remove();
         $('.Shed').html('<h1>wellcome!</h1>');
         $('.Sheader').css('opacity','1')
-      },2500);
+      },1000);
       setTimeout(function () {
         $('.addprofpic').css({'display':'block'});
-      },4000);
+      },2000);
       setTimeout(function () {
         $('.addprofpic').css({'opacity':'1'});
-        $('.skip').css({'display':'block'});
-      },4500);
+        $('.skip1').css('display','block');
+      },2500);
       }
   });
 
 
-  $('.skip').click(function (e) {
+  $('.skip1').click(function (e) {
     $('.addprofpic').css({'opacity':'0'});
     $('.Sheader').css('opacity','0');
+    $('.skip1').css('opacity','0');
     setTimeout(function () {
+      $('.skip1').css('display','none');
       $('.addprofpic').css({'display':'none'});
       $('.Sheader').css({'left':'80%','top':'50%','font-size':'40px','text-align':'left','width':'40%','height':'30%'});
       $('.Sheader').html('<h1>You can complete<br>your profile now!');
     },2000);
     setTimeout(function () {
+      $('.skip2').css('display','block');
       $('.Sheader').css({'opacity':'1'});
       $('.Sheader').css({'display':'block'});
     },2500);
@@ -94,10 +110,27 @@ $(document).ready(function () {
       $('.Uinfo').css({'height':'80%'});
     },3000);
     setTimeout(function () {
-      $('.uinfo').css({'opacity':'1'});
+      $('.updateprof').css({'opacity':'1'});
+      $('.skip2').css('opacity','1');
     },3300);
-    e.preventDefault();
   });
+
+
+
+  $('.skip2').click(function () {
+    $('.Uinfo').css({'height':'0%'});
+    $('.Uinfo').css('opacity','0')
+    $('.skip2').css('opacity','0');
+    $('.Sheader').css('opacity','0');
+    setTimeout(function () {
+    $('.Uinfo').css('display','none');
+      $('.skip2').css('display','none');
+      $('.addprofpic').css('display','none');
+      $('.Sheader').css('display','none');
+    },1000);
+
+  });
+
 
 
   $('#usrname').change(function () {
@@ -128,6 +161,18 @@ $(document).ready(function () {
     var c = $('#bios').val().split('').length;
     $("#char").html(100-c)
   });
+
+  //get other data of profile
+  $('.updateprof').submit(function (event) {
+    event.preventDefault();
+    var usr = $('#usrnameu').val();
+    var fname = $('#usrfn').val();
+    var lname = $('#usrln').val();
+    var bio = $("#bios").val();
+    var rpass = $("#rpass").val();
+    socket.emit('otherinfo', {usr, fname, lname, bio})
+  });
+
 
 $(document).mousemove(function (e) {
   var x = -e.pageX+940;

@@ -5,6 +5,7 @@
     <title>SharSit!</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="src/favicon.jpg">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
@@ -59,11 +60,14 @@
         <p>Setting a profile picture is useful!</p>
       </div>
     </div>
-    <div class="skip">
+    <div class="skip1">
       <p>>Skip</p>
     </div>
+    <div class="skip2">
+      <a>>Skip</a>
+    </div>
     <div class="Uinfo">
-      <form class="uinfo">
+      <form class="updateprof">
         <div class="d" id="userfn">
           <input class="in" id="usrfn" type="text" name="usrfn" placeholder="Enter your first name">
         </div>
@@ -79,12 +83,15 @@
         <div class="d" id="bio">
           <textarea class="in" id="bios" maxlength="100" type="text" name="bio" placeholder="Add a bio in 100 character!"></textarea>
         </div>
-        <div class="Serror"></div>
         <div class="chars">
           <span id="char">100</span> <span>/100</span><br>
         </div>
         <button id="Ss2"><div style="z-index:1; position:relative">Submit!</div><div id="Ssi2"></div></button><br>
       </form>
+    </div>
+<!--____________________________Main Page_____________________________________-->
+    <div class="new">
+      <i style='font-size:80px' class='fas'>&#xf5ad;</i>
     </div>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
