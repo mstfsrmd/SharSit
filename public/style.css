@@ -693,6 +693,9 @@ font-family: 'Piazzolla', serif;
   to{top: -75px;}
 }
 /*____________________________Main Page_______________________________________*/
+.maincont{
+  display: none;
+}
 .new{
   cursor: pointer;
   position: absolute;
@@ -818,4 +821,201 @@ font-family: 'Piazzolla', serif;
   margin:10px 50px;
   color: #666;
   font-size: 20px;
+}
+.blackArea{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  opacity: .4;
+  z-index: 2;
+  visibility: hidden;
+}
+.writePost{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  height: 45%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 3;
+  box-shadow: 10px 10px 40px #555;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all .4s;
+  display: none;
+}
+.writePost textarea {
+  border-radius: 10px;
+  border: none;
+  font-family: 'Piazzolla', serif;
+  font-size: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  height: 60%;
+  resize: none;
+  transform: translate(-50%, -50%);
+}
+.emoji{
+  cursor: pointer;
+  padding-right: 17px;
+  text-align: right;
+  position: absolute;
+  top: 40%;
+  left: 0%;
+  width: 80px;
+  height: 70px;
+  transform: translate(-50%, -50%);
+  border-radius: 35px;
+  background-color: #c60021;
+  transition: all .4s;
+}
+.emoji:hover{
+  transform: translate(-25%, -50%);
+}
+.fileSkin:hover{
+  transform: translate(-25%, -50%);
+}
+.fileSkin{
+  cursor: pointer;
+  padding-right: 17px;
+  text-align: right;
+  position: absolute;
+  top: 60%;
+  left: 0%;
+  width: 80px;
+  height: 70px;
+  transform: translate(-50%, -50%);
+  border-radius: 35px;
+  background-color: #c60021;
+  transition: all .4s;
+}
+.file{
+  cursor: pointer;
+  position: absolute;
+  top: 60%;
+  left: 0%;
+  width: 80px;
+  height: 70px;
+  transform: translate(-50%, -50%);
+  z-index:1;
+  display: none;
+}
+.fileUp{
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  z-index:0;
+}
+.sendPost{
+  font-size: 20px;
+  position: absolute;
+  top: 70%;
+  left: 70%;
+  width: 100px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+  border-top-left-radius: 60px;
+  border-top-right-radius: 29px;
+  border-bottom-left-radius: 44px;
+  border-bottom-right-radius:80px;
+  background-color: #c60021;
+  color: white;
+  border: none;
+  transition: all 1s;
+  cursor: pointer;
+}
+.sendPost:hover{
+  animation: send 4s alternate infinite;
+  border-top-left-radius: 198px;
+  border-top-right-radius: 172px;
+  border-bottom-left-radius: 277px;
+  border-bottom-right-radius:127px;
+}
+.postArea{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%, -50%);
+  overflow: auto;
+}
+.Post{
+  font-family: 'Piazzolla', serif;
+  padding: 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 30px;
+  width: 90%;
+  min-height: 250px;
+  border-bottom: solid #999;
+}
+.postAction{
+  margin: 10px 10px;
+  position: relative;
+  width: 90%;
+  height: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content:  flex-end;
+  align-items: center;
+
+}
+.content{
+  margin: 10px 10px;
+  font-size: 20px;
+  position: relative;
+  width:90%;
+  height: 30%;
+  word-wrap: break-word;
+
+}
+.postDate{
+  color: #aaa;
+  position: absolute;
+  top: 96%;
+  left: 22%;
+  width: 30%;
+  height: 30%;
+  transform: translate(-50%, -50%);
+
+}
+.act{
+  margin: 10px 10px;
+  cursor: pointer;
+
+}
+.w{
+  position: relative;
+  top: 20px;
+  left: 10px;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%, -50%);
+}
+.bl{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
 }

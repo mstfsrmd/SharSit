@@ -17,6 +17,11 @@ http.listen(8080, function () {
 
 //database connection
 console.log('Connecting to databases...');
+const con = mysql.createConnection({
+  host:'localhost',
+  user:'root',
+  password:'Mo137777'
+});
 const con1 = mysql.createConnection({
   host:'localhost',
   user:'root',
@@ -44,7 +49,6 @@ con1.query(table,function (err, res) {
   if (err) {
     throw err;
   }
-  console.log(res);
 })
 
 
@@ -66,6 +70,7 @@ function codeGenerator() {
 
 //define an array for storing socket id
 var id = {};
+var conSp;
 
 //socket connection
 io.on('connection', function (socket) {
@@ -98,15 +103,52 @@ io.on('connection', function (socket) {
     id[socket.id] = username;
     console.log(id);
 
-    //insert information to database if email confirmed
+    //conifigure user databases
     socket.on('emailIsOk',function (emailIsOk) {
-      var insertinfo = 'INSERT INTO users (username, email, password) VALUES ("'+username+'", "'+useremail+'", "'+userpass+'")';
-      con1.query(insertinfo, function (err, res) {
+      var u = emailIsOk.storedUsername;
+      var e = emailIsOk.storedEmail;
+      var p = emailIsOk.storedPass;
+      var insertinfo = 'INSERT INTO users (username, email, password) VALUES ("'+u+'", "'+e+'", "'+e+'")';
+      var createUserDB = 'CREATE DATABASE '+u+'';
+      var createUserPostDB = 'CREATE DATABASE '+u+'Post';
+      var postId = 'CREATE TABLE IF NOT EXISTS '+u+'postId (id INT AUTO_INCREMENT PRIMARY KEY, content TEXT, datetime DATETIME, likeing INT, replying INT, clicking INT)';
+      con.connect(function (err) {
+        if (err) throw err;
+        console.log('connection for creating new databases success');
+      });
+      console.log("Creating Database "+u+"...");
+      con.query(createUserDB, function (err, r) {
         if (err) {
           throw err;
         }
-        console.log(res);
-      })
+        console.log("Database "+u+" created");
+      });
+      console.log("Creating Database "+u+"Post...");
+      con.query(createUserPostDB, function (err, r) {
+        if (err) {
+          throw err;
+        }
+        console.log("Database "+u+"Post created");
+      });
+      var conSp = mysql.createConnection({
+        host:'localhost',
+        user:'root',
+        password:'Mo137777',
+        database: u
+      });
+      setTimeout(function () {
+        conSp.query(postId,function (err, r) {
+          if (err) {
+            throw err;
+          }
+          console.log('table '+u+'postId created');
+        });
+      },2000);
+      con1.query(insertinfo, function (err, r) {
+        if (err) {
+          throw err;
+        }
+      });
     });
 
 //_____________________________________________________________________________
@@ -159,9 +201,50 @@ io.on('connection', function (socket) {
       if (err) {
         throw err
       }
-      console.log(res);
     });
   });
+
+  //recording post
+  var lastId;
+  socket.on('post', function (post) {
+    var content = post.content;
+    var datetime = post.datetime;
+    var u = post.storedUsername;
+    conSp = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: u
+    });
+    //record post as postId
+    var intop = 'INSERT INTO '+u+'postId (content, datetime) VALUES ("'+content+'", "'+datetime+'")';
+    conSp.query(intop, function (err, res) {
+      if (err) {
+        console.log('bug');
+        throw err;
+      }
+      lastId = res.insertId;
+      thisPostId = u+'_'+lastId;
+      socket.join(u);
+      io.to(u).emit('post', {content, datetime, u, thisPostId});
+    })
+    conSpI = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: u+'Post'
+    });
+    setTimeout(function () {
+      var createPostTable = 'CREATE TABLE IF NOT EXISTS '+thisPostId+' (id INT AUTO_INCREMENT PRIMARY KEY, liker VARCHAR(255), datetime DATETIME, likes VARCHAR(255), replys TEXT, clicks VARCHAR(255))';
+      conSpI.query(createPostTable, function (err, res) {
+        if (err) {
+          throw err;
+        }
+        console.log(lastId);
+        console.log(res);
+      });
+    },2000)
+  })
 
   //usr disconnection
   socket.on("disconnect", function (dis) {

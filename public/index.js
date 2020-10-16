@@ -2,6 +2,9 @@ $(document).ready(function () {
   var socket = io();
 
   var usrname;
+  var storedUsername ;
+  var storedPass;
+  var storedEmail;
 
   $('#usrname').val('');
   $('#email').val('');
@@ -36,6 +39,12 @@ $(document).ready(function () {
     var email = $('#email').val();
     var pass = $("#pass").val();
     var rpass = $("#rpass").val();
+    $('.storeusr').val(usrname);
+    $('.storepass').val(pass);
+    $('.storeemail').val(email);
+    storedUsername = $('.storeusr').val();
+    storedPass = $('.storepass').val();
+    storedEmail = $('.storeemail').val();
     event.preventDefault();
     if (pass != rpass) {
       $('.Serror').html('>Passwords do not match<');
@@ -69,8 +78,7 @@ $(document).ready(function () {
     }
     else {
       $('#CodeS').prop('disabled', false);
-      var emailIsOk = 'email is ok';
-      socket.emit('emailIsOk', emailIsOk);
+      socket.emit('emailIsOk', {storedUsername, storedPass, storedEmail});
       $('.form2').css('opacity','0');
       $('.saturn').css('opacity','0');
       $('.Sheader').css({'top':'40%','left':'50%','transition':'all .2'})
@@ -128,7 +136,7 @@ $(document).ready(function () {
       $('.addprofpic').css('display','none');
       $('.Sheader').css('display','none');
     },1000);
-
+    setTimeout('$(".maincont").css("display","block")',1500);
   });
 
 
@@ -190,18 +198,76 @@ $(document).mousemove(function (e) {
   });
 
 
-  /*var move = 0;
-  setInterval(function () {
-    move++;
-    $('.sun').css('transform','translate('+move+'px,0px)');
-    $('.sun2').css('transform','translate('+2*move+'px,0px)');
-    var e = $('.sun2').position().left;
-    if (e > 2000) {
-      $('.sun2').css('left','-100%');
-      $('.sun2').css('transform','translate('+2*move+'px,0px)');
-    }
-  },100)*/
+  //popup
+  $('.blackArea').click(function () {
+    $('.blackArea').css('visibility','hidden');
+    $('.writePost').css('display','none')
+  });
+  $('.new').click(function () {
+    $('.blackArea').css('visibility','visible');
+    $('.writePost').css('display','block')
+  });
+  $('.sendPost').click(function () {
+    var d = new Date();
+    var s = d.getSeconds();
+    var m = d.getMinutes();
+    var h = d.getHours();
+    var day = d.getDay();
+    var month = d.getMonth();
+    var y = d.getFullYear();
+    var datetime = y+'-'+month+'-'+day+' '+h+':'+m+':'+s;
+    var content = $('.postCon').val();
+    socket.emit('post', {content, datetime, storedUsername});
+    $('.postCon').val('');
+    $('.blackArea').css('visibility','hidden');
+    $('.writePost').css('display','none')
 
+  });
+
+  socket.on('post', function (post) {
+    alert('ok')
+    var postId = post.thisPostId;
+    var postContent = post.content;
+    var postdate = post.datetime;
+    $('.postArea').prepend('<div class="Post"><div class="content '+postId+'"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;"" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl"id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div><div class="postDate '+postId+'date"><time></time></div></div>')
+    $('.'+postId+'').html(postContent);
+    $('.'+postId+'date').html(postdate);
+  });
+
+  //handle post action
+  var counterl = 0;
+  var counterr = 0;
+  var counters = 0;
+  $("#like").click(function () {
+    if (counterl == 0) {
+      counterl = 1;
+      $("#like").css('opacity','1');
+    }
+    else{
+      counterl = 0;
+      $("#like").css('opacity','0');
+    }
+  });
+  $("#reply").click(function () {
+    if (counterr == 0) {
+      counterr = 1;
+      $("#reply").css('opacity','1');
+    }
+    else{
+      counterr = 0;
+      $("#reply").css('opacity','0');
+    }
+  });
+  $("#save").click(function () {
+    if (counters == 0) {
+      counters = 1;
+      $("#save").css('opacity','1');
+    }
+    else {
+      counters = 0;
+      $("#save").css('opacity','0');
+    }
+  });
 
 });
 
