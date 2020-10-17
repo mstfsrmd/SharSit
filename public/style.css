@@ -231,7 +231,7 @@ footer{
 .socialmedia{
   position: absolute;
   top: 70%;
-  left: 50%;
+  left: 25%;
   transform: translate(-50%, -50%);
   width: 50%;
   height: 10%;
@@ -239,6 +239,15 @@ footer{
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+}
+.sm:hover{
+  color: #333;
+}
+.sm{
+  font-size:24px;
+  color:#999;
+  text-decoration:none;
+  transition: all .2s;
 }
 
 .Sheader{
@@ -1043,4 +1052,96 @@ font-family: 'Piazzolla', serif;
 }
 .flwr span, .flwg span{
   margin: 0;
+}
+.Search{
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  width: 90%;
+  height: 10%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding-top: 4%;
+}
+#search{
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 70%;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  padding: 5px 20px;
+  transition: all .5s cubic-bezier(0.89,0.3,0.13,1.01);
+}
+.SResC{
+  position: absolute;
+  top: 9.2%;
+  left: 50%;
+  transform: translate(-50%,0);
+  width: 81%;
+  height: 0;
+  border-bottom-right-radius:10px;
+  border-bottom-left-radius:10px;
+  background-color: white;
+  transition: all .5s cubic-bezier(0.89,0.3,0.13,1.01);
+}
+.SRC{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 96%;
+  height: 96%;
+  overflow: auto;
+  perspective: 20px;
+  display: none;
+}
+.SRes{
+  cursor: pointer;
+  margin-bottom: 20px;
+  top: 60px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 96%;
+  height: 90px;
+  background-color: #f6f6f6;
+  border-radius: 10px;
+  transition: all .4s;
+}
+.Uimg{
+  position: absolute;
+  top: 50%;
+  left: 13%;
+  transform: translate(-50%, -50%);
+  width: 9%;
+  height: 9%;
+
+}
+.Uimg img{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+}
+.Uname{
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 55%;
+}
+.Uname h1{
+  color: #333;
+  font-size: 20px;
+}
+.Uname p{
+  color: #999;
 }

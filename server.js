@@ -44,7 +44,7 @@ con2.connect(function (err) {
 })
 
 //creating user info table
-var table = 'CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,username  VARCHAR(255) NOT NULL, email MEDIUMTEXT NOT NULL, password VARCHAR(255) NOT NULL, fname VARCHAR(255), lname VARCHAR(255) , bio VARCHAR(100)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci';
+var table = 'CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,username  VARCHAR(255) NOT NULL, email MEDIUMTEXT NOT NULL, password VARCHAR(255) NOT NULL, fname VARCHAR(255), lname VARCHAR(255) , bio VARCHAR(100), certification INT, follower TEXT, following TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci';
 con1.query(table,function (err, res) {
   if (err) {
     throw err;
@@ -108,13 +108,13 @@ io.on('connection', function (socket) {
       var u = emailIsOk.storedUsername;
       var e = emailIsOk.storedEmail;
       var p = emailIsOk.storedPass;
-      var insertinfo = 'INSERT INTO users (username, email, password) VALUES ("'+u+'", "'+e+'", "'+e+'")';
-      var createUserDB = 'CREATE DATABASE '+u+'';
-      var createUserPostDB = 'CREATE DATABASE '+u+'Post';
-      var postId = 'CREATE TABLE IF NOT EXISTS '+u+'postId (id INT AUTO_INCREMENT PRIMARY KEY, content TEXT, datetime DATETIME, likeing INT, replying INT, clicking INT)';
-      var flwrs = 'CREATE TABLE IF NOT EXISTS '+u+'follower (id INT AUTO_INCREMENT PRIMARY KEY, username TEXT, datetime DATETIME)';
-      var flwng = 'CREATE TABLE IF NOT EXISTS '+u+'following (id INT AUTO_INCREMENT PRIMARY KEY, username TEXT, datetime DATETIME)';
-      var rooms = 'CREATE TABLE IF NOT EXISTS '+u+'room (id INT AUTO_INCREMENT PRIMARY KEY, room TEXT, datetime DATETIME)';
+      var insertinfo = 'INSERT INTO users (username, email, password, certification,follower, following) VALUES ("'+u+'", "'+e+'", "'+p+'", "0", "0", "0")';
+      var createUserDB = 'CREATE DATABASE '+u+' CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci';
+      var createUserPostDB = 'CREATE DATABASE '+u+'Post CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci';
+      var postId = 'CREATE TABLE IF NOT EXISTS '+u+'postId (id INT AUTO_INCREMENT PRIMARY KEY, content TEXT, datetime DATETIME, likeing INT, replying INT, clicking INT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
+      var flwrs = 'CREATE TABLE IF NOT EXISTS '+u+'follower (id INT AUTO_INCREMENT PRIMARY KEY, username TEXT, datetime DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
+      var flwng = 'CREATE TABLE IF NOT EXISTS '+u+'following (id INT AUTO_INCREMENT PRIMARY KEY, username TEXT, datetime DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
+      var rooms = 'CREATE TABLE IF NOT EXISTS '+u+'room (id INT AUTO_INCREMENT PRIMARY KEY, room TEXT, datetime DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
       con.connect(function (err) {
         if (err) throw err;
         console.log('connection for creating new databases success');
@@ -262,7 +262,7 @@ io.on('connection', function (socket) {
       database: u
     });
     //record post as postId
-    var intop = 'INSERT INTO '+u+'postId (content, datetime) VALUES ("'+content+'", "'+datetime+'")';
+    var intop = 'INSERT INTO '+u+'postId (content, datetime, likeing, replying, clicking) VALUES ("'+content+'", "'+datetime+'", "0", "0", "0")';
     conSp.query(intop, function (err, res) {
       if (err) {
         console.log('bug');
@@ -280,7 +280,7 @@ io.on('connection', function (socket) {
       database: u+'Post'
     });
     setTimeout(function () {
-      var createPostTable = 'CREATE TABLE IF NOT EXISTS '+thisPostId+' (id INT AUTO_INCREMENT PRIMARY KEY, liker VARCHAR(255), datetime DATETIME, likes VARCHAR(255), replys TEXT, clicks VARCHAR(255))';
+      var createPostTable = 'CREATE TABLE IF NOT EXISTS '+thisPostId+' (id INT AUTO_INCREMENT PRIMARY KEY, liker VARCHAR(255), datetime DATETIME, likes VARCHAR(255), replys TEXT, clicks VARCHAR(255)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
       conSpI.query(createPostTable, function (err, res) {
         if (err) {
           throw err;
@@ -289,6 +289,22 @@ io.on('connection', function (socket) {
         console.log(res);
       });
     },2000)
+  })
+
+  //global search
+  socket.on("searchRes", function (searchRes) {
+    var glsr = 'SELECT * FROM users WHERE username LIKE "%'+searchRes+'%" OR fname LIKE "%'+searchRes+'%" OR lname LIKE "%'+searchRes+'%" ORDER BY certification DESC';
+    con1.query(glsr, function (err, res) {
+      if (err) throw err;
+      console.log(res);
+      if (res != '') {
+        var sun = res.map(res => res.username);
+        var sfn = res.map(res => res.fname);
+        var sln = res.map(res => res.lname);
+        var scn = res.map(res => res.certification);
+        socket.emit('sresult', {sun, sfn, sln, scn});
+      }
+    });
   })
 
   //usr disconnection

@@ -192,10 +192,13 @@ $(document).ready(function () {
     socket.emit('loginCheck', {loginusr, loginpass});
     socket.on('checkRes', function (checkRes) {
       if (checkRes.checkRes == 'ok') {
+        if (!checkRes.f) checkRes.f = '';
+        if (!checkRes.l) checkRes.l = '';
+        if (!checkRes.b) checkRes.b = '';
         $('.Nerror').html('');
         $(".SignInFrom").css('display','none');
         $(".maincont").css('display','block');
-        $(".maincont").append('<div class="blackArea"></div><div class="writePost"><textarea class="postCon" name="post" maxlength="300" rows="8" cols="80" placeholder="What is your situation...?"></textarea><button class="sendPost" type="button" name="button">SharSit!</button><div class="attach"><div class="emoji"><i style="font-size:34px; color: white;line-height: 69px;" class="far">&#xf118;</i></div><div class="file"><input class="fileUp" type="file" name="" value=""></div><div class="fileSkin"><i style="font-size:34px; color: white;line-height: 69px;" class="fas">&#xf0c6;</i></div></div></div><div class="mainsec"><div class="postArea"></div></div><div class="rnav"><div class="pimg"><img class="ppicture" src="profile.png" alt="Your picture"></div><div class="acInfo"><div class="usrInfo"><h1 class="acname">'+checkRes.f+' '+checkRes.l+'</h1><h3 class="acuser">'+checkRes.u+'</h3></div><div class="usrInfo"><span>Bio</span><p class="biocontent">'+checkRes.b+'</p></div><div class="usrInfo flw"><div class="flwr"><span id="followers">0</span><br><span>Follower</span></div><div class="flwg"><span id="followings">0</span><br><span>following</span></div></div></div></div><div class="lnav"><div class="new"><div class="newcont"><i style="font-size:50px;text-shadow: 7px 7px 7px #b2001e,7px 7px 7px #d40023;" class="fas">&#xf5ad;</i></div></div></div>')
+        $(".maincont").append('<div class="blackArea"></div><div class="writePost"><textarea class="postCon" name="post" maxlength="300" rows="8" cols="80" placeholder="What is your situation...?"></textarea><button class="sendPost" type="button" name="button">SharSit!</button><div class="attach"><div class="emoji"><i style="font-size:34px; color: white;line-height: 69px;" class="far">&#xf118;</i></div><div class="file"><input class="fileUp" type="file" name="" value=""></div><div class="fileSkin"><i style="font-size:34px; color: white;line-height: 69px;" class="fas">&#xf0c6;</i></div></div></div><div class="mainsec"><div class="postArea"></div></div><div class="rnav"><div class="pimg"><img class="ppicture" src="profile.png" alt="Your picture"></div><div class="acInfo"><div class="usrInfo"><h1 class="acname">'+checkRes.f+' '+checkRes.l+'</h1><h3 class="acuser">@'+checkRes.u+'</h3></div><div class="usrInfo"><span>Bio</span><p class="biocontent">'+checkRes.b+'</p></div><div class="usrInfo flw"><div class="flwr"><span id="followers">0</span><br><span>Follower</span></div><div class="flwg"><span id="followings">0</span><br><span>following</span></div></div></div></div><div class="lnav"><div class="Search"><input id="search" type="search" name="" value="" placeholder="Global Search..." autocomplete="off"></div><div class="SResC"><div class="SRC"></div></div><div class="new"><div class="newcont"><i style="font-size:50px;text-shadow: 7px 7px 7px #b2001e,7px 7px 7px #d40023;" class="fas">&#xf5ad;</i></div></div></div>')
       }else {
         $('.Nerror').html(checkRes.checkRes);
       }
@@ -232,7 +235,7 @@ $(document).mousemove(function (e) {
     var s = d.getSeconds();
     var m = d.getMinutes();
     var h = d.getHours();
-    var day = d.getDay();
+    var day = d.getDate();
     var month = d.getMonth();
     var y = d.getFullYear();
     var datetime = y+'-'+month+'-'+day+' '+h+':'+m+':'+s;
@@ -245,7 +248,6 @@ $(document).mousemove(function (e) {
   });
 
   socket.on('post', function (post) {
-    alert('ok')
     var postId = post.thisPostId;
     var postContent = post.content;
     var postdate = post.datetime;
@@ -253,6 +255,53 @@ $(document).mousemove(function (e) {
     $('.'+postId+'').html(postContent);
     $('.'+postId+'date').html(postdate);
   });
+
+  //global Search
+  $('.maincont').on('keyup', '#search',function () {
+    var searchRes = $('#search').val().trim().replace('@','');
+    $('.SRC').empty();
+    if (searchRes != '') {
+      socket.emit('searchRes', searchRes);
+      socket.on('sresult', function (s) {
+        var sun = s.sun;
+        var sfn = s.sfn;
+        var sln = s.sln;
+        var scn = s.scn;
+        for (var i = 0; i < sun.length; i++) {
+          if ($('.'+sun[i]+'').length == 0) {
+            if (!sfn[i] && !sln[i]) {
+              sfn[i] = 'SharSit';
+              sln[i] = 'user'
+            }
+            if (!sfn[i] && sln[i]) sfn[i] = '';
+            if (sfn[i] && !sln[i]) sln[i] = '';
+            $('.SRC').append('<div class="SRes '+sun[i]+'"><div class="Uimg"><img src="profile.png" alt=""></div><div class="Uname '+sun[i]+'un"><h1 class="'+sfn[i]+'un">'+sfn[i]+' '+sln[i]+'</h1><p>@'+sun[i]+'</p></div></div>')
+            if (scn[i] == 1) {
+              $('.'+sfn[i]+'un').append('<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>')
+            }
+          }
+        }
+      });
+    }else {
+      $('.SRC').empty();
+    }
+  });
+  $('.maincont').on('focus', '#search',function () {
+    $("#search").css({'width': '100%','border-bottom-right-radius':'0px','border-bottom-left-radius':'0px'})
+    $(".SResC").css({'height':'70%','width':'90%'});
+    $(".SRC").css('display','block')
+  });
+  $('.maincont').on('blur', '#search',function () {
+    $("#search").css({'width': '90%','border-bottom-right-radius':'10px','border-bottom-left-radius':'10px'})
+    $(".SResC").css({'height':'0%','width':'81%'});
+    $(".SRC").css('display','none');
+    $("#search").val('');
+    $('.SRC').empty();;
+  });
+
+
+
+
 
   /*handle post action
   var counter = 0;
