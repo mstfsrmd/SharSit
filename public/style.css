@@ -945,7 +945,6 @@ font-family: 'Piazzolla', serif;
 .postArea{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1018,4 +1017,16 @@ font-family: 'Piazzolla', serif;
   height: 100%;
   transform: translate(-50%, -50%);
   opacity: 0;
+}
+.flw{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.flwr, .flwg{
+  text-align: center;
+}
+.flwr span, .flwg span{
+  margin: 0;
 }

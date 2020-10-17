@@ -12,7 +12,6 @@ $(document).ready(function () {
   $("#rpass").val('');
   $('#usrname').on('input', function () {
     var onusrname = $(this).val();
-    console.log(onusrname);
     socket.emit('onusrname', onusrname);
     socket.on('isUsr', function (isUsr) {
       if (onusrname != '') {
@@ -229,46 +228,19 @@ $(document).mousemove(function (e) {
     var postId = post.thisPostId;
     var postContent = post.content;
     var postdate = post.datetime;
-    $('.postArea').prepend('<div class="Post"><div class="content '+postId+'"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;"" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl"id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div><div class="postDate '+postId+'date"><time></time></div></div>')
+    $('.postArea').prepend('<div class="Post"><div class="content '+postId+'"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl interA '+postId+'IA" act="likeing" pId="'+postId+'">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId+'IA" act="replying" pId="'+postId+'">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId+'IA" act="saving" pId="'+postId+'">&#xf02e;</i></i></div></div><div class="postDate '+postId+'date"><time></time></div></div>')
     $('.'+postId+'').html(postContent);
     $('.'+postId+'date').html(postdate);
   });
 
   //handle post action
-  var counterl = 0;
-  var counterr = 0;
-  var counters = 0;
-  $("#like").click(function () {
-    if (counterl == 0) {
-      counterl = 1;
-      $("#like").css('opacity','1');
-    }
-    else{
-      counterl = 0;
-      $("#like").css('opacity','0');
-    }
+  var counter = 0;
+  $(".interA").click(function () {
+    var act = $(event.target).attr('act');
+    var pId = $(event.target).attr('pId');
+    console.log(act);
+    console.log(pId);
   });
-  $("#reply").click(function () {
-    if (counterr == 0) {
-      counterr = 1;
-      $("#reply").css('opacity','1');
-    }
-    else{
-      counterr = 0;
-      $("#reply").css('opacity','0');
-    }
-  });
-  $("#save").click(function () {
-    if (counters == 0) {
-      counters = 1;
-      $("#save").css('opacity','1');
-    }
-    else {
-      counters = 0;
-      $("#save").css('opacity','0');
-    }
-  });
-
 });
 
 

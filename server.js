@@ -11,7 +11,7 @@ const fileUpload = require('express-fileupload');
 
 //server connection
 console.log('Connecting to server...');
-http.listen(8080, function () {
+http.listen(process.env.PORT || 8080, function () {
   console.log('Server is ready');
 });
 
@@ -112,6 +112,9 @@ io.on('connection', function (socket) {
       var createUserDB = 'CREATE DATABASE '+u+'';
       var createUserPostDB = 'CREATE DATABASE '+u+'Post';
       var postId = 'CREATE TABLE IF NOT EXISTS '+u+'postId (id INT AUTO_INCREMENT PRIMARY KEY, content TEXT, datetime DATETIME, likeing INT, replying INT, clicking INT)';
+      var flwrs = 'CREATE TABLE IF NOT EXISTS '+u+'follower (id INT AUTO_INCREMENT PRIMARY KEY, username TEXT, datetime DATETIME)';
+      var flwng = 'CREATE TABLE IF NOT EXISTS '+u+'following (id INT AUTO_INCREMENT PRIMARY KEY, username TEXT, datetime DATETIME)';
+      var rooms = 'CREATE TABLE IF NOT EXISTS '+u+'room (id INT AUTO_INCREMENT PRIMARY KEY, room TEXT, datetime DATETIME)';
       con.connect(function (err) {
         if (err) throw err;
         console.log('connection for creating new databases success');
@@ -142,6 +145,24 @@ io.on('connection', function (socket) {
             throw err;
           }
           console.log('table '+u+'postId created');
+        });
+        conSp.query(flwrs,function (err, r) {
+          if (err) {
+            throw err;
+          }
+          console.log('table '+u+'follower created');
+        });
+        conSp.query(flwng,function (err, r) {
+          if (err) {
+            throw err;
+          }
+          console.log('table '+u+'following created');
+        });
+        conSp.query(room,function (err, r) {
+          if (err) {
+            throw err;
+          }
+          console.log('table '+u+'room created');
         });
       },2000);
       con1.query(insertinfo, function (err, r) {
@@ -255,8 +276,33 @@ io.on('connection', function (socket) {
 
 
 
+/*----------------Under Construction--------------------------------------------
 
+//joining all folloing rooms
 
+var jr = 'SELECT username FROM '+u+'following';
+var conSp = mysql.createConnection({
+  host:'localhost',
+  user:'root',
+  password:'Mo137777',
+  database: u
+});
+conSp.query(jr, function (err, res) {
+  if (err) {
+    throw err
+  }
+  var flwng = res.map(res=>res.username);
+  for (var i = 0; i < flwng.length; i++) {
+    socket.join(flwng[i]);
+    var fp = 'SELECT content, datetime FROM '+flwng[i]+'postId';
+    conSp.query(jr, function (err, res) {
+      if (err) {
+        throw err
+      }
+
+    }
+  }
+})*/
 
 
 
