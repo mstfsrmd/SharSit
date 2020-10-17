@@ -275,8 +275,11 @@ footer{
   letter-spacing: 9px;
   text-transform: capitalize;
 }
+.SignUpForm{
+  display: none;
+}
 
-.Sform{
+.Sform, .Nform{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -285,7 +288,7 @@ footer{
   height: 80%;
   transition: all .5s;
 }
-.sform{
+.sform, .nform{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -313,6 +316,9 @@ footer{
   width: 60%;
   margin-bottom: 40px;
 }
+.dn{
+  top: 30%;
+}
 .d::before{
   content: '';
   position: absolute;
@@ -329,7 +335,7 @@ footer{
   width: 100%;
 }
 
-.Serror{
+.Serror, .Nerror{
 font-family: 'Piazzolla', serif;
   position: absolute;
   top: 80%;
@@ -339,6 +345,9 @@ font-family: 'Piazzolla', serif;
   width: 60%;
   height: 60px;
   color: #c60021;
+}
+.Nerror{
+  top: 70%;
 }
 .sinfo{
   opacity: .6;
@@ -505,7 +514,7 @@ font-family: 'Piazzolla', serif;
   opacity: 0;
   transition: all .5s;
 }
-#Ss, #Ss2{
+#Ss, #Ss2, #Ns{
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
   color: white;
@@ -524,8 +533,11 @@ font-family: 'Piazzolla', serif;
   overflow: hidden;
   outline: none;
 }
+#Ns{
+  top: 80%;
+}
 
-#Ssi, #Ssi2{
+#Ssi, #Ssi2, #Nsi{
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -538,7 +550,9 @@ font-family: 'Piazzolla', serif;
   transition: all .9s;
   outline: none;
 }
-
+#Nsi{
+  top: 40%;
+}
 
 #Ss2{
   top: 110%;

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>SharSit!</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="src/favicon.jpg">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+  <body>
+    <div class="SignInFrom">
+      <header class="Sheader">
+        <div class="Shed">
+          <h1>Sign in!</h1>
+        </div>
+        <p class="Sp">have a good time!</p>
+        <input class="storeusr" type="hidden" name="" value="">
+        <input class="storepass" type=" hidden" name="" value="" hidden>
+        <input class="storeemail" type=" hidden" name="" value="" hidden>
+      </header>
+      <div class="Nform">
+        <form class="nform">
+          <div class="dn d" id="Nuser">
+            <input class="in" id="nusrname" type="text" name="user" placeholder="Enter a username" required>
+          </div>
+          <div class="dn d" id="Npass">
+            <input class="in" id="npass" type="password" name="pass" placeholder="Enter a password" required>
+          </div>
+          <div class="Nerror"></div>
+          <button id="Ns"><div style="z-index:1; position:relative">Sign up!</div><div id="Nsi"></div></button><br>
+        </form>
+      </div>
+    </div>
+
+<!--____________________________Main Page_____________________________________-->
+    <div class="maincont"></div>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src='index.js'></script>
+  </body>
+</html>

@@ -158,7 +158,7 @@ io.on('connection', function (socket) {
           }
           console.log('table '+u+'following created');
         });
-        conSp.query(room,function (err, r) {
+        conSp.query(rooms,function (err, r) {
           if (err) {
             throw err;
           }
@@ -224,6 +224,30 @@ io.on('connection', function (socket) {
       }
     });
   });
+
+  //login proccess
+  socket.on('loginCheck',function (loginCheck) {
+    var loginusr = loginCheck.loginusr;
+    var loginpass = loginCheck.loginpass;
+    var logCh = 'SELECT * FROM users WHERE username="'+loginusr+'" AND password="'+loginpass+'"';
+    con1.query(logCh, function (err, res) {
+      if (err) {
+        throw err;
+      }
+      var f = res.map(res => res.fname)[0];
+      var l = res.map(res => res.lname)[0];
+      var b = res.map(res => res.bio)[0];
+      var u = res.map(res => res.username)[0];
+      if (res == '') {
+        var checkRes = 'Your username or password is incorrect!';
+        socket.emit('checkRes', {checkRes, f, l, b});
+      }else {
+        var checkRes = 'ok';
+        socket.emit('checkRes', {checkRes, f, l, b, u});
+      }
+    });
+  });
+
 
   //recording post
   var lastId;
