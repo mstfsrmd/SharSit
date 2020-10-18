@@ -229,6 +229,8 @@ io.on('connection', function (socket) {
   socket.on('loginCheck',function (loginCheck) {
     var loginusr = loginCheck.loginusr;
     var loginpass = loginCheck.loginpass;
+    var u;
+    //reading user information
     var logCh = 'SELECT * FROM users WHERE username="'+loginusr+'" AND password="'+loginpass+'"';
     con1.query(logCh, function (err, res) {
       if (err) {
@@ -237,15 +239,48 @@ io.on('connection', function (socket) {
       var f = res.map(res => res.fname)[0];
       var l = res.map(res => res.lname)[0];
       var b = res.map(res => res.bio)[0];
-      var u = res.map(res => res.username)[0];
+      u = res.map(res => res.username)[0];
+      var c = res.map(res => res.certification)[0];
+      var fr = res.map(res => res.follower)[0];
+      var fg = res.map(res => res.following)[0];
       if (res == '') {
         var checkRes = 'Your username or password is incorrect!';
-        socket.emit('checkRes', {checkRes, f, l, b});
+        socket.emit('checkRes', {checkRes, f, l, b, c, fr, fg});
       }else {
         var checkRes = 'ok';
-        socket.emit('checkRes', {checkRes, f, l, b, u});
+        socket.emit('checkRes', {checkRes, f, l, b, u, c, fr, fg});
       }
     });
+    //reading user post
+    setTimeout(function () {
+      conSp = mysql.createConnection({
+        host:'localhost',
+        user:'root',
+        password:'Mo137777',
+        database: u
+      });
+      var logpost = 'SELECT * FROM '+u+'postId';
+      conSp.query(logpost, function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        var p = res.map(res => res.content);
+        var d = res.map(res => res.datetime);
+        var lk = res.map(res => res.likeing);
+        var rp = res.map(res => res.replying);
+        socket.emit('postload', {p, d, lk, rp, u});
+      })
+      // joining all following rooms
+      socket.join(u);
+      var jroom = 'SELECT * FROM '+u+'room';
+      conSp.query(jroom, function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        var j = res.map(res => res.room);
+        for (var i = 0; i < j.length; i++) {
+          socket.join(j[i]);
+        }
+      })
+    }, 1000);
   });
 
 
@@ -261,7 +296,7 @@ io.on('connection', function (socket) {
       password:'Mo137777',
       database: u
     });
-    //record post as postId
+    //record post as Id
     var intop = 'INSERT INTO '+u+'postId (content, datetime, likeing, replying, clicking) VALUES ("'+content+'", "'+datetime+'", "0", "0", "0")';
     conSp.query(intop, function (err, res) {
       if (err) {
@@ -270,7 +305,6 @@ io.on('connection', function (socket) {
       }
       lastId = res.insertId;
       thisPostId = u+'_'+lastId;
-      socket.join(u);
       io.to(u).emit('post', {content, datetime, u, thisPostId});
     })
     conSpI = mysql.createConnection({
