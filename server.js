@@ -122,14 +122,14 @@ io.on('connection', function (socket) {
       console.log("Creating Database "+u+"...");
       con.query(createUserDB, function (err, r) {
         if (err) {
-          throw err;
+          console.log(err.message);
         }
         console.log("Database "+u+" created");
       });
       console.log("Creating Database "+u+"Post...");
       con.query(createUserPostDB, function (err, r) {
         if (err) {
-          throw err;
+          console.log(err.message);
         }
         console.log("Database "+u+"Post created");
       });
@@ -229,18 +229,19 @@ io.on('connection', function (socket) {
   socket.on('loginCheck',function (loginCheck) {
     var loginusr = loginCheck.loginusr;
     var loginpass = loginCheck.loginpass;
-    var u;
+    var u; var f;
+    var l; var c;
     //reading user information
     var logCh = 'SELECT * FROM users WHERE username="'+loginusr+'" AND password="'+loginpass+'"';
     con1.query(logCh, function (err, res) {
       if (err) {
         throw err;
       }
-      var f = res.map(res => res.fname)[0];
-      var l = res.map(res => res.lname)[0];
+      f = res.map(res => res.fname)[0];
+      l = res.map(res => res.lname)[0];
       var b = res.map(res => res.bio)[0];
       u = res.map(res => res.username)[0];
-      var c = res.map(res => res.certification)[0];
+      c = res.map(res => res.certification)[0];
       var fr = res.map(res => res.follower)[0];
       var fg = res.map(res => res.following)[0];
       if (res == '') {
@@ -262,12 +263,11 @@ io.on('connection', function (socket) {
       var logpost = 'SELECT * FROM '+u+'postId';
       conSp.query(logpost, function (err, res) {
         if (err) throw err;
-        console.log(res);
         var p = res.map(res => res.content);
         var d = res.map(res => res.datetime);
         var lk = res.map(res => res.likeing);
         var rp = res.map(res => res.replying);
-        socket.emit('postload', {p, d, lk, rp, u});
+        socket.emit('postload', {p, d, lk, rp, u, f, l, c});
       })
       // joining all following rooms
       socket.join(u);
@@ -280,9 +280,51 @@ io.on('connection', function (socket) {
           socket.join(j[i]);
         }
       })
+      conSp.end(function (err,res) {
+        if (err) console.log(err.message);
+      });
     }, 1000);
   });
 
+  /*reading clicked user information
+  socket.on('selectedusr', function (su) {
+    var selectedusr = 'SELECT * FROM users WHERE username = "'+su+'"';
+    con1.query(selectedusr, function (err, res) {
+      if (err) console.log(err.message);
+      // joining selected user room
+      socket.join(su);
+      var f = res.map(res => res.fname)[0];
+      var l = res.map(res => res.lname)[0];
+      var b = res.map(res => res.bio)[0];
+      var u = res.map(res => res.username)[0];
+      var c = res.map(res => res.certification)[0];
+      var fr = res.map(res => res.follower)[0];
+      var fg = res.map(res => res.following)[0];
+      socket.emit('suresult', {f,l, b, c,fr,fg,u});
+    });
+    //reading selected user post
+    setTimeout(function () {
+      conSp = mysql.createConnection({
+        host:'localhost',
+        user:'root',
+        password:'Mo137777',
+        database: su
+      });
+      var logpost = 'SELECT * FROM '+su+'postId';
+      conSp.query(logpost, function (err, res) {
+        if (err) console.log(err.message);;
+        var p = res.map(res => res.content);
+        var d = res.map(res => res.datetime);
+        var lk = res.map(res => res.likeing);
+        var rp = res.map(res => res.replying);
+        socket.emit('postload', {p, d, lk, rp, su});
+      })
+      conSp.end(function (err,res) {
+        if (err) console.log(err.message);
+      });
+    }, 1000);
+  })
+*/
 
   //recording post
   var lastId;
@@ -303,8 +345,8 @@ io.on('connection', function (socket) {
         console.log('bug');
         throw err;
       }
-      lastId = res.insertId;
-      thisPostId = u+'_'+lastId;
+      pSId = datetime.replace(' ', '').replace(':','').replace(':','').replace(':','').replace('-','').replace('-','');
+      thisPostId = u+pSId+'poSt';
       io.to(u).emit('post', {content, datetime, u, thisPostId});
     })
     conSpI = mysql.createConnection({
@@ -319,8 +361,13 @@ io.on('connection', function (socket) {
         if (err) {
           throw err;
         }
-        console.log(lastId);
-        console.log(res);
+        console.log(thisPostId);
+      });
+      conSp.end(function (err,res) {
+        if (err) console.log(err.message);
+      });
+      conSpI.end(function (err,res) {
+        if (err) console.log(err.message);
       });
     },2000)
   })
@@ -330,7 +377,6 @@ io.on('connection', function (socket) {
     var glsr = 'SELECT * FROM users WHERE username LIKE "%'+searchRes+'%" OR fname LIKE "%'+searchRes+'%" OR lname LIKE "%'+searchRes+'%" ORDER BY certification DESC';
     con1.query(glsr, function (err, res) {
       if (err) throw err;
-      console.log(res);
       if (res != '') {
         var sun = res.map(res => res.username);
         var sfn = res.map(res => res.fname);
@@ -340,6 +386,16 @@ io.on('connection', function (socket) {
       }
     });
   })
+
+  socket.on('flw', function (fu) {
+    var ufl = 'UPDATE users SET follower = follower + 1 WHERE username = "'+fu+'"';
+    con1.query(ufl, function (err, res) {
+      if (err) {
+        throw err;
+      }
+      console.log(res);
+    })
+  });
 
   //usr disconnection
   socket.on("disconnect", function (dis) {

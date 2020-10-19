@@ -3,12 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>SharSit!</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="src/favicon.jpg">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+    <div class="menuicon"><i class="fa" id="menuicon">&#xf0c9;</i></div>
+    <div class="menu"><div class="secr"><div class="rsect"><div class="rtsecr"><div class="profCont"><div class="pimg"><img class="ppicture" src="../src/profile.png" alt="Your picture"></div><div class="Uinfo"><h1><i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i></h1><h3></h3></div></div></div><div class="rtsecl"><div class="usrInfo"><span>Bio</span><p></p></div><div class="usrInfo flw"><div class="flwr"><span id="followers">0</span><br><span>Follower</span></div><div class="flwg"><span id="followings">0</span><br><span>following</span></div></div></div></div><div class="rsecb"></div></div><div class="secl"><div class="controlnav"><div class="cn setting"><i style="font-size:44px" class="fa">&#xf013;</i></div><div class="cn profileset"><i style="font-size:44px" class="fa">&#xf2c0;</i></div><div class="cn saved"><i style="font-size:44px" class="fa">&#xf097;</i></div><div class="cn notif"><i style="font-size:44px" class="fa">&#xf0a2;</i></div><div class="cn flfg"><i class="material-icons" id="j">&#xe915;</i></div></div></div></div>
     <div class="blackArea"></div>
     <div class="writePost">
       <textarea class="postCon" name="post" maxlength="300" rows="8" cols="80" placeholder="What is your situation...?"></textarea>
@@ -23,12 +26,17 @@
         <div class="fileSkin"><i style='font-size:34px; color: white;line-height: 69px;' class='fas'>&#xf0c6;</i></div>
       </div>
     </div>
+    <div class="selfpost"><div class="spCont"></div></div>
     <div class="mainsec">
       <div class="postArea">
         <div class="Post">
-          <div class="content">
-            1
-          </div>
+          <div class="posterInfo">
+              <div class="Pimg">
+                <img src="../src/profile.png" alt="">
+              </div>
+              <div class="Pname">
+                <h1 class="'+sfn[i]+'un">Mostafa Sarmad</h1>
+                <p>@mstfsrmd</p></div></div><div class="content"><div class="postDate"><time>2020-10-13 12:32</time></div></div>
           <div class="postAction">
             <div class="postLike act">
               <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf004;
@@ -46,170 +54,6 @@
               </i>
             </div>
           </div>
-          <div class="postDate">
-            <time>2020-10-13 12:32</time>
-          </div>
-        </div>
-        <div class="Post">
-          <div class="content">
-            2
-          </div>
-          <div class="postAction">
-            <div class="postLike act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf004;
-                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
-              </i>
-            </div>
-            <div class="postReply act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf075;
-                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
-              </i>
-            </div>
-            <div class="postSave act">
-              <i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;
-                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
-              </i>
-            </div>
-          </div>
-
-        </div>
-        <div class="Post">
-          <div class="content">
-            3
-          </div>
-          <div class="postAction">
-            <div class="postLike act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf004;
-                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
-              </i>
-            </div>
-            <div class="postReply act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf075;
-                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
-              </i>
-            </div>
-            <div class="postSave act">
-              <i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;
-                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
-              </i>
-            </div>
-          </div>
-
-        </div>
-        <div class="Post">
-          <div class="content">
-            4
-          </div>
-          <div class="postAction">
-            <div class="postLike act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf004;
-                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
-              </i>
-            </div>
-            <div class="postReply act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf075;
-                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
-              </i>
-            </div>
-            <div class="postSave act">
-              <i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;
-                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
-              </i>
-            </div>
-          </div>
-
-        </div>
-        <div class="Post">
-          <div class="content">
-            5
-          </div>
-          <div class="postAction">
-            <div class="postLike act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf004;
-                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
-              </i>
-            </div>
-            <div class="postReply act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf075;
-                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
-              </i>
-            </div>
-            <div class="postSave act">
-              <i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;
-                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
-              </i>
-            </div>
-          </div>
-
-        </div>
-        <div class="Post">
-          <div class="content">
-            6
-          </div>
-          <div class="postAction">
-            <div class="postLike act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf004;
-                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
-              </i>
-            </div>
-            <div class="postReply act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf075;
-                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
-              </i>
-            </div>
-            <div class="postSave act">
-              <i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;
-                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
-              </i>
-            </div>
-          </div>
-
-        </div>
-        <div class="Post">
-          <div class="content">
-            7
-          </div>
-          <div class="postAction">
-            <div class="postLike act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf004;
-                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
-              </i>
-            </div>
-            <div class="postReply act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf075;
-                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
-              </i>
-            </div>
-            <div class="postSave act">
-              <i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;
-                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
-              </i>
-            </div>
-          </div>
-
-        </div>
-        <div class="Post">
-          <div class="content">
-            8
-          </div>
-          <div class="postAction">
-            <div class="postLike act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf004;
-                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
-              </i>
-            </div>
-            <div class="postReply act">
-              <i style='font-size:30px;color:#999;display:block;' class='far w'>&#xf075;
-                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
-              </i>
-            </div>
-            <div class="postSave act">
-              <i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;
-                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
-              </i>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
@@ -236,6 +80,7 @@
             <span>following</span>
           </div>
         </div>
+        <div class="usrInfo"><button class="FollowB" type="button" name="button">Follow</button></div>
       </div>
 
     </div>
@@ -247,11 +92,8 @@
         </div>
       </div>
 
-    </div>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    </div>  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src='index.js'></script>
   </body>
 </html>
-
-  
