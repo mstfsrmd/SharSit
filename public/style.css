@@ -800,7 +800,6 @@ font-family: 'Piazzolla', serif;
   height: 115%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  filter: invert(1) sepia(1) brightness(.9);
 }
 .acInfo{
   display: flex;
@@ -997,9 +996,12 @@ font-family: 'Piazzolla', serif;
   text-align: center;
   width: 11%;
   height: 11%;
+  overflow: hidden;
+  border-radius: 50%;
 
 }
 .Pimg img{
+  border-radius: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
   width: 70px;
@@ -1221,7 +1223,7 @@ font-family: 'Piazzolla', serif;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) translateZ(1.5px);
+  transform: translate(-50%, -50%) translateZ(-1.5px);
   width: 95%;
   height: 95%;
   border-radius: 15px;
@@ -1229,8 +1231,9 @@ font-family: 'Piazzolla', serif;
   box-shadow: 4px 4px 20px rgba(0, 0, 0, .5) ;
   opacity: 0;
   transition: transform .5s, opacity .5s;
+  font-weight:
 }
-.Uinfo{
+.Usinfo{
   text-align: center;
   position: absolute;
   top: 80%;
@@ -1239,7 +1242,7 @@ font-family: 'Piazzolla', serif;
   width: 95%;
   height: 30%;
 }
-.Uinfo h3{
+.Usinfo h3{
   color: #888;
   text-align: left;
   margin: 8px 40px;

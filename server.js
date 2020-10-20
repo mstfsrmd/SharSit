@@ -44,7 +44,7 @@ con2.connect(function (err) {
 })
 
 //creating user info table
-var table = 'CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,username  VARCHAR(255) NOT NULL, email MEDIUMTEXT NOT NULL, password VARCHAR(255) NOT NULL, fname VARCHAR(255), lname VARCHAR(255) , bio VARCHAR(100), certification INT, follower TEXT, following TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci';
+var table = 'CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,username  VARCHAR(255) NOT NULL, email MEDIUMTEXT NOT NULL, emailKey TEXT, password VARCHAR(255) NOT NULL, passwordKey TEXT, fname VARCHAR(255), lname VARCHAR(255), bio VARCHAR(100),location VARCHAR(100), certification INT, follower TEXT, following TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci';
 con1.query(table,function (err, res) {
   if (err) {
     throw err;
@@ -67,6 +67,37 @@ function codeGenerator() {
   return code;
 }
 
+//encoding
+const list = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@!$%&*_-+=. '.split('');
+function encode(name) {
+  var main = name.split('');
+  var store = name.split('');
+  var key = [];
+  var rand;
+  for (var i = 0; i < main.length; i++) {
+    rand = list[Math.round(Math.random()*73)];
+    key[i] = list.indexOf(rand) - list.indexOf(store[i]);
+    if (key[i]<0) {
+      i = i-1;
+      continue;
+    }
+    main[i] = rand;
+  }
+  var code = main.join('');
+  var key = key.join(',');
+  return [code, key];
+}
+//decoding
+function decode(code, key) {
+  var code = code.split('');
+  var key = key.split(',');
+  for (var i = 0; i < key.length; i++) {
+    var uncode = list.indexOf(code[i]) - key[i];
+    code[i] = list[uncode];
+  }
+  code = code.join('');
+  return code;
+}
 
 //define an array for storing socket id
 var id = {};
@@ -108,7 +139,13 @@ io.on('connection', function (socket) {
       var u = emailIsOk.storedUsername;
       var e = emailIsOk.storedEmail;
       var p = emailIsOk.storedPass;
-      var insertinfo = 'INSERT INTO users (username, email, password, certification,follower, following) VALUES ("'+u+'", "'+e+'", "'+p+'", "0", "0", "0")';
+      var enE = encode(e);var enP = encode(p);
+      var codeE = enE[0]; var codeP = enP[0];
+      var keyE = enE[1]; var keyP = enP[1];
+      var tzRe = /\(([\w\s]+)\)/; // Look for "(", any words (\w) or spaces (\s), and ")"
+      var d = new Date().toString();
+      var userlocation = tzRe.exec(d)[1].replace(' Standard Time', '');
+      var insertinfo = 'INSERT INTO users (username, email, emailKey, password, passwordKey, certification,follower, following) VALUES ("'+u+'", "'+codeE+'", "'+keyE+'", "'+codeP+'", "'+keyP+'", "0", "0", "0")';
       var createUserDB = 'CREATE DATABASE '+u+' CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci';
       var createUserPostDB = 'CREATE DATABASE '+u+'Post CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci';
       var postId = 'CREATE TABLE IF NOT EXISTS '+u+'postId (id INT AUTO_INCREMENT PRIMARY KEY, content TEXT, datetime DATETIME, likeing INT, replying INT, clicking INT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
@@ -228,15 +265,13 @@ io.on('connection', function (socket) {
   //login proccess
   socket.on('loginCheck',function (loginCheck) {
     var loginusr = loginCheck.loginusr;
-    var loginpass = loginCheck.loginpass;
+    var decP; var loginpass;
     var u; var f;
     var l; var c;
-    //reading user information
-    var logCh = 'SELECT * FROM users WHERE username="'+loginusr+'" AND password="'+loginpass+'"';
-    con1.query(logCh, function (err, res) {
-      if (err) {
-        throw err;
-      }
+    var givenloginpass = loginCheck.loginpass;
+    var dec = 'SELECT * FROM users WHERE username="'+loginusr+'"';
+    con1.query(dec, function (err, res) {
+      if (err) throw err;
       f = res.map(res => res.fname)[0];
       l = res.map(res => res.lname)[0];
       var b = res.map(res => res.bio)[0];
@@ -248,41 +283,53 @@ io.on('connection', function (socket) {
         var checkRes = 'Your username or password is incorrect!';
         socket.emit('checkRes', {checkRes, f, l, b, c, fr, fg});
       }else {
-        var checkRes = 'ok';
-        socket.emit('checkRes', {checkRes, f, l, b, u, c, fr, fg});
+        loginpasskey = res.map(res => res.passwordKey)[0];
+        loginpass = res.map(res => res.password)[0];
+        loginpass = decode(loginpass, loginpasskey)
+        console.log(loginpass);
+        if (loginpass != givenloginpass) {
+          var checkRes = 'Your username or password is incorrect!';
+          socket.emit('checkRes', {checkRes, f, l, b, c, fr, fg});
+        }else {
+          var checkRes = 'ok';
+          socket.emit('checkRes', {checkRes, f, l, b, u, c, fr, fg});
+        }
       }
     });
+
     //reading user post
     setTimeout(function () {
-      conSp = mysql.createConnection({
-        host:'localhost',
-        user:'root',
-        password:'Mo137777',
-        database: u
-      });
-      var logpost = 'SELECT * FROM '+u+'postId';
-      conSp.query(logpost, function (err, res) {
-        if (err) throw err;
-        var p = res.map(res => res.content);
-        var d = res.map(res => res.datetime);
-        var lk = res.map(res => res.likeing);
-        var rp = res.map(res => res.replying);
-        socket.emit('postload', {p, d, lk, rp, u, f, l, c});
-      })
-      // joining all following rooms
-      socket.join(u);
-      var jroom = 'SELECT * FROM '+u+'room';
-      conSp.query(jroom, function (err, res) {
-        if (err) throw err;
-        console.log(res);
-        var j = res.map(res => res.room);
-        for (var i = 0; i < j.length; i++) {
-          socket.join(j[i]);
-        }
-      })
-      conSp.end(function (err,res) {
-        if (err) console.log(err.message);
-      });
+      if (u) {
+        conSp = mysql.createConnection({
+          host:'localhost',
+          user:'root',
+          password:'Mo137777',
+          database: u
+        });
+        var logpost = 'SELECT * FROM '+u+'postId';
+        conSp.query(logpost, function (err, res) {
+          if (err) throw err;
+          var p = res.map(res => res.content);
+          var d = res.map(res => res.datetime);
+          var lk = res.map(res => res.likeing);
+          var rp = res.map(res => res.replying);
+          socket.emit('postload', {p, d, lk, rp, u, f, l, c});
+        })
+        // joining all following rooms
+        socket.join(u);
+        var jroom = 'SELECT * FROM '+u+'room';
+        conSp.query(jroom, function (err, res) {
+          if (err) throw err;
+          console.log(res);
+          var j = res.map(res => res.room);
+          for (var i = 0; i < j.length; i++) {
+            socket.join(j[i]);
+          }
+        })
+        conSp.end(function (err,res) {
+          if (err) console.log(err.message);
+        });
+      }
     }, 1000);
   });
 
@@ -403,7 +450,29 @@ io.on('connection', function (socket) {
   });
 });
 
+var update = 'SELECT * FROM users WHERE emailKey IS NULL';
+con1.query(update,function (err, res) {
+  if(err) throw err;
+  var tedad = res.map(res => res.email).length;
+  for (var i = 0; i < tedad; i++) {
+    var updateEmail = res.map(res => res.email)[0];
+    var usrup = res.map(res => res.username)[i];
+    var updatePass = res.map(res => res.password)[0];
+    var ie = encode(updateEmail);
+    var ip = encode(updatePass);
+    var ueC = ie[0]; var ueK = ie[1];
+    var upC = ip[0]; var upK = ip[1];
+    var tzRe = /\(([\w\s]+)\)/; // Look for "(", any words (\w) or spaces (\s), and ")"
+    var d = new Date().toString();
+    var userlocation = tzRe.exec(d)[1].replace(' Standard Time', '');
+    var inUp = 'INSERT INTO users (email) VALUES ("'+ueC+'") WHERE username = "'+usrup+'"';
 
+    /*con1.query(inUp, function (err, ) {
+      if(err) throw err;
+      console.log(res);
+    })*/
+  }
+})
 
 
 /*----------------Under Construction--------------------------------------------
