@@ -195,21 +195,23 @@ $(document).ready(function () {
     storedUsername = $('.storeusr').val();
     storedPass = $('.storeusr').val();
     socket.emit('loginCheck', {loginusr, loginpass});
-    socket.on('checkRes', function (checkRes) {
-      if (checkRes.checkRes == 'ok') {
-        var c = '';
-        if (!checkRes.f) checkRes.f = '';
-        if (!checkRes.l) checkRes.l = '';
-        if (!checkRes.b) checkRes.b = '';
-        if (checkRes.c) c = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
-        $('.Nerror').html('');
-        $(".SignInFrom").css('display','none');
-        $(".maincont").css('display','block');
-        $(".maincont").append('<div class="menuicon"><i class="fa" id="menuicon">&#xf0c9;</i></div><div class="menu"><div class="secr"><div class="rsect"><div class="rtsecr"><div class="profCont"><div class="pimg"><img class="ppicture" src="mstfsrmd.jpeg"" alt="Your picture"></div><div class="Usinfo"><h1>'+checkRes.f+' '+checkRes.l+c+'</h1><h3>@'+checkRes.u+'</h3></div></div></div><div class="rtsecl"><div class="usrInfo bioSec"><span>Bio</span><p>'+checkRes.b+'</p></div><div class="usrInfo flw"><div class="flwr"><span id="followers">'+checkRes.fr+'</span><br><span>Follower</span></div><div class="flwg"><span id="followings">'+checkRes.fg+'</span><br><span>following</span></div></div></div></div><div class="rsecb"></div></div><div class="secl"><div class="controlnav"><div class="cn setting"><i style="font-size:44px" class="fa">&#xf013;</i></div><div class="cn profileset"><i style="font-size:44px" class="fa">&#xf2c0;</i></div><div class="cn saved"><i style="font-size:44px" class="fa">&#xf097;</i></div><div class="cn notif"><i style="font-size:44px" class="fa">&#xf0a2;</i></div><div class="cn flfg"><i class="material-icons" id="j">&#xe915;</i></div></div></div></div><div class="blackArea"></div><div class="blackArea2"></div><div class="writePost"><textarea class="postCon" name="post" maxlength="300" rows="8" cols="80" placeholder="What is your situation...?" required></textarea><button class="sendPost" type="button" name="button">SharSit!</button><div class="attach"><div class="emoji"><i style="font-size:34px; color: white;line-height: 69px;" class="far">&#xf118;</i></div><div class="file"><input class="fileUp" type="file" name="" value=""></div><div class="fileSkin"><i style="font-size:34px; color: white;line-height: 69px;" class="fas">&#xf0c6;</i></div></div></div><div class="mainsec"><div class="postArea '+checkRes.u+'pA"></div></div><div class="rnav"><div class="pimg"><img class="ppicture" src="profile.png" alt="Your picture"></div><div class="acInfo"><div class="usrInfo"><h1 class="acname">'+checkRes.f+' '+checkRes.l+c+'</h1><h3 class="acuser">@'+checkRes.u+'</h3></div><div class="usrInfo"><span>Bio</span><p class="biocontent">'+checkRes.b+'</p></div><div class="usrInfo flw"><div class="flwr"><span id="followers">'+checkRes.fr+'</span><br><span>Follower</span></div><div class="flwg"><span id="followings">'+checkRes.fg+'</span><br><span>following</span></div></div></div></div><div class="lnav"><div class="Search"><input id="search" type="search" name="" value="" placeholder="Global Search..." autocomplete="off"></div><div class="SResC"><div class="SRC"></div></div><div class="new"><div class="newcont"><i style="font-size:50px;text-shadow: 7px 7px 7px #b2001e,7px 7px 7px #d40023;" class="fas">&#xf5ad;</i></div></div></div>')
-      }else {
-        $('.Nerror').html(checkRes.checkRes);
+  });
+
+  socket.on('checkRes', function (checkRes) {
+    if (checkRes.checkRes == 'ok') {
+      $('.Nerror').html('');
+      var c = '';
+      if (!checkRes.f) checkRes.f = '';
+      if (!checkRes.l) checkRes.l = '';
+      if (!checkRes.b) checkRes.b = '';
+      if (checkRes.c) c = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
+      $('.Nerror').html('');
+      $(".SignInFrom").css('display','none');
+      $(".maincont").css('display','block');
+      $(".maincont").append('<div class="homeicon"><i class="fa" id="homeicon">&#xf015;</i></div><div class="menuicon"><i class="fa" id="menuicon">&#xf0c9;</i></div><div class="menu"><div class="secr"><div class="rsect"><div class="rtsecr"><div class="profCont"><div class="pimg"><img class="ppicture" src="mstfsrmd.jpeg"" alt="Your picture"></div><div class="Usinfo"><h1>'+checkRes.f+' '+checkRes.l+c+'</h1><h3>@'+checkRes.u+'</h3></div></div></div><div class="rtsecl"><div class="usrInfo bioSec"><span>Bio</span><p>'+checkRes.b+'</p></div><div class="usrInfo flw"><div class="flwr"><span id="followers'+checkRes.u+'">'+checkRes.fr+'</span><br><span>Follower</span></div><div class="flwg"><span id="followings">'+checkRes.fg+'</span><br><span>following</span></div></div></div></div><div class="rsecb"></div></div><div class="secl"><div class="controlnav"><div class="cn setting"><i style="font-size:44px" class="fa">&#xf013;</i></div><div class="cn profileset"><i style="font-size:44px" class="fa">&#xf2c0;</i></div><div class="cn saved"><i style="font-size:44px" class="fa">&#xf097;</i></div><div class="cn notif"><i style="font-size:44px" class="fa">&#xf0a2;</i></div><div class="cn flfg"><i class="material-icons" id="j">&#xe915;</i></div></div></div></div><div class="blackArea"></div><div class="blackArea2"></div><div class="writePost"><textarea class="postCon" name="post" maxlength="300" rows="8" cols="80" placeholder="What is your situation...?"></textarea><button class="sendPost" type="button" name="button">SharSit!</button><div class="attach"><div class="emoji"><i style="font-size:34px; color: white;line-height: 69px;" class="far">&#xf118;</i></div><div class="file"><input class="fileUp" type="file" name="" value=""></div><div class="fileSkin"><i style="font-size:34px; color: white;line-height: 69px;" class="fas">&#xf0c6;</i></div></div></div><div class="mainsec"><div class="postArea '+checkRes.u+'pA" ></div></div><div class="rnav"></div><div class="lnav"><div class="Search"><input id="search" type="search" name="" value="" placeholder="Global Search..." autocomplete="off"></div><div class="SResC"><div class="SRC"></div></div><div class="new"><div class="newcont"><i style="font-size:50px;text-shadow: 7px 7px 7px #b2001e,7px 7px 7px #d40023;" class="fas">&#xf5ad;</i></div></div></div>')
+    }else {
+      $('.Nerror').html(checkRes.checkRes);
       }
-    });
   });
   socket.on('postload', function (p) {
     var pcont = p.p;
@@ -227,9 +229,13 @@ $(document).ready(function () {
     if (!pfname && plname) pfname = '';
     if (pfname && !plname) plname = '';
     for (var i = 0; i < pcont.length; i++) {
-      $('.'+puser+'pA').prepend('<div class="Post"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+pfname+' '+plname+pcert+'</h1><p>@'+p.u+'</p></div></div><div class="content">'+pcont[i].replace(/\n/, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
+      $('.'+puser+'pA').prepend('<div class="Post '+puser+'PoSt"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+pfname+' '+plname+pcert+'</h1><p>@'+p.u+'</p></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
     }
+  });
 
+  $('.maincont').on('click', '.homeicon', function (e) {
+    socket.emit('goHome', storedUsername);
+    $(".mainsec").empty();
   })
 
   //main page animation
@@ -257,8 +263,9 @@ $(document).ready(function () {
     $('.blackArea2').css({'z-index':'2', 'opacity':'.4'});
     $('.writePost').css('display','block')
   });
+
+  //send post
   $('.maincont').on('click', '.sendPost', function (e) {
-    if ($('.postCon').val() != '') {
       var d = new Date();
       var s = d.getSeconds();
       var m = d.getMinutes();
@@ -272,9 +279,6 @@ $(document).ready(function () {
       $('.postCon').val('');
       $('.blackArea2').css({'z-index':'-2', 'opacity':'0'});
       $('.writePost').css('display','none');
-    }else {
-      e.preventDefault();
-    }
   });
 
   //getting post from server
@@ -283,52 +287,108 @@ $(document).ready(function () {
     var postContent = post.content;
     console.log(postContent);
     var postdate = post.datetime;
-    $('.postArea').prepend('<div class="Post"><div class="posterInfo"><div class="Pimg"><img src="profile.png" alt=""></div><div class="Pname"><h1>'+fname+' '+lname+'</h1><p>@'+post.u+'</p></div></div><div class="content '+postId+'"><div class="postDate '+postId+'date"><time></time></div></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl interA '+postId+'IA" act="likeing" pId="'+postId+'">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId+'IA" act="replying" pId="'+postId+'">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId+'IA" act="saving" pId="'+postId+'">&#xf02e;</i></i></div></div></div>')
-    $('.'+postId+'').prepend(postContent.replace(/\n/, "<br />"));
+    $('.postArea').prepend('<div class="Post '+postId+'"><div class="posterInfo '+postId+'pInfo"><div class="Pimg '+postId+'pImag"><img src="profile.png" alt=""></div><div class="Pname '+postId+'pNam"><h1>'+fname+' '+lname+'</h1><p>@'+post.u+'</p></div></div><div class="content '+postId+'pContant"><div class="postDate '+postId+'date"><time></time></div></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl interA '+postId+'IAL" act="likeing" pId="'+postId+'">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId+'IAR" act="replying" pId="'+postId+'">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId+'IAS" act="saving" pId="'+postId+'">&#xf02e;</i></i></div></div></div>')
+    $('.'+postId+'pContant').prepend(postContent.replace(/(?:\r\n|\r|\n)/g, "<br />"));
     $('.'+postId+'date').html(postdate);
   });
 
   //global Search
   $('.maincont').on('keyup', '#search',function () {
-    var searchRes = $('#search').val().trim().replace('@','');
+    var searchRes = $('#search').val().trim();
+    if (searchRes.split('')[0] == '@') {
+      $('#search').css('color','#999');
+    }else {
+      $('#search').css('color','black');
+    }
+    var searchRes = searchRes.replace('@','');
     $('.SRC').empty();
     if (searchRes != '') {
       socket.emit('searchRes', searchRes);
-      socket.on('sresult', function (s) {
-        var sun = s.sun;
-        var sfn = s.sfn;
-        var sln = s.sln;
-        var scn = s.scn;
-        for (var i = 0; i < sun.length; i++) {
-          if ($('.'+sun[i]+'').length == 0) {
-            if (!sfn[i] && !sln[i]) {
-              sfn[i] = 'SharSit';
-              sln[i] = 'user'
-            }
-            if (!sfn[i] && sln[i]) sfn[i] = '';
-            if (sfn[i] && !sln[i]) sln[i] = '';
-            $('.SRC').append('<div class="SRes '+sun[i]+'"><div class="Uimg"><img src="profile.png" alt=""></div><div class="Uname '+sun[i]+'un"><h1 class="'+sfn[i]+'un">'+sfn[i]+' '+sln[i]+'</h1><p>@'+sun[i]+'</p></div></div>')
-            if (scn[i] == 1) {
-              $('.'+sfn[i]+'un').append('<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>')
-            }
-          }
-        }
-      });
     }else {
       $('.SRC').empty();
     }
   });
+  socket.on('sresult', function (s) {
+    var sun = s.sun;
+    var sfn = s.sfn;
+    var sln = s.sln;
+    var scn = s.scn;
+    for (var i = 0; i < sun.length; i++) {
+      if (sun[i] == storedUsername) {
+        continue;
+      }
+      if ($('.'+sun[i]+'').length == 0) {
+        if (!sfn[i] && !sln[i]) {
+          sfn[i] = 'SharSit';
+          sln[i] = 'user'
+        }
+        if (!sfn[i] && sln[i]) sfn[i] = '';
+        if (sfn[i] && !sln[i]) sln[i] = '';
+        $('.SRC').append('<div class="SRes '+sun[i]+'" SResId = '+sun[i]+'><div class="Uimg '+sun[i]+'SRimg"><img src="profile.png" alt=""></div><div class="Uname '+sun[i]+'Un"><h1 class="'+sfn[i]+'un">'+sfn[i]+' '+sln[i]+'</h1><p>@'+sun[i]+'</p></div></div>')
+        if (scn[i] == 1) {
+          $('.'+sfn[i]+'un').append('<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>')
+        }
+      }
+    }
+  });
+
+  //choose a user
+  $(".maincont"). on('click', '.SRes', function (e) {
+    var sResUser = $(this).attr('SResId');
+    socket.emit('selectedusr', sResUser);
+  });
+
+  //getting choosen user result
+  socket.on('suresult', function (res) {
+    var chUser = res.u; var chFname = res.f;
+    var chLname = res.l; var chBio = res.b;
+    var chCert = res.c; var chFlr = res.fr;
+    var chFlg = res.fg;
+    if(!chBio) chBio = '';
+    if (!chFname && !chLname) {
+      chFname = 'SharSit';
+      chLname = 'user'
+    }
+    if (!chFname && chLname) chFname = '';
+    if (chFname && !chLname) chLname = '';
+    if (chCert == 1) {
+      chCert = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
+    }else {chCert = ''}
+    $('.rnav').empty();
+    $('.rnav').append('<div class="acInfo '+chUser+'Ainfo"><div class="CusrInfo"><h1 class="Cacuser">'+chFname+' '+chLname+chCert+'</h1><h3 class="Cacuser" id="cacuser">@'+chUser+'</h3><h5 style="color:#999" class="Cacuser"><i style="font-size:14px;color:#999" class="fa">&#xf041;</i>Iran/Tehran</h5></div><div class="CusrInfo"><span>Bio</span><p class="biocontent">'+chBio+'</p></div><div class="CusrInfo flw"><div class="flwr"><span id="followers'+chUser+'">'+chFlr+'</span><br><span>Follower</span></div><div class="flwg"><span id="followings">'+chFlg+'</span><br><span>following</span></div></div><div class="CusrInfo"><button class="FollowB" type="button" name="button">Follow</button></div></div></div>')
+
+  });
+
+  //getting choosen user posts
+  socket.on('Cpostload', function (res) {
+    $('.mainsec').empty();
+    var cpContent = res.p;
+    $('.mainsec').append('<div class="postArea '+res.su+'pA" ></div>');
+    if (res.c){ var cpCert = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
+  }else cpCert = '';
+    if (!res.f && !res.l) {
+      res.f = 'SharSit';
+      res.l = 'user';}
+    if (!res.f && res.l) res.f = '';
+    if (res.f && !res.l) res.l = '';
+    for (var i = 0; i < cpContent.length; i++) {
+      $('.'+res.su+'pA').prepend('<div class="Post '+res.su+'PoSt"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+res.f+' '+res.l+cpCert+'</h1><p>@'+res.su+'</p></div></div><div class="content">'+cpContent[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+cpContent[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
+    }
+  });
+
   $('.maincont').on('focus', '#search',function () {
-    $("#search").css({'width': '100%','border-bottom-right-radius':'0px','border-bottom-left-radius':'0px'})
+    $("#search").css({'width': '100%','border-bottom-right-radius':'0px','border-bottom-left-radius':'0px'});
     $(".SResC").css({'height':'70%','width':'90%'});
-    $(".SRC").css('display','block')
+    $(".SRC").css('display','block');
   });
   $('.maincont').on('blur', '#search',function () {
-    $("#search").css({'width': '90%','border-bottom-right-radius':'10px','border-bottom-left-radius':'10px'})
+    setTimeout(function () {
+    $("#search").css({'width': '90%','border-bottom-right-radius':'10px','border-bottom-left-radius':'10px'});
     $(".SResC").css({'height':'0%','width':'81%'});
     $(".SRC").css('display','none');
     $("#search").val('');
-    $('.SRC').empty();;
+    $('.SRC').empty();
+  },500)
   });
 
   //control panel opening
@@ -389,37 +449,6 @@ $(document).ready(function () {
   console.log(o.replace('undefined',''));
   console.log(x);*/
 
-  var name = 'm90604431'
-  var main = name.split(''); //["m", "o", "s", "t", "a", "f", "a", "s", "a", "r", "m", "a", "d"]
-  var store = name.split('');
-  var key = [];
-  var rand;
-  const list = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@!$%&*_-+=(){}[]. '.split('');
-  for (var i = 0; i < main.length; i++) {
-    rand = list[Math.round(Math.random()*79)];
-    //name = name.replace(main[i], rand);
-    key[i] = list.indexOf(rand) - list.indexOf(store[i]) ;
-    if (key[i]<0) {
-      i--;
-      continue;
-    }
-    main[i] = rand;
-  }
-  console.log(main);
-  var code = main.join('');
-  var key = key.join(',');
-  console.log(code);
-  console.log(key);
-
-  var key = key.split(',');
-  for (var i = 0; i < key.length; i++) {
-    var uncode = list.indexOf(main[i]) - key[i];
-    main[i] = list[uncode];
-  }
-  main = main.join('');
-  console.log(main);
-
-
   /*handle post action
   var counter = 0;
   $(".interA").click(function () {
@@ -430,5 +459,5 @@ $(document).ready(function () {
   });*/
 });
 
-
+//😊
 /**/

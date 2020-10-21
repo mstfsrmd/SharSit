@@ -768,7 +768,7 @@ font-family: 'Piazzolla', serif;
   position: absolute;
   top: 55%;
   left: 12%;
-  width: 17%;
+  width: 19%;
   height: 75%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
@@ -853,6 +853,7 @@ font-family: 'Piazzolla', serif;
   display: none;
 }
 .writePost textarea {
+  outline: none;
   border-radius: 10px;
   border: none;
   font-family: 'Piazzolla', serif;
@@ -921,6 +922,7 @@ font-family: 'Piazzolla', serif;
   z-index:0;
 }
 .sendPost{
+  outline: none
   font-size: 20px;
   position: absolute;
   top: 70%;
@@ -1118,7 +1120,7 @@ font-family: 'Piazzolla', serif;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 96%;
-  height: 90px;
+  min-height: 90px;
   background-color: #f6f6f6;
   border-radius: 10px;
   transition: all .4s;
@@ -1155,18 +1157,41 @@ font-family: 'Piazzolla', serif;
 .Uname p{
   color: #999;
 }
-.menuicon{
+.menuicon, .homeicon{
+  box-sizing: content-box;
+  text-align: center;
   position: absolute;
   top: 5%;
   left: 5%;
   transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  transition: all .4s;
 }
-#menuicon{
+.homeicon{
+  left: 8%;
+}
+.menuicon:hover{
+  background-color: #ffcccc;
+  border: solid #c60021 .2px;
+}
+.homeicon:hover{
+  background-color: #ffcccc;
+  border: solid #c60021 .2px;
+}
+#menuicon, #homeicon{
+  line-height: 45px;
   cursor: pointer;
   font-size: 30px;
   color: #888;
+  transition: all .3s;
+}
+#menuicon:hover{
+  color: #c60021;
+}
+#homeicon:hover{
+  color: #c60021;
 }
 .menu{
   display: none;
@@ -1247,7 +1272,31 @@ font-family: 'Piazzolla', serif;
   text-align: left;
   margin: 8px 40px;
 }
-.usrInfo{
+.Cacuser{
+  text-align: center;
+  margin-bottom: 10px;
+}
+#cacuser{
+  color: #999;
+}
+.FollowB{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45%;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #c60021;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+
+
+}
+.usrInfo , .CusrInfo{
   transform:  translateZ(1.5px);
   position: relative;
   background-color: #f6f6f6;
@@ -1259,13 +1308,33 @@ font-family: 'Piazzolla', serif;
   opacity: 0;
   transition: transform .5s, opacity .5s;
 }
+.CusrInfo{
+  transform:  translateZ(0);
+  opacity: 1;
+  box-shadow: 2px 2px 10px #999;
+  margin-bottom: 20px;
+  width: 120%;
+}
 .usrInfo span{
   cursor: default;
   margin-left:50px;
   color: #999;
   font-size: 15px;
 }
+.CusrInfo span{
+  cursor: default;
+  margin-left:50px;
+  color: #999;
+  font-size: 15px;
+}
 .usrInfo p{
+  cursor: default;
+  margin:10px 50px;
+  color: #666;
+  font-size: 20px;
+  word-wrap: break-word;
+}
+.CusrInfo p{
   cursor: default;
   margin:10px 50px;
   color: #666;
