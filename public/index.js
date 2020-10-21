@@ -8,6 +8,8 @@ $(document).ready(function () {
   var fname;
   var lname;
   var bio;
+  var rooms ={};
+  var usrroom = [];
 
   $('#usrname').val('');
   $('#email').val('');
@@ -196,7 +198,7 @@ $(document).ready(function () {
     storedPass = $('.storeusr').val();
     socket.emit('loginCheck', {loginusr, loginpass});
   });
-
+  //getting verification for login inputs
   socket.on('checkRes', function (checkRes) {
     if (checkRes.checkRes == 'ok') {
       $('.Nerror').html('');
@@ -208,35 +210,89 @@ $(document).ready(function () {
       $('.Nerror').html('');
       $(".SignInFrom").css('display','none');
       $(".maincont").css('display','block');
-      $(".maincont").append('<div class="homeicon"><i class="fa" id="homeicon">&#xf015;</i></div><div class="menuicon"><i class="fa" id="menuicon">&#xf0c9;</i></div><div class="menu"><div class="secr"><div class="rsect"><div class="rtsecr"><div class="profCont"><div class="pimg"><img class="ppicture" src="mstfsrmd.jpeg"" alt="Your picture"></div><div class="Usinfo"><h1>'+checkRes.f+' '+checkRes.l+c+'</h1><h3>@'+checkRes.u+'</h3></div></div></div><div class="rtsecl"><div class="usrInfo bioSec"><span>Bio</span><p>'+checkRes.b+'</p></div><div class="usrInfo flw"><div class="flwr"><span id="followers'+checkRes.u+'">'+checkRes.fr+'</span><br><span>Follower</span></div><div class="flwg"><span id="followings">'+checkRes.fg+'</span><br><span>following</span></div></div></div></div><div class="rsecb"></div></div><div class="secl"><div class="controlnav"><div class="cn setting"><i style="font-size:44px" class="fa">&#xf013;</i></div><div class="cn profileset"><i style="font-size:44px" class="fa">&#xf2c0;</i></div><div class="cn saved"><i style="font-size:44px" class="fa">&#xf097;</i></div><div class="cn notif"><i style="font-size:44px" class="fa">&#xf0a2;</i></div><div class="cn flfg"><i class="material-icons" id="j">&#xe915;</i></div></div></div></div><div class="blackArea"></div><div class="blackArea2"></div><div class="writePost"><textarea class="postCon" name="post" maxlength="300" rows="8" cols="80" placeholder="What is your situation...?"></textarea><button class="sendPost" type="button" name="button">SharSit!</button><div class="attach"><div class="emoji"><i style="font-size:34px; color: white;line-height: 69px;" class="far">&#xf118;</i></div><div class="file"><input class="fileUp" type="file" name="" value=""></div><div class="fileSkin"><i style="font-size:34px; color: white;line-height: 69px;" class="fas">&#xf0c6;</i></div></div></div><div class="mainsec"><div class="postArea '+checkRes.u+'pA" ></div></div><div class="rnav"></div><div class="lnav"><div class="Search"><input id="search" type="search" name="" value="" placeholder="Global Search..." autocomplete="off"></div><div class="SResC"><div class="SRC"></div></div><div class="new"><div class="newcont"><i style="font-size:50px;text-shadow: 7px 7px 7px #b2001e,7px 7px 7px #d40023;" class="fas">&#xf5ad;</i></div></div></div>')
+      $(".maincont").append('<div class="timelineicon"><i id="timelineicon" class="material-icons">&#xe8f9;</i></div><div class="homeicon"><i class="fa" id="homeicon">&#xf015;</i></div><div class="menuicon"><i class="fa" id="menuicon">&#xf0c9;</i></div><div class="menu"><div class="secr"><div class="rsect"><div class="rtsecr"><div class="profCont"><div class="pimg"><img class="ppicture" src="mstfsrmd.jpeg"" alt="Your picture"></div><div class="Usinfo"><h1>'+checkRes.f+' '+checkRes.l+c+'</h1><h3>@'+checkRes.u+'</h3></div></div></div><div class="rtsecl"><div class="usrInfo bioSec"><span>Bio</span><p>'+checkRes.b+'</p></div><div class="usrInfo flw"><div class="flwr"><span id="followers'+checkRes.u+'">'+checkRes.fr+'</span><br><span>Follower</span></div><div class="flwg"><span id="followings'+checkRes.u+'">'+checkRes.fg+'</span><br><span>following</span></div></div></div></div><div class="rsecb"></div></div><div class="secl"><div class="controlnav"><div class="cn setting"><i style="font-size:44px" class="fa">&#xf013;</i></div><div class="cn profileset"><i style="font-size:44px" class="fa">&#xf2c0;</i></div><div class="cn saved"><i style="font-size:44px" class="fa">&#xf097;</i></div><div class="cn notif"><i style="font-size:44px" class="fa">&#xf0a2;</i></div><div class="cn flfg"><i class="material-icons" id="j">&#xe915;</i></div></div></div></div><div class="blackArea"></div><div class="blackArea2"></div><div class="blackArea3"></div><div class="writePost"><textarea class="postCon" name="post" maxlength="300" rows="8" cols="80" placeholder="What is your situation...?"></textarea><button class="sendPost" type="button" name="button">SharSit!</button><div class="attach"><div class="emoji"><i style="font-size:34px; color: white;line-height: 69px;" class="far">&#xf118;</i></div><div class="file"><input class="fileUp" type="file" name="" value=""></div><div class="fileSkin"><i style="font-size:34px; color: white;line-height: 69px;" class="fas">&#xf0c6;</i></div></div></div><div class="mainsec"><div class="postArea '+checkRes.u+'pA" ></div></div><div class="rnav"></div><div class="lnav"><div class="Search"><input id="search" type="search" name="" value="" placeholder="Global Search..." autocomplete="off"></div><div class="SResC"><div class="SRC"></div></div><div class="new"><div class="newcont"><i style="font-size:50px;text-shadow: 7px 7px 7px #b2001e,7px 7px 7px #d40023;" class="fas">&#xf5ad;</i></div></div></div>')
+      $('.blackArea3').css({'z-index':'2', 'opacity':'.4'});
     }else {
       $('.Nerror').html(checkRes.checkRes);
       }
   });
+  //load all posts
   socket.on('postload', function (p) {
+    $('.blackArea3').css({'z-index':'-2', 'opacity':'0'});
     var pcont = p.p;
     var pdate = p.d;
     var pl = p.lk;
     var pr = p.rp;
-    var puser = p.u;
-    var pfname = p.f; var plname =p.l;
-    var pcert = p.c;
-    if (p.c){ pcert = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
-  }else pcert = '';
+    var puser = p.u; var plnameOk;
+    var pfname = p.ff; var plname =p.ll;
+    var pcert = p.cc; var pcertOk; var pfnameOk;
+    for (var i = 0; i < pcont.length; i++) {
+      if (pcert[i] == 1){ pcertOk = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
+      }else{
+        pcertOk = '';}
+      if (pfname[i]=='' && !plname[i]=='') {
+        pfnameOk = 'SharSit';
+        plnameOk = 'user';}
+      if (pfname[i] =='' && plname[i] !='') {pfnameOk = ''; plnameOk = plname[i];}
+      if (pfname[i] !='' && plname[i] == '') {plnameOk = ''; pfnameOk = pfname[i];}
+      if (pfname[i] !='' && plname[i] !='') {plnameOk = plname[i]; pfnameOk = pfname[i]};
+      $('.postArea').prepend('<div class="Post '+puser[i]+'PoSt"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+pfnameOk+' '+plnameOk+pcertOk+'</h1><p>@'+puser[i]+'</p></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
+    }
+  });
+
+  //go to my posts
+  $('.maincont').on('click', '.homeicon', function (e) {
+    var rooM = rooms[storedUsername]
+    socket.emit('goHome', {storedUsername, rooM});
+    $(".mainsec").empty();
+  });
+  socket.on('Homepostload', function (p) {
+    var pcont = p.p;var pdate = p.d;
+    var pl = p.lk;var pr = p.rp;
+    var puser = p.u;var pfname = p.f;
+    var plname =p.l;var pHcert = p.c;
+    if (p.c){ pHcert = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
+  }else pHcert = '';
     if (!pfname && !plname) {
       pfname = 'SharSit';
       plname = 'user';}
     if (!pfname && plname) pfname = '';
     if (pfname && !plname) plname = '';
+    $('.mainsec').append('<div class="postArea '+puser+'pA" ></div>');
     for (var i = 0; i < pcont.length; i++) {
-      $('.'+puser+'pA').prepend('<div class="Post '+puser+'PoSt"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+pfname+' '+plname+pcert+'</h1><p>@'+p.u+'</p></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
+      $('.'+puser+'pA').prepend('<div class="Post '+puser+'PoSt"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+pfname+' '+plname+pHcert+'</h1><p>@'+p.u+'</p></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
     }
   });
 
-  $('.maincont').on('click', '.homeicon', function (e) {
-    socket.emit('goHome', storedUsername);
+  //go to my timeline
+  $('.maincont').on('click', '.timelineicon', function (e) {
+    socket.emit('goTime', storedUsername);
     $(".mainsec").empty();
-  })
+    $('.blackArea3').css({'z-index':'2', 'opacity':'.4'});
+  });
+  socket.on('Timepostload', function (p) {
+    $('.blackArea3').css({'z-index':'-2', 'opacity':'0'});
+    $('.mainsec').append('<div class="postArea '+puser+'pA" ></div>');
+    var pcont = p.p;
+    var pdate = p.d;
+    var pl = p.lk;
+    var pr = p.rp;
+    var puser = p.tIme; var plnameOk;
+    var pfname = p.ff; var plname =p.ll;
+    var pcert = p.cc; var pcertOk; var pfnameOk;
+    for (var i = 0; i < pcont.length; i++) {
+      if (pcert[i] == 1){ pcertOk = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
+      }else{
+        pcertOk = '';}
+      if (pfname[i]=='' && !plname[i]=='') {
+        pfnameOk = 'SharSit';
+        plnameOk = 'user';}
+      if (pfname[i] =='' && plname[i] !='') {pfnameOk = ''; plnameOk = plname[i];}
+      if (pfname[i] !='' && plname[i] == '') {plnameOk = ''; pfnameOk = pfname[i];}
+      if (pfname[i] !='' && plname[i] !='') {plnameOk = plname[i]; pfnameOk = pfname[i]};
+      $('.postArea').prepend('<div class="Post '+puser[i]+'PoSt"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+pfnameOk+' '+plnameOk+pcertOk+'</h1><p>@'+puser[i]+'</p></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
+    }
+  });
 
   //main page animation
   $(document).mousemove(function (e) {
@@ -276,13 +332,13 @@ $(document).ready(function () {
       var datetime = y+'-'+month+'-'+day+' '+h+':'+m+':'+s;
       var content = $('.postCon').val();
       socket.emit('post', {content, datetime, storedUsername});
-      $('.postCon').val('');
-      $('.blackArea2').css({'z-index':'-2', 'opacity':'0'});
-      $('.writePost').css('display','none');
   });
 
   //getting post from server
   socket.on('post', function (post) {
+    $('.postCon').val('');
+    $('.blackArea2').css({'z-index':'-2', 'opacity':'0'});
+    $('.writePost').css('display','none');
     var postId = post.thisPostId;
     var postContent = post.content;
     console.log(postContent);
@@ -335,11 +391,21 @@ $(document).ready(function () {
   //choose a user
   $(".maincont"). on('click', '.SRes', function (e) {
     var sResUser = $(this).attr('SResId');
-    socket.emit('selectedusr', sResUser);
+    socket.emit('selectedusr', {sResUser, storedUsername});
   });
 
   //getting choosen user result
   socket.on('suresult', function (res) {
+    if (!rooms[storedUsername]) {
+      console.log('ok');
+    }else {
+      usrroom = []
+      socket.emit('leave', rooms[storedUsername]);
+      delete rooms[storedUsername];
+    }
+    usrroom.push(res.u)
+    rooms[storedUsername] = usrroom;
+    console.log(rooms);
     var chUser = res.u; var chFname = res.f;
     var chLname = res.l; var chBio = res.b;
     var chCert = res.c; var chFlr = res.fr;
@@ -355,14 +421,21 @@ $(document).ready(function () {
       chCert = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
     }else {chCert = ''}
     $('.rnav').empty();
-    $('.rnav').append('<div class="acInfo '+chUser+'Ainfo"><div class="CusrInfo"><h1 class="Cacuser">'+chFname+' '+chLname+chCert+'</h1><h3 class="Cacuser" id="cacuser">@'+chUser+'</h3><h5 style="color:#999" class="Cacuser"><i style="font-size:14px;color:#999" class="fa">&#xf041;</i>Iran/Tehran</h5></div><div class="CusrInfo"><span>Bio</span><p class="biocontent">'+chBio+'</p></div><div class="CusrInfo flw"><div class="flwr"><span id="followers'+chUser+'">'+chFlr+'</span><br><span>Follower</span></div><div class="flwg"><span id="followings">'+chFlg+'</span><br><span>following</span></div></div><div class="CusrInfo"><button class="FollowB" type="button" name="button">Follow</button></div></div></div>')
-
+    $('.rnav').append('<div class="acInfo '+chUser+'Ainfo"><div class="CusrInfo"><h1 class="Cacuser">'+chFname+' '+chLname+chCert+'</h1><h3 class="Cacuser" id="cacuser">@'+chUser+'</h3><h5 style="color:#999" class="Cacuser"><i style="font-size:14px;color:#999" class="fa">&#xf041;</i>Iran/Tehran</h5></div><div class="CusrInfo"><span>Bio</span><p class="biocontent">'+chBio+'</p></div><div class="CusrInfo flw"><div class="flwr"><span id="followers'+chUser+'">'+chFlr+'</span><br><span>Follower</span></div><div class="flwg" id="followings'+chUser+'"><span id="followings">'+chFlg+'</span><br><span>following</span></div></div><div class="CusrInfo"><button class="FollowB '+chUser+'fL" flId = "'+chUser+'fL" type="button" name="button">Follow</button></div></div></div>')
+    if (res.myflg) {
+      $(".FollowB").css({'background-color':'#FAE2E6', 'border':'solid #c60021', 'color':'#c60021'});
+      $(".FollowB").html('Following');
+    }else {
+      $(".FollowB").css({'background-color':'#c60021', 'border':'none', 'color':'white'});
+      $(".FollowB").html('Follow');
+    }
   });
 
   //getting choosen user posts
   socket.on('Cpostload', function (res) {
     $('.mainsec').empty();
     var cpContent = res.p;
+    var cpDate = res.d;
     $('.mainsec').append('<div class="postArea '+res.su+'pA" ></div>');
     if (res.c){ var cpCert = '<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
   }else cpCert = '';
@@ -372,7 +445,7 @@ $(document).ready(function () {
     if (!res.f && res.l) res.f = '';
     if (res.f && !res.l) res.l = '';
     for (var i = 0; i < cpContent.length; i++) {
-      $('.'+res.su+'pA').prepend('<div class="Post '+res.su+'PoSt"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+res.f+' '+res.l+cpCert+'</h1><p>@'+res.su+'</p></div></div><div class="content">'+cpContent[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+cpContent[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
+      $('.'+res.su+'pA').prepend('<div class="Post '+res.su+'PoSt"><div class="posterInfo"><div class="Pimg"><img src="mstfsrmd.jpeg" alt=""></div><div class="Pname"><h1>'+res.f+' '+res.l+cpCert+'</h1><p>@'+res.su+'</p></div></div><div class="content">'+cpContent[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+cpDate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf004;<i style="font-size:30px;color:#c60021;display:block;" class="fas bl" id="like">&#xf004;</i></i></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl" id="reply">&#xf075;</i></i></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i></i></div></div></div></div>');
     }
   });
 
@@ -390,6 +463,35 @@ $(document).ready(function () {
     $('.SRC').empty();
   },500)
   });
+
+  //follow handle
+  $(".maincont").on('click', '.FollowB', function () {
+    var userFA = $(this).attr('flId');
+    userFA = userFA.replace('fL', '');
+    if ($(".FollowB").html() == 'Follow') {
+      socket.emit('flw', {userFA, storedUsername});
+    }else {
+      socket.emit('unflw', {userFA, storedUsername});
+    }
+  });
+  //following result
+  socket.on('flwSuc', function (fu) {
+    $(".FollowB").css({'background-color':'#FAE2E6', 'border':'solid #c60021', 'color':'#c60021'});
+    $(".FollowB").html('Following');
+    var what1 = $('#followers'+fu+'').html();
+    var what2 = $('#followers'+storedUsername+'').html();
+    $('#followers'+fu+'').html(+what1 + 1);
+    $('#followings'+storedUsername+'').html(+what2 + 1);
+  });
+  //Unfollowing result
+  socket.on('unflwSuc', function (fu) {
+    $(".FollowB").css({'background-color':' #c60021', 'border':'none', 'color':'white'});
+    $(".FollowB").html('Follow');
+    var what1 = $('#followers'+fu+'').html();
+    var what2 = $('#followers'+storedUsername+'').html();
+    $('#followers'+fu+'').html(+what1 - 1);
+    $('#followings'+storedUsername+'').html(+what2 - 1);
+  })
 
   //control panel opening
   var ex = 0;

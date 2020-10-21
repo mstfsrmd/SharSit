@@ -99,9 +99,18 @@ function decode(code, key) {
   return code;
 }
 
-var i = encode('m90604431');
-console.log(i[0]);
-console.log(i[1]);
+function GetTime() {
+  var d = new Date();
+  var s = d.getSeconds();
+  var m = d.getMinutes();
+  var h = d.getHours();
+  var day = d.getDate();
+  var month = d.getMonth();
+  var y = d.getFullYear();
+  var datetime = y+'-'+month+'-'+day+' '+h+':'+m+':'+s;
+  return datetime;
+}
+
 
 //define an array for storing socket id
 var id = {};
@@ -291,15 +300,14 @@ io.on('connection', function (socket) {
       }else {
         loginpasskey = res.map(res => res.passwordKey)[0];
         loginpass = res.map(res => res.password)[0];
-        loginpass = decode(loginpass, loginpasskey)
-        console.log(loginpass);
+        loginpass = decode(loginpass, loginpasskey);
         if (loginpass != givenloginpass) {
           var checkRes = 'Your username or password is incorrect!';
           socket.emit('checkRes', {checkRes, f, l, b, c, fr, fg});
         }else {
           var checkRes = 'ok';
           socket.emit('checkRes', {checkRes, f, l, b, u, c, fr, fg});
-          //reading user post
+          //reading user and followings posts
           setTimeout(function () {
             if (u) {
               conSp = mysql.createConnection({
@@ -308,29 +316,61 @@ io.on('connection', function (socket) {
                 password:'Mo137777',
                 database: u
               });
-              var logpost = 'SELECT * FROM '+u+'postId';
-              conSp.query(logpost, function (err, res) {
-                if (err) throw err;
-                var p = res.map(res => res.content);
-                var d = res.map(res => res.datetime);
-                var lk = res.map(res => res.likeing);
-                var rp = res.map(res => res.replying);
-                socket.emit('postload', {p, d, lk, rp, u, f, l, c});
-              })
-              // joining all following rooms
-              socket.join(u);
-              var jroom = 'SELECT * FROM '+u+'room';
-              conSp.query(jroom, function (err, res) {
-                if (err) throw err;
-                console.log(res);
-                var j = res.map(res => res.room);
-                for (var i = 0; i < j.length; i++) {
-                  socket.join(j[i]);
+              //selecting following users
+              var statement = '';
+              var flgpst = 'SELECT username FROM '+u+'following'
+              conSp.query(flgpst, function (err, resu) {
+                if(err) console.log(err.message);
+                if (resu != '') {
+                  var resu = resu.map(resu => resu.username);
+                  for (var i = 0; i < resu.length; i++) {
+                    statement = statement + ' UNION ALL SELECT content, datetime, likeing, replying, author FROM '+resu[i]+'.'+resu[i]+'postId ';
+                  }
+                  statement = statement +' ORDER BY datetime ';
                 }
               })
-              conSp.end(function (err,res) {
-                if (err) console.log(err.message);
-              });
+              setTimeout(function () {
+                var ff = []; var ll = []; var cc = [];
+                var logpost = 'SELECT content,datetime, likeing, replying, author FROM '+u+'.'+u+'postId'+ statement;
+                conSp.query(logpost, function (err, res) {
+                  if (err) console.log(err.message);
+                  //get username of post author
+                  u = res.map(res => res.author);
+                  var iNfO = [];
+                  for (var i = 0; i < u.length; i++) {
+                    var getFL = 'SELECT * FROM users WHERE username = "'+u[i]+'"';
+                    con1.query(getFL, function (err, resF) {
+                      if (err) console.log(err.message);
+                      iNfO.push(resF);
+                    });
+                  }
+                  setTimeout(function () {
+                    var fff;
+                    for (var i = 0; i < u.length; i++) {
+                      fff = iNfO[i];
+                      ff.push(fff.map(fff => fff.fname));
+                      ll.push(fff.map(fff => fff.lname));
+                      cc.push(fff.map(fff => fff.certification));
+                    };
+                    u = res.map(res => res.author);
+                    var p = res.map(res => res.content);
+                    var d = res.map(res => res.datetime);
+                    var lk = res.map(res => res.likeing);
+                    var rp = res.map(res => res.replying);
+                    socket.emit('postload', {p, d, lk, rp, u, ff, ll, cc});
+                  },600);
+                })
+                // joining all following rooms
+                socket.join(u);
+                var jroom = 'SELECT * FROM '+u+'room';
+                conSp.query(jroom, function (err, res) {
+                  if (err) throw err;
+                  var j = res.map(res => res.room);
+                  for (var i = 0; i < j.length; i++) {
+                    socket.join(j[i]);
+                  }
+                })
+              },1000);
             }
           }, 1000);
         }
@@ -339,65 +379,173 @@ io.on('connection', function (socket) {
 
   });
 
+  //go to time line
+  socket.on('goTime', function (tIme) {
+    var decP; var loginpass;
+    var u; var f;
+    var l; var c;
+    //reading user and followings posts
+    conSp = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: tIme
+    });
+      //selecting following users
+      var statement = '';
+      var flgpst = 'SELECT username FROM '+tIme+'following'
+      conSp.query(flgpst, function (err, resu) {
+        if(err) console.log(err.message);
+        if (resu != '') {
+          var resu = resu.map(resu => resu.username);
+          for (var i = 0; i < resu.length; i++) {
+            statement = statement + ' UNION ALL SELECT content, datetime, likeing, replying, author FROM '+resu[i]+'.'+resu[i]+'postId ';
+          }
+          statement = statement +' ORDER BY datetime ';
+        }
+      });
+      //get all posts
+      setTimeout(function () {
+        var ff = []; var ll = []; var cc = [];
+        var logpost = 'SELECT content,datetime, likeing, replying, author FROM '+tIme+'.'+tIme+'postId'+ statement;
+        conSp.query(logpost, function (err, res) {
+          if (err) console.log('err');
+          //get name of post author
+          tIme = res.map(res => res.author);
+          var iNfO = [];
+          for (var i = 0; i < tIme.length; i++) {
+            var getFL = 'SELECT * FROM users WHERE username = "'+tIme[i]+'"';
+            con1.query(getFL, function (err, resF) {
+              if (err) console.log(err.message);
+              iNfO.push(resF);
+            });
+          }
+
+          setTimeout(function () {
+            var fff;
+            for (var i = 0; i < tIme.length; i++) {
+              fff = iNfO[i];
+              ff.push(fff.map(fff => fff.fname));
+              ll.push(fff.map(fff => fff.lname));
+              cc.push(fff.map(fff => fff.certification));
+            };
+            tIme = res.map(res => res.author);
+            var p = res.map(res => res.content);
+            var d = res.map(res => res.datetime);
+            var lk = res.map(res => res.likeing);
+            var rp = res.map(res => res.replying);
+            socket.emit('Timepostload', {p, d, lk, rp, tIme, ff, ll, cc});
+          },600);
+        })
+      },600);
+    });
+
   //go to home
   socket.on('goHome', function (home) {
-    socket.disconnect();
-    socket.connect();
-
-    var jroom = 'SELECT * FROM '+u+'room';
-    conSp.query(jroom, function (err, res) {
-      if (err) throw err;
-      console.log(res);
-      var j = res.map(res => res.room);
-      for (var i = 0; i < j.length; i++) {
-        socket.join(j[i]);
+    var rooM = home.rooM;
+    var u = home.storedUsername;
+    var f; var l; var c;
+    if (rooM) {
+      for (var i = 0; i < rooM.length; i++) {
+        socket.leave(rooM[i]);
       }
-    })
-
-  })
-
-  //reading clicked user information
-  socket.on('selectedusr', function (su) {
-    var f;var l;var b
-    var c;var fr;var fg;
-    var selectedusr = 'SELECT * FROM users WHERE username = "'+su+'"';
-    con1.query(selectedusr, function (err, res) {
-      if (err) console.log(err.message);
-      // joining selected user room
-      socket.join(su);
+    }
+    var dec = 'SELECT * FROM users WHERE username="'+u+'"';
+    con1.query(dec, function (err, res) {
+      if (err) throw err;
       f = res.map(res => res.fname)[0];
       l = res.map(res => res.lname)[0];
-      b = res.map(res => res.bio)[0];
+      var b = res.map(res => res.bio)[0];
       u = res.map(res => res.username)[0];
       c = res.map(res => res.certification)[0];
-      fr = res.map(res => res.follower)[0];
-      fg = res.map(res => res.following)[0];
-      socket.emit('suresult', {f,l, b, c,fr,fg,u});
+      var fr = res.map(res => res.follower)[0];
+      var fg = res.map(res => res.following)[0];
     });
-    //reading selected user post
-    setTimeout(function () {
+    if (u) {
       conSp = mysql.createConnection({
         host:'localhost',
         user:'root',
         password:'Mo137777',
-        database: su
+        database: u
       });
-      console.log(su);
-      var logpost = 'SELECT * FROM '+su+'postId';
+      var logpost = 'SELECT * FROM '+u+'postId';
       conSp.query(logpost, function (err, res) {
-        if (err) console.log(err.message);;
+        if (err) throw err;
         var p = res.map(res => res.content);
         var d = res.map(res => res.datetime);
         var lk = res.map(res => res.likeing);
         var rp = res.map(res => res.replying);
-        console.log(lk);
-        socket.emit('Cpostload', {p, d, lk, rp, su, f, l});
-      })
-      conSp.end(function (err,res) {
-        if (err) console.log(err.message);
+        socket.emit('Homepostload', {p, d, lk, rp, u, f, l, c});
       });
-    }, 1000);
-  })
+    }
+  });
+
+  //reading clicked user information
+  socket.on('selectedusr', function (selectedusr) {
+    var f;var l;var b; var su = selectedusr.sResUser;
+    var myUsr = selectedusr.storedUsername;
+    var c;var fr;var fg; var myflg;
+    conSpp = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: myUsr
+    });
+    var isflg = 'SELECT * FROM '+myUsr+'following';
+    conSpp.query(isflg, function (err, res) {
+      if (err) console.log(err.message);
+      res = res.map(res => res.username);
+      for (var i = 0; i < res.length; i++) {
+        if (res[i] == su) {
+          myflg = true;
+        }else {
+          myflg = false;
+        }
+      }
+    });
+    setTimeout(function () {
+      var selectedusr = 'SELECT * FROM users WHERE username = "'+su+'"';
+      con1.query(selectedusr, function (err, res) {
+        if (err) console.log(err.message);
+        // joining selected user room
+        socket.join(su);
+        f = res.map(res => res.fname)[0];
+        l = res.map(res => res.lname)[0];
+        b = res.map(res => res.bio)[0];
+        u = res.map(res => res.username)[0];
+        c = res.map(res => res.certification)[0];
+        fr = res.map(res => res.follower)[0];
+        fg = res.map(res => res.following)[0];
+        socket.emit('suresult', {f,l, b, c, fr, fg, u, myflg});
+      });
+
+      //reading selected user post
+      setTimeout(function () {
+        conSp = mysql.createConnection({
+          host:'localhost',
+          user:'root',
+          password:'Mo137777',
+          database: su
+        });
+        var logpost = 'SELECT * FROM '+su+'postId';
+        conSp.query(logpost, function (err, res) {
+          if (err) console.log(err.message);;
+          var p = res.map(res => res.content);
+          var d = res.map(res => res.datetime);
+          var lk = res.map(res => res.likeing);
+          var rp = res.map(res => res.replying);
+          socket.emit('Cpostload', {p, d, lk, rp, su, f, l});
+        })
+      }, 1000);
+    }, 300);
+  });
+
+  //leave all unfollow rooms
+  socket.on('leave', function (res) {
+    for (var i = 0; i < res.length; i++) {
+      socket.leave(res[i]);
+    }
+  });
 
   //recording post
   var lastId;
@@ -436,12 +584,6 @@ io.on('connection', function (socket) {
         }
         console.log(thisPostId);
       });
-      conSp.end(function (err,res) {
-        if (err) console.log(err.message);
-      });
-      conSpI.end(function (err,res) {
-        if (err) console.log(err.message);
-      });
     },2000)
   })
 
@@ -460,14 +602,90 @@ io.on('connection', function (socket) {
     });
   })
 
-  socket.on('flw', function (fu) {
+  //follow handle
+  socket.on('flw', function (fa) {
+    fu = fa.userFA; myU = fa.storedUsername;
+    var thistime = GetTime();
+    conSpFl = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: myU
+    });
+    //set numbur of user followers
     var ufl = 'UPDATE users SET follower = follower + 1 WHERE username = "'+fu+'"';
     con1.query(ufl, function (err, res) {
-      if (err) {
-        throw err;
-      }
-      console.log(res);
-    })
+      if (err) throw err;
+      console.log('1 :'+res);
+    });
+    //set numbur of my followings
+    var ufg = 'UPDATE users SET following = following + 1 WHERE username = "'+myU+'"';
+    con1.query(ufg, function (err4, res4) {
+      if (err4) throw err4;
+      console.log('2: '+res4);
+    });
+    //recorde name of user follower
+    var myflg = 'INSERT INTO '+myU+'following (username, datetime) VALUES ("'+fu+'", "'+thistime+'")';
+    conSpFl.query(myflg, function (err2,res2) {
+      if (err2) throw err2;
+    });
+    //recored name of my following
+    conSpFg = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: fu
+    });
+    setTimeout(function () {
+      var myflg = 'INSERT INTO '+fu+'follower (username, datetime) VALUES ("'+myU+'", "'+thistime+'")';
+      conSpFg.query(myflg, function (err3,res3) {
+        if (err3) throw err3;
+      });
+      socket.emit('flwSuc', fu);
+    }, 200);
+  });
+
+  //unfollow handle
+  socket.on('unflw', function (fa) {
+    fu = fa.userFA; myU = fa.storedUsername;
+    var thistime = GetTime();
+    conSpFl = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: myU
+    });
+    //set numbur of user followers
+    var ufl = 'UPDATE users SET follower = +follower - 1 WHERE username = "'+fu+'"';
+    con1.query(ufl, function (err, res) {
+      if (err) throw err;
+      console.log('1 :'+res);
+    });
+    //set numbur of my followings
+    var ufg = 'UPDATE users SET following = +following - 1 WHERE username = "'+myU+'"';
+    con1.query(ufg, function (err4, res4) {
+      if (err4) throw err4;
+      console.log('2: '+res4);
+    });
+    //recorde name of user follower
+    var myflg = 'DELETE FROM '+myU+'following WHERE username = "'+fu+'"';
+    conSpFl.query(myflg, function (err2,res2) {
+      if (err2) throw err2;
+    });
+    //recored name of my following
+    conSpFg = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: fu
+    });
+    setTimeout(function () {
+      var myflg = 'DELETE FROM '+fu+'follower WHERE username = "'+myU+'"';
+      conSpFg.query(myflg, function (err3,res3) {
+        if (err3) throw err3;
+      });
+      socket.emit('unflwSuc', fu);
+    }, 200);
   });
 
   //usr disconnection
@@ -476,29 +694,6 @@ io.on('connection', function (socket) {
   });
 });
 
-var update = 'SELECT * FROM users WHERE emailKey IS NULL';
-con1.query(update,function (err, res) {
-  if(err) throw err;
-  var tedad = res.map(res => res.email).length;
-  for (var i = 0; i < tedad; i++) {
-    var updateEmail = res.map(res => res.email)[0];
-    var usrup = res.map(res => res.username)[i];
-    var updatePass = res.map(res => res.password)[0];
-    var ie = encode(updateEmail);
-    var ip = encode(updatePass);
-    var ueC = ie[0]; var ueK = ie[1];
-    var upC = ip[0]; var upK = ip[1];
-    var tzRe = /\(([\w\s]+)\)/; // Look for "(", any words (\w) or spaces (\s), and ")"
-    var d = new Date().toString();
-    var userlocation = tzRe.exec(d)[1].replace(' Standard Time', '');
-    var inUp = 'INSERT INTO users (email) VALUES ("'+ueC+'") WHERE username = "'+usrup+'"';
-
-    /*con1.query(inUp, function (err, ) {
-      if(err) throw err;
-      console.log(res);
-    })*/
-  }
-})
 
 
 /*----------------Under Construction--------------------------------------------
