@@ -1454,7 +1454,7 @@ font-family: 'Piazzolla', serif;
   justify-content: flex-start;
   align-items:  flex-start;
   padding: 10px;
-  transition: all .4s cubic-bezier(0.92,0.2,0.43,0.7);
+  transition: all .4s ;
 }
 .Anm{
   display: flex;
@@ -1544,7 +1544,6 @@ font-family: 'Piazzolla', serif;
 .at_sign:hover{
   text-decoration:underline;
 }
-
 
 
 

@@ -134,7 +134,7 @@ io.on('connection', function (socket) {
     var isAcount = 'SELECT * FROM users WHERE username LIKE "%'+onusrname+'"';
     con1.query(isAcount, function (err, res) {
       if (err) {
-        throw err
+        return console.log(err);
       }
       var isUsr
       if (res != '') {
@@ -177,26 +177,33 @@ io.on('connection', function (socket) {
       var blocked = 'CREATE TABLE IF NOT EXISTS '+u+'blocked (id INT AUTO_INCREMENT PRIMARY KEY, blockingUsr VARCHAR(255), datetime DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
       var blocking = 'CREATE TABLE IF NOT EXISTS '+u+'blocking (id INT AUTO_INCREMENT PRIMARY KEY, blockedUsr VARCHAR(255), datetime DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
       var like = 'CREATE TABLE IF NOT EXISTS '+u+'like (id INT AUTO_INCREMENT PRIMARY KEY, postId TEXT, datetime DATETIME, author VARCHAR(255)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
-      var reply = 'CREATE TABLE IF NOT EXISTS '+u+'reply (id INT AUTO_INCREMENT PRIMARY KEY, postId TEXT, datetime DATETIME, author VARCHAR(255), hasLike INT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
+      var reply = 'CREATE TABLE IF NOT EXISTS '+u+'reply (id INT AUTO_INCREMENT PRIMARY KEY, postId TEXT, datetime DATETIME, author VARCHAR(255), hasLike INT, RpostId text) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
       var save = 'CREATE TABLE IF NOT EXISTS '+u+'save (id INT AUTO_INCREMENT PRIMARY KEY, postId TEXT, datetime DATETIME, author VARCHAR(255), hasLike INT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
+      var click = 'create table '+u+'click (id int auto_increment PRIMARY KEY,userclicked varchar(255) null,postId text null,number int default 1 null)'
       con.connect(function (err) {
-        if (err) throw err;
+        if (err) return console.log(err);
         console.log('connection for creating new databases success');
       });
       console.log("Creating Database "+u+"...");
       con.query(createUserDB, function (err, r) {
         if (err) {
-          console.log(err.message);
+          return console.log(err);
         }
         console.log("Database "+u+" created");
       });
       console.log("Creating Database "+u+"Post...");
       con.query(createUserPostDB, function (err, r) {
         if (err) {
-          console.log(err.message);
+          return console.log(err);
         }
         console.log("Database "+u+"Post created");
       });
+      con1.query(insertinfo, function (err, r) {
+        if (err) {
+          return console.log(err);
+        }else {
+          console.log('information inserted');
+        }
       var conSp = mysql.createConnection({
         host:'localhost',
         user:'root',
@@ -206,63 +213,65 @@ io.on('connection', function (socket) {
       setTimeout(function () {
         conSp.query(postId,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'postId created');
         });
         conSp.query(flwrs,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'follower created');
         });
         conSp.query(flwng,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'following created');
         });
         conSp.query(rooms,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'room created');
         });
         conSp.query(blocked,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'blocked created');
         });
         conSp.query(blocking,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'blocking created');
         });
         conSp.query(like,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'like created');
         });
         conSp.query(reply,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'reply created');
         });
         conSp.query(save,function (err, r) {
           if (err) {
-            console.log(err.message);
+            return console.log(err);
           }
           console.log('table '+u+'save created');
         });
+        conSp.query(click,function (err, r) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log('table '+u+'click created');
+        });
       },2000);
-      con1.query(insertinfo, function (err, r) {
-        if (err) {
-          throw err;
-        }
       });
     });
 
@@ -282,7 +291,7 @@ io.on('connection', function (socket) {
       from: 'info@SharSit.com',
       to: useremail ,
       subject: 'Authentication Email From SharSit',
-      text: 'Hi! your code is '+ gen
+      text: 'Hi! your code is <b>'+gen+'</b>'
     };
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
@@ -326,11 +335,11 @@ io.on('connection', function (socket) {
     var u; var f;
     var l; var c;
     var givenloginpass = loginCheck.loginpass;
-    var dec = 'SELECT * FROM users WHERE username="'+loginusr+'"';
+    var dec = 'SELECT * FROM users WHERE username=?';
     id[loginusr] = socket.id;
     id[socket.id] = loginusr;
-    con1.query(dec, function (err, res) {
-      if (err) throw err;
+    con1.query(dec,loginusr, function (err, res) {
+      if (err) return console.log(err);
       f = res.map(res => res.fname)[0];
       l = res.map(res => res.lname)[0];
       var b = res.map(res => res.bio)[0];
@@ -377,11 +386,9 @@ io.on('connection', function (socket) {
                 var ff = []; var ll = []; var cc = []; var lik = [];
                 var logpost = 'SELECT content,datetime, likeing, replying, author, postId FROM '+u+'.'+u+'postId'+ statement;
                 conSp.query(logpost, function (err, res) {
-                  if (err) console.log(err.message);
+                  if (err) return console.log(err.message);
                   //get username of post author
                   u = res.map(res => res.author);
-
-                  console.log(res);
                   var iNfO = [];
                   for (var i = 0; i < u.length; i++) {
                     var getFL = 'SELECT * FROM users WHERE username = "'+u[i]+'"';
@@ -415,7 +422,7 @@ io.on('connection', function (socket) {
                     for (var i = 0; i < pi.length; i++) {
                       var isliker = 'SELECT * FROM '+loginusr+'like WHERE postId = "'+pi[i]+'"';
                       conSpLike.query(isliker, function (err0, isLikeRes) {
-                        if (err) throw err0;
+                        if (err0) return console.log(err0);;;
                         isLikeRes = isLikeRes.map(isLikeRes => isLikeRes.author);
                         if (isLikeRes == '') {
                           isLike.push(false);
@@ -518,6 +525,7 @@ io.on('connection', function (socket) {
             var lk = res.map(res => res.likeing);
             var rp = res.map(res => res.replying);
             var pi = res.map(res => res.postId);
+            console.log(rp);
             //check whiche post is liked by me
             conSpLikeT = mysql.createConnection({
               host:'localhost',
@@ -529,7 +537,7 @@ io.on('connection', function (socket) {
             for (var i = 0; i < pi.length; i++) {
               var islikerT = 'SELECT * FROM '+u+'like WHERE postId = "'+pi[i]+'"';
               conSpLikeT.query(islikerT, function (err0T, isLikeResT) {
-                if (err) throw err0T;
+                if (err0T) return console.log(err0T);;
                 isLikeResT = isLikeResT.map(isLikeResT => isLikeResT.author);
                 if (isLikeResT == '') {
                   isLikeTimeLine.push(false);
@@ -550,9 +558,9 @@ io.on('connection', function (socket) {
               });
               socket.emit('Timepostload', {p, d, lk, rp, usr, ff, ll, cc, pi, isLikeTimeLine});
             }, 50);
-          },60);
+          },200);
         })
-      },60);
+      },200);
 
     });
 
@@ -598,7 +606,7 @@ io.on('connection', function (socket) {
         for (var i = 0; i < pi.length; i++) {
           var islikerH = 'SELECT * FROM '+u+'like WHERE postId = "'+pi[i]+'"';
           conSp.query(islikerH, function (err0H, isLikeResH) {
-            if (err) throw err0H;
+            if (err0H) return console.log(err0H);;
             isLikeResH = isLikeResH.map(isLikeResH => isLikeResH.author);
             if (isLikeResH == '') {
               isLikeHome.push(false);
@@ -635,12 +643,13 @@ io.on('connection', function (socket) {
       database: myUsr
     });
     var isflg = 'SELECT * FROM '+myUsr+'following';
-    conSpp.query(isflg, function (err, res) {
-      if (err) console.log(err.message);
-      res = res.map(res => res.username);
-      for (var i = 0; i < res.length; i++) {
-        if (res[i] == su) {
+    conSpp.query(isflg, function (erris, resis) {
+      if (erris) console.log(erris.message);
+      resis = resis.map(resis => resis.username);
+      for (var i = 0; i < resis.length; i++) {
+        if (resis[i] == su) {
           myflg = true;
+          break;
         }else {
           myflg = false;
         }
@@ -661,6 +670,7 @@ io.on('connection', function (socket) {
         fr = res.map(res => res.follower)[0];
         fg = res.map(res => res.following)[0];
         loc = res.map(res => res.location)[0];
+        console.log(myflg);
         socket.emit('suresult', {f,l, b, c, fr, fg, u, myflg, loc});
       });
 
@@ -691,7 +701,7 @@ io.on('connection', function (socket) {
           for (var i = 0; i < pi.length; i++) {
             var islikerC = 'SELECT * FROM '+myUsr+'like WHERE postId = "'+pi[i]+'"';
             conSpLikeC.query(islikerC, function (err0C, isLikeResC) {
-              if (err) throw err0C;
+              if (err0C) return console.log(err0C);;
               isLikeResC = isLikeResC.map(isLikeResC => isLikeResC.author);
               if (isLikeResC == '') {
                 isLikeSUsr.push(false);
@@ -732,9 +742,9 @@ io.on('connection', function (socket) {
     });
     //record post as Id
     var intop = 'INSERT INTO '+u+'postId (content, datetime, likeing, replying, clicking, postId) VALUES ("'+content+'", "'+datetime+'", "0", "0", "0", "'+thisPostId+'")';
-    conSp.query(intop, function (err, resR) {
-      if (err) {
-        throw errR;
+    conSp.query(intop, function (errR, resR) {
+      if (errR) {
+        return console.log(errR);;
       }
       io.to(u).emit('post', {content, datetime, u, thisPostId});
     })
@@ -746,9 +756,9 @@ io.on('connection', function (socket) {
     });
     setTimeout(function () {
       var createPostTable = 'CREATE TABLE IF NOT EXISTS '+thisPostId+' (id INT AUTO_INCREMENT PRIMARY KEY, liker VARCHAR(255), datetime DATETIME, likes VARCHAR(255), replys TEXT, clicks VARCHAR(255)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
-      conSpI.query(createPostTable, function (err, resRc) {
-        if (err) {
-          throw errRc;
+      conSpI.query(createPostTable, function (errRc, resRc) {
+        if (errRc) {
+          return console.log(errRc);;;
         }
         console.log(thisPostId);
       });
@@ -769,6 +779,102 @@ io.on('connection', function (socket) {
       }
     });
   });
+
+  //click on a post
+  socket.on('clickedPost', function (result) {
+    var postId = result.poId; var clicker = result.storedUsername;
+    var result = result.poId; var datetime = GetTime();
+    var userId = result.slice(0,result.indexOf('2'));
+    var replier, rdatetime, replyCon, likeR, replyR, datetimeR;
+    var repCon = [];
+    conSpGR = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: userId+'Post'
+    });
+    setTimeout(function () {
+      //get post replies
+      var getReply = 'SELECT * FROM '+postId+' WHERE replys IS NOT NULL ORDER BY datetime';
+      conSpGR.query(getReply, function (err, res) {
+        if (err) return console.log(err);
+        else {
+          replier = res.map(res => res.liker);
+          rdatetime = res.map(res => res.datetime);
+          replyId = res.map(res => res.replys);
+        }
+        //record my click in my own database
+        conSpGR = mysql.createConnection({
+          host:'localhost',
+          user:'root',
+          password:'Mo137777',
+          database: clicker
+        });
+        setTimeout(function () {
+          var meisliker = 'SELECT * FROM '+clicker+'click WHERE postId = "'+postId+'"';
+          conSpGR.query(meisliker, function (recorderr, recordres) {
+            if (recorderr) return console.log(recorderr);
+            else {
+              if (recordres != '') {
+                var uclicked = 'UPDATE '+clicker+'click SET  number = number + 1 WHERE postId="'+postId+'"';
+                conSpGR.query(uclicked, function (isnerr, isnres) {
+                  if (isnerr) return console.log(isnerr);
+                });
+              }else {
+                var uclicked = 'INSERT INTO '+clicker+'click (userclicked, postId) VALUES ("'+userId+'", "'+postId+'")';
+                conSpGR.query(uclicked, function (iserr, isres) {
+                  if (iserr) return console.log(iserr);
+                });
+              }
+            }
+          });
+        }, 100);
+        //read replies
+        var replyC =[], replyL=[], replyD=[], replyR=[], replyf=[], replyb=[], replylo=[], replyr=[], replyt=[], replyr=[], replyl=[];
+        for (var i = 0; i < replier.length; i++) {
+          conSpQR = mysql.createConnection({
+            host:'localhost',
+            user:'root',
+            password:'Mo137777',
+            database: replier[i]
+          });
+            var rpost = 'SELECT * FROM '+replier[i]+'postId WHERE postId = "'+replyId[i]+'"';
+            conSpQR.query(rpost, function (rerr, rres) {
+              if (rerr) return console.log(rerr);
+              ctnt = rres.map(rres => rres.content);
+              lkng = rres.map(rres => rres.likeing);
+              rplg = rres.map(rres => rres.replying);
+              rpld = rres.map(rres => rres.datetime);
+              replyC.push(ctnt[0]);
+              replyL.push(lkng[0]);
+              replyR.push(rplg[0]);
+              replyD.push(rpld[0]);
+            });
+        }
+        for (var i = 0; i < replier.length; i++) {
+            var rusr = 'SELECT * FROM users WHERE username = "'+replier[i]+'"';
+            con1.query(rusr, function (ruerr, rures) {
+              if (ruerr) return console.log(ruerr);
+              fkng = rures.map(rures => rures.fname);
+              lkng = rures.map(rures => rures.lname);
+              crtfc = rures.map(rures => rures.certification);
+              bio = rures.map(rures => rures.bio);
+              flr = rures.map(rures => rures.follower);
+              flg = rures.map(rures => rures.following);
+              loc = rures.map(rures => rures.location);
+              replyf.push(fkng[0]);replyb.push(bio[0]);
+              replylo.push(loc[0]);replyr.push(flr[0]);
+              replyt.push(crtfc[0]);replyr.push(flg[0]);
+              replyl.push(lkng[0]);
+            });
+        }
+        setTimeout(function () {
+          socket.emit('ClPsRes',{postId, userId, replyD, replier, replyId, replyC, replyL, replyR, replyf, replyb, replylo, replyr, replyt, replyr, replyl});
+        }, 100);
+      });
+    }, 100);
+  });
+
 
   //reading async info
   socket.on('AS', function (resu) {
