@@ -16,7 +16,30 @@
     <div class="menu"><div class="secr"><div class="rsect"><div class="rtsecr"><div class="profCont"><div class="pimg"><img class="ppicture" src="../src/profile.png" alt="Your picture"></div><div class="Uinfo"><h1><i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i></h1><h3></h3></div></div></div><div class="rtsecl"><div class="usrInfo"><span>Bio</span><p></p></div><div class="usrInfo flw"><div class="flwr"><span id="followers">0</span><br><span>Follower</span></div><div class="flwg"><span id="followings">0</span><br><span>following</span></div></div></div></div><div class="rsecb"></div></div><div class="secl"><div class="controlnav"><div class="cn setting"><i style="font-size:44px" class="fa">&#xf013;</i></div><div class="cn profileset"><i style="font-size:44px" class="fa">&#xf2c0;</i></div><div class="cn saved"><i style="font-size:44px" class="fa">&#xf097;</i></div><div class="cn notif"><i style="font-size:44px" class="fa">&#xf0a2;</i></div><div class="cn flfg"><i class="material-icons" id="j">&#xe915;</i></div></div></div></div>
     <div class="blackArea"></div>
     <div class="writePost">
-      <textarea class="postCon" name="post" maxlength="300" rows="8" cols="80" placeholder="What is your situation...?"></textarea>
+      <div class="writePost_main">
+        <textarea rows="1" cols="80" placeholder="What is your situation...?"></textarea>
+        <div contenteditable="true" class="postCon" name="post" maxlength="300"  cols="80" >
+          <span class="placeholder" style="color: #999;">What is your situation...?</span>
+        </div>
+        <div class="media">
+          <div class="mediaCont">
+            <div class="delPic">&times</div>
+            <img id="writePostMedia" src="../src/main.jpg" alt="">
+          </div>
+          <div class="mediaCont">
+            <div class="delPic">&times</div>
+            <img id="writePostMedia" src="../src/j.jpg" alt="">
+          </div>
+          <div class="mediaCont">
+            <div class="delPic">&times</div>
+            <img id="writePostMedia" src="../src/nat.jpg" alt="">
+          </div>
+          <div class="mediaCont">
+            <div class="delPic">&times</div>
+            <img id="writePostMedia" src="../src/trump.jpg" alt="">
+          </div>
+        </div>
+      </div>
       <button class="sendPost" type="button" name="button">SharSit!</button>
       <div class="attach">
         <div class="emoji">
@@ -38,7 +61,15 @@
               </div>
               <div class="Pname">
                 <h1 class="'+sfn[i]+'un">Mostafa Sarmad</h1>
-                <p>@mstfsrmd</p></div></div><div class="content"><div class="postDate"><time>2020-10-13 12:32</time></div></div>
+                <p>@mstfsrmd</p></div></div><div class="content">GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG<div class="postDate"><time>2020-10-13 12:32</time></div></div>
+                <div class="media">
+                  <div class="mediaCont">
+                    <img class="writePostMedia" src="../src/victory.jpg" alt="">
+                  </div>
+                  <div class="mediaCont">
+                    <img class="writePostMedia" src="../src/victory.jpg" alt="">
+                  </div>
+                </div>
           <div class="postAction">
             <div class="postLike act">
               <i style='font-size:30px;color:#999;display:block;' class='far w Lk'>&#xf004;
@@ -58,43 +89,38 @@
           </div>
         </div>
       </div>
+      <div class="writeReply">
+        <div class="writeReply_input">
+          <textarea class="replyText" id="replyText" rows="1" cols="80"></textarea>
+          <button class="sendReply" type="button">Send!</button>
+            <div class="closeReply"><p class="CR">&times</p></div>
+        </div>
+      </div>
     </div>
     <div class="rnav">
-      <div class="pimg">
-        <img class="ppicture" src="profile.png" alt="Your picture">
-      </div>
-      <div class="acInfo">
-        <div class="usrInfo">
-          <h1>Mostafa Sarmad<i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i></h1>
-          <h3>@mstfsrmd</h3>
-        </div>
-        <div class="usrInfo">
-          <span>Bio</span>
-          <p>HI! I'm Mosi!</p>
-        </div>
-        <div class="usrInfo flw">
-          <div class="flwr">
-            <span id="followers">12</span><br>
-            <span>Follower</span>
-          </div>
-          <div class="flwg">
-            <span id="followings">112</span><br>
-            <span>following</span>
-          </div>
-        </div>
-        <div class="usrInfo"><button class="FollowB" type="button" name="button">Follow</button></div>
-      </div>
-
+      <div class="rnavCont"><div class="youLike"><h1 class="yLHead">People to follow</h1><div class="yLcont"><div class="CS">Coming Soon !</div></div></div><div class="trends"><h1 class="tHead">Trends now</h1><div class="Tcont"><div class="CS">Coming Soon !</div></div></div></div>
     </div>
     <div class="lnav">
       <div class="Search"><input id="search" type="search" name="" value="" placeholder="Global Search..." autocomplete="off"></div>
       <div class="new">
         <div class="newcont">
-          <i style='font-size:50px;text-shadow: 7px 7px 7px #b2001e,7px 7px 7px #d40023;' class='fas'>&#xf5ad;</i>
+          <i style='font-size:50px;text-shadow: 7px 7px 7px rgba(0, 0, 0, .2;);' class='fas'>&#xf5ad;</i>
         </div>
       </div>
 
-    </div>  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    </div>
+
+    <div class="SRes '+sun[i]+'" SResId = '+sun[i]+'>
+      <div class="Uimg '+sun[i]+'SRimg">
+        <img src="'+srcOk+'" alt="">
+      </div>
+      <div class="Uname '+sun[i]+'Un" info="'+sun[i]+'">
+        <h1 class="'+sun[i]+'un">'+sfn[i]+' '+sln[i]+'</h1>
+        <p>@'+sun[i]+'</p>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
     $('#search').on('focus',function () {

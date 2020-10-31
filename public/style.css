@@ -8,6 +8,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Piazzolla:wght@200&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Piazzolla:wght@200;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@700&display=swap');
 :root{
 }
 *{
@@ -19,22 +22,10 @@ input:required {
     box-shadow:none;
 }
 html{
-  --changeColor: #964f4c;
-  --a:#efc050;
-  --b:#964f4c;
-  --c:#c60021;
-  --d:#019875;
-  --e:#ff6f61;
-  --f:#5f4b8b;
-  --g:#88b04b;
-  --h:#ad5e99;
-  --i:#009473;
-  --j:#dd4124;
-  --k:#7bc4c4;
-  --l:#0f4c81;
+  --changeColor: #1da1f2;
+  --D: #f5f8fa;
 }
 body{
-  overflow: hidden;
   font-family: 'Nunito', sans-serif;
   background-color: #efeeee;
   overflow-x: hidden;
@@ -449,7 +440,7 @@ font-family: 'Piazzolla', serif;
   filter: opacity(.4);
 }
 .profpic{
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: white;
   background-color: var(--changeColor);
   position: absolute;
@@ -466,7 +457,7 @@ font-family: 'Piazzolla', serif;
   cursor: pointer;
 }
 .desc{
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -762,6 +753,10 @@ font-family: 'Piazzolla', serif;
   transform: translate(-50%, -50%);
 }
 .mainsec{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
   top: 52%;
   left: 50%;
@@ -770,6 +765,7 @@ font-family: 'Piazzolla', serif;
   transform: translate(-50%, -50%);
   border-radius: 5px;
   background-color: #f6f6f6;
+  padding: 30px;
 }
 .rnav{
   position: absolute;
@@ -779,7 +775,7 @@ font-family: 'Piazzolla', serif;
   height: 85%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
-  background-color: #f6f6f6;
+  background: none;
   perspective: 1000px;
 
 }
@@ -842,7 +838,6 @@ font-family: 'Piazzolla', serif;
   background-color: black;
   z-index: -2;
   opacity: 0;
-  transition: opacity .4s;
 }
 .blackArea3{
   transition: none;
@@ -852,101 +847,170 @@ font-family: 'Piazzolla', serif;
   top: 50%;
   left: 50%;
   width: 40%;
-  height: 45%;
+  max-height: 90%;
+  min-height: 300px;
   transform: translate(-50%, -50%);
   background-color: white;
   z-index: 3;
   box-shadow: 10px 10px 40px #555;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: auto;
   transition: all .4s;
   display: none;
 }
-.writePost textarea {
-  outline: none;
+.writePost textarea{
   border-radius: 10px;
+  font-family: 'Piazzolla', serif;
+  font-size: 25px;
+  position: relative;
+  width: 95%;
+  resize: none;
+  overflow-y: visible;
+  word-wrap: break-word;
   border: none;
+  outline: none;
+  z-index: 1;
+  background: none;
+}
+.postCon{
+  border-radius: 10px;
   font-family: 'Piazzolla', serif;
   font-size: 25px;
   position: absolute;
+  top: 0;
+  width: 95%;
+  min-height: 45px;
+  resize: none;
+  word-wrap: break-word;
+  opacity: 0;
+}
+.writePost_main{
+  position: relative;
   top: 50%;
   left: 50%;
-  width: 60%;
-  height: 60%;
-  resize: none;
-  transform: translate(-50%, -50%);
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  transform: translate(-50%, 0);
+  padding: 20px 0;
+}
+.media, .mediaPost{
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 30px;
+  justify-content: center;
+}
+.mediaCont, .mediaContPost{
+  position: relative;
+  max-width: 600px;
+  overflow: hidden;
+  margin: 1px;
+  border-radius: 20px;
+}
+.writePostMedia, .writePostMediapost{
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 .emoji{
   cursor: pointer;
   padding-right: 17px;
   text-align: right;
   position: absolute;
-  top: 40%;
+  top: 25%;
   left: 0%;
   width: 80px;
   height: 70px;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   border-radius: 35px;
   background-color: var(--changeColor);
   transition: all .4s;
 }
 .emoji:hover{
-  transform: translate(-25%, -50%);
+  transform: translate(-25%, 0%);
 }
 .fileSkin:hover{
-  transform: translate(-25%, -50%);
+  transform: translate(-25%, 0%);
 }
 .fileSkin{
   cursor: pointer;
   padding-right: 17px;
   text-align: right;
   position: absolute;
-  top: 60%;
+  bottom: 25%;
   left: 0%;
   width: 80px;
   height: 70px;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   border-radius: 35px;
   background-color: var(--changeColor);
   transition: all .4s;
 }
+.file:hover ~ .fileSkin{
+  transform: translate(-25%, 0%);
+}
 .file{
   cursor: pointer;
   position: absolute;
-  top: 60%;
+  bottom: 25%;
   left: 0%;
-  width: 80px;
-  height: 70px;
-  transform: translate(-50%, -50%);
-  z-index:1;
-  display: none;
+  width: 100px;
+  height: 80px;
+  transform: translate(-50%, 0);
+  z-index:2;
+  opacity: 0;
 }
 .fileUp{
+  opacity: 0;
   cursor: pointer;
   position: absolute;
-  top: 50%;
+  bottom: 50%;
   left: 50%;
-  width: 10%;
-  height: 10%;
-  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, 50%);
   z-index:5;
 }
-.sEnd{
-
+.delPic{
+  transition: all .2s;
+  color: rgba(0, 0, 0, .5);
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 40px;
+  background-color: #efeeee;
+  border-radius: 50%;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  opacity: .4;
+  text-align: center;
+  cursor: pointer;
+  line-height: 27px;
+}
+.delPic:hover{
+  opacity: 1;
 }
 .sendPost{
-  outline: none
+  outline: none;
   font-size: 20px;
   position: absolute;
-  top: 70%;
-  left: 70%;
+  bottom: 5px;
+  right: 5px;
   width: 100px;
   height: 100px;
-  transform: translate(-50%, -50%);
-  border-top-left-radius: 60px;
-  border-top-right-radius: 29px;
-  border-bottom-left-radius: 44px;
-  border-bottom-right-radius:80px;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 250px;
+  border-bottom-left-radius: 250px;
+  border-bottom-right-radius:250px;
   background-color: var(--changeColor);
   color: white;
   border: none;
@@ -955,20 +1019,17 @@ font-family: 'Piazzolla', serif;
 }
 .sendPost:hover{
   animation: send 4s alternate infinite;
-  border-top-left-radius: 198px;
-  border-top-right-radius: 172px;
-  border-bottom-left-radius: 277px;
-  border-bottom-right-radius:127px;
+  border-top-left-radius:250px;
+  border-top-right-radius: 250px;
+  border-bottom-left-radius: 250px;
+  border-bottom-right-radius:100px;
 }
 .postArea{
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
   width: 90%;
   height: 90%;
-  transform: translate(-50%, -50%);
   overflow: auto;
 }
 .Post{
@@ -1034,12 +1095,12 @@ font-family: 'Piazzolla', serif;
 }
 .Pname p{
   color: #999;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 .content{
   margin: 10px 10px;
   font-size: 30px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   position: relative;
   width:90%;
   word-wrap: break-word;
@@ -1051,7 +1112,7 @@ font-family: 'Piazzolla', serif;
   position: relative;
   left: 2%;
   width: 30%;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 15px;
 
 }
@@ -1154,8 +1215,10 @@ font-family: 'Piazzolla', serif;
   top: 50%;
   left: 13%;
   transform: translate(-50%, -50%);
-  width: 9%;
-  height: 9%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
 
 }
 .Uimg img{
@@ -1163,8 +1226,8 @@ font-family: 'Piazzolla', serif;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
 }
 .Uname{
   position: absolute;
@@ -1179,6 +1242,7 @@ font-family: 'Piazzolla', serif;
   font-size: 20px;
 }
 .Uname p{
+  font-family: 'Roboto', sans-serif;
   color: #999;
 }
 .menuicon, .homeicon, .timelineicon{
@@ -1362,6 +1426,7 @@ font-family: 'Piazzolla', serif;
   font-size: 15px;
 }
 .usrInfo p{
+  font-family: 'Roboto', sans-serif;
   cursor: default;
   margin:10px 50px;
   color: #666;
@@ -1369,6 +1434,7 @@ font-family: 'Piazzolla', serif;
   word-wrap: break-word;
 }
 .CusrInfo p{
+  font-family: 'Roboto', sans-serif;
   cursor: default;
   margin:10px 50px;
   color: #666;
@@ -1403,7 +1469,7 @@ font-family: 'Piazzolla', serif;
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
-  transition:opacity .5s, transform .4s cubic-bezier(0.74,0.14,0.57,1), width .4s cubic-bezier(0.99,0.45,0.31,0.63) .4s;
+  transition:opacity .5s, transform .4s cubic-bezier(0.74,0.14,0.57,1), width .4s cubic-bezier(0.99,0.45,0.31,0.63) .4s, box-shadow .4s;
 }
 
 .cn{
@@ -1446,7 +1512,7 @@ font-family: 'Piazzolla', serif;
   width: 350px;
   height: 280px;
   background-color: #f6f6f6;
-  box-shadow: 7px 7px 20px #999;
+  box-shadow: 0px 0px 30px -10px rgba(0,0,0,0.2);
   border-radius: 10px;
   z-index: 11;
   display: flex;
@@ -1499,7 +1565,7 @@ font-family: 'Piazzolla', serif;
   margin: 5px 0;
   cursor: default;
   color: #999;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 .Aflw{
   display: flex;
@@ -1544,6 +1610,166 @@ font-family: 'Piazzolla', serif;
 .at_sign:hover{
   text-decoration:underline;
 }
+.writeReply{
+}
+.writeReply_input{
+
+}
+.replyText{
+  resize: none;
+  padding: 15px 30px 7px 75px;
+  outline: none;
+  border-radius: 20px;
+  border: none;
+  font-family: 'Piazzolla', serif;
+  font-size: 25px;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 80%;
+  resize: none;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, .1);
+}
+.sendReply{
+  outline: none
+  font-size: 20px;
+  position: absolute;
+  top: 91.5%;
+  left: 90%;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius:25px;
+  background-color: var(--changeColor);
+  color: white;
+  border: none;
+  transition: all .4s;
+  cursor: pointer;
+}
+.sendReply:hover{
+  animation: send 4s alternate infinite;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius:10px;
+}
+.closeReply{
+  cursor: pointer;
+  font-size: 40px;
+  position: absolute;
+  top: 91.5%;
+  left: 8%;
+  width: 35px;
+  height: 35px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+.closeReply:hover{
+  background-color: #efeeee;
+}
+.CR{
+  color: #555;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-51%, -51%);
+}
+.replyTo:hover{
+  text-decoration: underline;
+}
+.rnavCont{
+  cursor: default;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+}
+.youLike, .trends{
+  cursor: default;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  background-color: var(--D);
+  cursor: pointer;
+  position:relative;
+  width: 120%;
+  height: 350px;
+  border-radius: 10px;
+}
+.yLcont, .Tcont{
+  cursor: wait;
+  position: relative;
+  width: 98%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+}
+.yLHead, .tHead{
+  cursor: wait;
+  align-self: stretch;
+  font-size: 23px;
+  padding: 20px 20px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 2px;
+  color: #444;
+  border-bottom: solid #bbb .3px;
+}
+.CS{
+font-size: 23px;
+padding: 20px 20px;
+font-family: 'Montserrat', sans-serif;
+letter-spacing: 2px;
+color: #444;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
