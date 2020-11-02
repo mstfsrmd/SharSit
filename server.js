@@ -11,7 +11,7 @@ const fileUpload = require('express-fileupload');
 
 //server connection
 console.log('Connecting to server...');
-http.listen(process.env.PORT || 8080, function () {
+http.listen(process.env.PORT || 3000, function () {
   console.log('Server is ready');
 });
 
@@ -105,20 +105,19 @@ function GetTime() {
   var m = d.getMinutes();
   var h = d.getHours();
   var day = d.getDate();
-  var month = d.getMonth();
+  var month = d.getMonth()+ 1;
   var y = d.getFullYear();
   if (s<10) var s = '0'+d.getSeconds();
   if (m<10) var m = '0'+d.getMinutes();
   if (h<10) var h = '0'+d.getHours();
   if (day<10) var day = '0'+d.getDate();
   if (month<10) var month = '0'+d.getMonth();
-  day = day - 1;
   var datetime = y+'-'+month+'-'+day+' '+h+':'+m+':'+s;
   return datetime;
 }
 
-var poid = '';
 function getstring() {
+  var poid = '';
   const list = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'.split('');
   for (var i = 0; i < 10; i++) {
     rand = list[Math.round(Math.random()*61)];
@@ -179,10 +178,10 @@ io.on('connection', function (socket) {
       var tzRe = /\(([\w\s]+)\)/; // Look for "(", any words (\w) or spaces (\s), and ")"
       var d = new Date().toString();
       var userlocation = tzRe.exec(d)[1].replace(' Standard Time', '');
-      var insertinfo = 'INSERT INTO users (username, email, emailKey, password, passwordKey, certification ,follower, following, location) VALUES ("'+u+'", "'+codeE+'", "'+keyE+'", "'+codeP+'", "'+keyP+'", "0", "0", "0", "'+userlocation+'")';
+      var insertinfo = 'INSERT INTO users (username, email, emailKey, password, passwordKey, certification ,follower, following, location, joindate) VALUES ("'+u+'", "'+codeE+'", "'+keyE+'", "'+codeP+'", "'+keyP+'", "0", "0", "0", "'+userlocation+'", "'+GetTime()+'")';
       var createUserDB = 'CREATE DATABASE '+u+' CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci';
       var createUserPostDB = 'CREATE DATABASE '+u+'Post CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci';
-      var postId = 'CREATE TABLE IF NOT EXISTS '+u+'postId (id INT AUTO_INCREMENT PRIMARY KEY, content TEXT, datetime DATETIME, likeing INT, replying INT, clicking INT, postId TEXT, author VARCHAR(255) default "'+u+'", image TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
+      var postId = 'CREATE TABLE IF NOT EXISTS '+u+'postId (id INT AUTO_INCREMENT PRIMARY KEY, content TEXT, datetime DATETIME, likeing INT, replying INT, clicking INT, postId TEXT, author VARCHAR(255) default "'+u+'", image TEXT, report INT default 0 null) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
       var flwrs = 'CREATE TABLE IF NOT EXISTS '+u+'follower (id INT AUTO_INCREMENT PRIMARY KEY, username TEXT, datetime DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
       var flwng = 'CREATE TABLE IF NOT EXISTS '+u+'following (id INT AUTO_INCREMENT PRIMARY KEY, username TEXT, datetime DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
       var rooms = 'CREATE TABLE IF NOT EXISTS '+u+'room (id INT AUTO_INCREMENT PRIMARY KEY, room TEXT, datetime DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;';
@@ -290,10 +289,13 @@ io.on('connection', function (socket) {
 //_____________________________________________________________________________
     //sending Authentication email
     const transporter = nodemailer.createTransport({
+  	  host: 'https://sharsit.iran.liara.run/',
+  	port:8080,
+  	secure: true,
       service: 'gmail',
       auth: {
-        user: 'mostafasarmad96@gmail.com',
-        pass: 'm09370030491'
+        user: 'sharsit.users@gmail.com',
+        pass: 'm90604431'
       }
     });
     var gen = codeGenerator();
@@ -302,8 +304,8 @@ io.on('connection', function (socket) {
     const mailOptions = {
       from: 'info@SharSit.com',
       to: useremail ,
-      subject: 'Authentication Email From SharSit',
-      text: 'Hi! your code is <b>'+gen+'</b>'
+      subject: 'Verify your email address on SharSit',
+      text: 'Hi! your code is '+gen
     };
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
@@ -471,6 +473,17 @@ io.on('connection', function (socket) {
                     socket.join(j[i]);
                   }
                 })
+                //Trends
+                var trends1 = 'SELECT * FROM hashTags ORDER BY number DESC, hashtag ASC LIMIT 10';
+                con1.query(trends1,function (errt1, rest1) {
+                  if(errt1) return console.log(errt1);
+                  else {
+                    var hash1 = rest1.map(rest1 => rest1.hashtag);
+                    var num1 = rest1.map(rest1 => rest1.number);
+                    socket.emit('trnd1', {hash1, num1});
+                  }
+                })
+
               },100);
             }
           }, 100);
@@ -1047,8 +1060,71 @@ io.on('connection', function (socket) {
   socket.on('callMention', function (call) {
     var atsn = call.atsn, callmy = call.storedUsername;
     socket.to(id[atsn]).emit('callM', {atsn, callmy});
-  })
+  });
 
+  //store HashTags
+  socket.on('HashTags', function (h) {
+    var hstg = h.hstg, author = h.storedUsername, datetime = GetTime();
+    var harray = Object.values(hstg);
+    harray.splice(harray.indexOf(harray.length-1), 1);
+    harray.splice(harray.indexOf(harray.length-1), 1);
+    for (var j = 0; j < harray.length; j++) {
+      console.log(harray);
+      var cnt = 0;
+      for (var i = 0; i < harray.length; i++) {
+        if (harray[j] == harray[i]) {
+          cnt++;
+          console.log(harray[j]);
+          console.log(harray[i]);
+          if (cnt > 1) {
+            harray.splice(i, 1);
+          }
+        }
+      }
+    }
+    console.log(harray);
+    harray.forEach((item) => {
+      var hashCheck = 'SELECT * FROM hashTags WHERE hashtag = "'+item+'"';
+      con1.query(hashCheck, function (errh, resh) {
+        if (errh) return console.log(errh);
+        else {
+          if (resh == '') {
+            var hashTag = 'INSERT INTO hashTags (hashtag, author, datetime) VALUES ("'+item+'", "'+author+'", "'+datetime+'")';
+            con1.query(hashTag, function (errhi, reshi) {
+              if (errhi) return console.log(errhi);
+            });
+          }else {
+            var hashTagu = 'UPDATE hashTags SET number = number + 1 , datetime = "'+datetime+'" WHERE hashtag="'+item+'"';
+            con1.query(hashTagu, function (errhu, reshu) {
+              if (errhu) return console.log(errhu);
+            });
+          }
+        }
+      })
+    });
+  });
+
+  var hash = [], num = [], t = [], to =[], diff = [];
+  setInterval(function () {
+    var trends = 'SELECT * FROM hashTags ORDER BY number DESC, hashtag ASC LIMIT 10';
+    con1.query(trends,function (errt, rest) {
+      if(errt) return console.log(errt);
+      else {
+        hash = rest.map(rest => rest.hashtag);
+        num = rest.map(rest => rest.number);
+        socket.emit('trnd', {hash, num});
+      }
+    })
+    setTimeout(function () {
+      for (var i = 0; i < hash.length; i++) {
+        t[hash[i]] = i+1;
+        if (to[hash[i]]) {
+          diff[hash[i]] = to[hash[i]] - t[hash[i]];
+        }
+        to[hash[i]] = i+1;
+      }
+    }, 500);
+  }, 10000);
 
   //reading async info
   socket.on('AS', function (resu) {
@@ -1207,9 +1283,25 @@ io.on('connection', function (socket) {
       database: uId+'Post'
     });
     setTimeout(function () {
-      var myflg = 'INSERT INTO '+pId+' (liker, datetime, likes) VALUES ("'+mId+'", "'+datetime+'", "true")';
-      conSpFg.query(myflg, function (err2,res2) {
-        if (err2) throw err2;
+      var isname = 'select liker from '+pId+' WHERE liker="'+mId+'"';
+      conSpFg.query(isname, function (errI2,resI2) {
+        if (errI2) throw errI2;
+        else {
+          console.log(resI2);
+          if (resI2 == '') {
+            var myflg = 'INSERT INTO '+pId+' (liker, datetime, likes) VALUES ("'+mId+'", "'+datetime+'", "true")';
+            conSpFg.query(myflg, function (err2,res2) {
+              if (err2) throw err2;
+              console.log('insert');
+            });
+          }else {
+            var myflg = 'UPDATE '+pId+' SET likes = "true" WHERE liker="'+mId+'"';
+            conSpFg.query(myflg, function (err2,res2) {
+              if (err2) throw err2;
+              console.log('update');
+            });
+          }
+        }
       });
       socket.emit('liked', {uId, pId, mId});
       io.to(uId).emit('likedN', {uId, pId, mId});
@@ -1251,7 +1343,7 @@ io.on('connection', function (socket) {
       database: uId+'Post'
     });
     setTimeout(function () {
-      var myflg = 'DELETE FROM '+pId+' WHERE liker = "'+mId+'"';
+      var myflg = 'UPDATE '+pId+' SET likes = null WHERE liker = "'+mId+'"';
       conSpFg.query(myflg, function (err2,res2) {
         if (err2) throw err2;
       });
@@ -1264,41 +1356,113 @@ io.on('connection', function (socket) {
     var dat = data.buffer;
     var dt = "data:image/png;base64,"+dat.toString("base64");
     socket.emit('pic', dt);
+  });
+
+  //deleting a post
+  socket.on('deletePost', function (del) {
+    var puser = del.storedUsername, pId = del.iid;
+    var type = pId.slice(pId.length - 1, pId.length);
+    (function delReply() {
+      if (type == 'y') {
+        return new Promise(function(resolve, reject) {
+          conSpDr = mysql.createConnection({
+            host:'localhost',
+            user:'root',
+            password:'Mo137777',
+            database: puser
+          });
+          resolve(conSpDr);
+          console.log('1');
+        }).then(function (rs) {
+          return new Promise(function(resolve, reject) {
+            var which = 'SELECT author, postId FROM '+puser+'reply WHERE RpostId = "'+pId+'"';
+            rs.query(which, function (errdr, resdr) {
+              if (errdr) console.log(errdr);
+              else {
+                resdru = resdr.map(resdr => resdr.author)[0];
+                resdri = resdr.map(resdr => resdr.postId)[0];
+                resolve([resdru, resdri]);
+              }
+            });
+          }).then(function (rsdr) {
+              return new Promise(function(resolve, reject) {
+                conSpDru = mysql.createConnection({
+                  host:'localhost',
+                  user:'root',
+                  password:'Mo137777',
+                  database: rsdr[0]+'Post'
+                });
+                resolve([conSpDru, rsdr[0], rsdr[1]]);
+              }).then(function (rsdru) {
+                var which = ' UPDATE '+rsdru[2]+' SET replys = null WHERE liker = "'+puser+'"';
+                conSpDru.query(which, function (errdru, resdru) {
+                  if (errdru) console.log(errdru);
+                  else {
+                    deletePostTable();
+                    deletePostDatebase();
+                  }
+                });
+              });
+            })
+          });
+      }else {
+        deletePostTable();
+        deletePostDatebase();
+      }
+    })();
+    function deletePostTable() {
+      return new Promise(function(resolve, reject) {
+        conSpDp = mysql.createConnection({
+          host:'localhost',
+          user:'root',
+          password:'Mo137777',
+          database: puser
+        });
+        resolve(conSpDp);
+      }).then(function (res) {
+        var delp = 'DELETE FROM '+puser+'postId WHERE postId = "'+pId+'"';
+        res.query(delp, function (errD, resD) {
+          if (errD) console.log(errD);
+          else {
+            socket.emit('deletedPost', {puser, pId});
+          }
+        });
+      });
+    };
+    function deletePostDatebase() {
+      return new Promise(function(resolve, reject) {
+        conSpDpd = mysql.createConnection({
+          host:'localhost',
+          user:'root',
+          password:'Mo137777',
+          database: puser+'Post'
+        });
+        resolve(conSpDpd);
+      }).then(function (res) {
+        var delpd = 'DROP DATABASE IF EXISTS '+pId+'';
+        res.query(delpd, function (errDd, resDd) {
+          if (errDd) console.log(errDd);
+        });
+      });
+    };
+
   })
 
-  //usr disconnection
-  socket.on("disconnect", function (dis) {
-    console.log('a usr disconnected.');
-  });
-});
 
 
 
-/*----------------Under Construction--------------------------------------------
-
-//joining all folloing rooms
-
-var jr = 'SELECT username FROM '+u+'following';
-var conSp = mysql.createConnection({
-  host:'localhost',
-  user:'root',
-  password:'Mo137777',
-  database: u
-});
-conSp.query(jr, function (err, res) {
+/*var row = 'select * from users';
+con1.query(row, function (err, res) {
   if (err) {
-    throw err
+    return console.log(err);
   }
-  var flwng = res.map(res=>res.username);
-  for (var i = 0; i < flwng.length; i++) {
-    socket.join(flwng[i]);
-    var fp = 'SELECT content, datetime FROM '+flwng[i]+'postId';
-    conSp.query(jr, function (err, res) {
-      if (err) {
-        throw err
-      }
-
+  else {
+    var unum = res.length;
+    var percent = Math.round(unum * 0.1);
+    if (percent < 2) {
+      percent = 2;
     }
+    console.log(percent);
   }
 })*/
 
@@ -1308,14 +1472,8 @@ conSp.query(jr, function (err, res) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-//upload a file
+  //usr disconnection
+  socket.on("disconnect", function (dis) {
+    console.log('a usr disconnected.');
+  });
+});

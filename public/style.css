@@ -496,7 +496,7 @@ font-family: 'Piazzolla', serif;
 .skip2:hover{
   opacity: .6;
 }
-.Uinfo{
+.Uinfo, .inUinfo{
   display: none;
   position: absolute;
   top: 10%;
@@ -506,6 +506,9 @@ font-family: 'Piazzolla', serif;
   height: 0;
   border-right: solid #eee;
   transition: all .5s;
+}
+.inUinfo{
+  display: block;
 }
 #bios{
   max-width: 600px;
@@ -523,7 +526,7 @@ font-family: 'Piazzolla', serif;
   text-align: right;
   background: none;
 }
-.updateprof{
+.updateprof, .inupdateprof{
   position: absolute;
   top: 45%;
   left: 50%;
@@ -533,7 +536,20 @@ font-family: 'Piazzolla', serif;
   opacity: 0;
   transition: all .5s;
 }
-#Ss, #Ss2, #Ns{
+.inupdateprof{
+  opacity: 1;
+  display: flex;
+  justify-content:space-between;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 700px;
+  height: 300px;
+  top: 100px;
+  transform: translate(-40%, 0);
+}
+.lin, .rin{
+}
+#Ss, #Ss2, #Ns, #inSs2{
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
   color: white;
@@ -552,11 +568,15 @@ font-family: 'Piazzolla', serif;
   overflow: hidden;
   outline: none;
 }
+#inSs2{
+  top: 183px;
+  left: 70%;
+}
 #Ns{
   top: 80%;
 }
 
-#Ssi, #Ssi2, #Nsi{
+#Ssi, #Ssi2, #Nsi, #inSsi2{
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -828,7 +848,7 @@ font-family: 'Piazzolla', serif;
   height: 40%;
   transform: translate(-50%, -50%);
 }
-.blackArea, .blackArea2, .blackArea3{
+.blackArea, .blackArea2, .blackArea3, .blackArea4{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -841,6 +861,10 @@ font-family: 'Piazzolla', serif;
 }
 .blackArea3{
   transition: none;
+}
+.blackArea4{
+  transition: none;
+  background: none;
 }
 .writePost{
   position: absolute;
@@ -1065,8 +1089,50 @@ font-family: 'Piazzolla', serif;
   max-height: 100px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.PInf{
+  width: 100%;
+  height: 400px;
+  max-height: 100px;
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
+.iicon{
+  font-size:35px;
+  display: block;
+  left: 91.4%;
+  top: 10%;
+  position: absolute;
+  z-index:3;
+  transform: translate(-50%, -50%);
+}
+.postInter{
+  float: right;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  line-height: 6px;
+  text-align: center;
+}
+.postInter:hover{
+  background-color: #efeeee;
+}
+.postIndex{
+  cursor: pointer;
+  display: none;
+  position: relative;
+  left: -180px;
+  top: 40px;
+  width: 250px;
+  height: 400px;
+  z-index: 2;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, .2);
 }
 .Pimg{
   text-align: center;
@@ -1084,6 +1150,7 @@ font-family: 'Piazzolla', serif;
   height: 70px;
 }
 .Pname{
+  margin: 0 10px;
   height: 55%;
 }
 .Pname h1:hover{
@@ -1304,6 +1371,52 @@ font-family: 'Piazzolla', serif;
   justify-content: center;
   align-items: center;
 }
+.ctrl{
+  display: flex;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 62%;
+  z-index: 4;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .3) ;
+}
+.cback{
+  display: flex;
+  position: relative;
+  width: 15%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.cbicon{
+  margin-top: 40px;
+  position: relative;
+  width: 100%;
+  height: 10%;
+  text-align: center;
+}
+.cmain{
+  display: flex;
+  position: relative;
+  width: 80%;
+  height: 92%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.cmhead{
+  font-size: 30px;
+  color: #666;
+}
 .secr,.secl{
   display: flex;
   flex-direction: column;
@@ -1354,7 +1467,6 @@ font-family: 'Piazzolla', serif;
   box-shadow: 4px 4px 20px rgba(0, 0, 0, .5) ;
   opacity: 0;
   transition: transform .5s, opacity .5s;
-  font-weight:
 }
 .Usinfo{
   text-align: center;
@@ -1713,9 +1825,10 @@ font-family: 'Piazzolla', serif;
   width: 98%;
   height: 80%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
 
 }
 .yLHead, .tHead{
@@ -1728,6 +1841,34 @@ font-family: 'Piazzolla', serif;
   color: #444;
   border-bottom: solid #bbb .3px;
 }
+.Tcont, .tHead{
+  cursor:default;
+}
+.hash{
+  margin-top: 10px;
+  cursor: pointer;
+  border-bottom: solid #ddd;
+  position: relative;
+  width: 98%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 40px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  transition: all .2s;
+}
+.hash:hover{
+  background-color: white;
+}
+.hash h2{
+  color: #555;
+}
+.hash p{
+  color: #999;
+}
 .CS{
 font-size: 23px;
 padding: 20px 20px;
@@ -1739,9 +1880,96 @@ color: #444;
 
 
 
+.sk-folding-cube {
+  margin: 20px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+}
 
+.sk-folding-cube .sk-cube {
+  z-index: 10;
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  top: 250px;
+  left: 250px;
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+}
+.sk-folding-cube .sk-cube:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f6f6f6;
+  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+          animation: sk-foldCubeAngle 2.4s infinite linear both;
+  -webkit-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+}
+.sk-folding-cube .sk-cube2 {
+  -webkit-transform: scale(1.1) rotateZ(90deg);
+          transform: scale(1.1) rotateZ(90deg);
+}
+.sk-folding-cube .sk-cube3 {
+  -webkit-transform: scale(1.1) rotateZ(180deg);
+          transform: scale(1.1) rotateZ(180deg);
+}
+.sk-folding-cube .sk-cube4 {
+  -webkit-transform: scale(1.1) rotateZ(270deg);
+          transform: scale(1.1) rotateZ(270deg);
+}
+.sk-folding-cube .sk-cube2:before {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s;
+}
+.sk-folding-cube .sk-cube3:before {
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s;
+}
+.sk-folding-cube .sk-cube4:before {
+  -webkit-animation-delay: 0.9s;
+          animation-delay: 0.9s;
+}
+@-webkit-keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+            transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  } 25%, 75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+            transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  } 90%, 100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+            transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
+}
 
-
+@keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+            transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  } 25%, 75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+            transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  } 90%, 100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+            transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
+}
 
 
 
@@ -1860,7 +2088,7 @@ color: #444;
     top: 5%;
     left: 50%;
     transform: translate(-50%, 0);
-    width: 90%;
+    width: 30%;
     margin-bottom: 40px;
   }
   .dn{
@@ -1880,7 +2108,7 @@ color: #444;
   .Nerror{
     top: 70%;
   }
-  #Ss, #Ss2{
+  #Ss, #Ss2, {
     top: 800px;
     left: 50%;
     font-size: 60px;

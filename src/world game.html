@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <script src="world%20game_files/jquery-3.js"></script>
+    <title>world game</title>
+    <style media="screen">
+      .msg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+      }
+      .timer{
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+      }
+      #exit{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="timer">
+      100
+    </div>
+    <div class="msg" dir="rtl"></div>
+    <form class="f">
+      <input id="g" type="text" name="" value="ali">
+      <input id="s" type="number" name="" value="22">
+      <button id="p">Join</button>
+    </form>
+    <button id="score">0</button>
+    <div class="oscore"> امتیاز حریف <span>0</span> </div>
+    <button id="exit">خروج</button>
+    <script type="text/javascript" src="world%20game_files/socket.js"></script>
+    <script>
+    $(document).ready(function () {
+      var a = $('.timer').html();
+      var socket = io();
+
+      $('.f').submit(function (event) {
+        event.preventDefault();
+        var user = $('#g').val();
+        var score = $('#s').val();
+        socket.emit('open', {user,score})
+        $("#p").attr("disabled","disabled");
+      })
+      socket.on('wait', function (wait) {
+        $('.msg').html(wait.wait);
+        $("#exit").css("display","block");
+      });
+      socket.on('joined', function (u) {
+        $('.msg').html('');
+        $('.msg').html(u.myId+' به شما متصل شد!<br />امتیاز او '+u.myScore+'است.');
+        $("#score").attr("disabled",false);
+      });
+      socket.on('Ijoined', function (i) {
+        $('.msg').html('');
+        $('.msg').html('شما به  '+i.opponentId+' متصل شدید!<br />امتیاز او '+i.opponentScore+' است!');
+        $("#score").attr("disabled",false);
+        $("#exit").css("display","block");
+
+      });
+      socket.on('time', function (res) {
+        var t = res.time;
+        $('.timer').html(+a - t);
+        if (t == 100) {
+          $('.timer').html('!وقت تمام شد');
+          $("#score").attr("disabled","disabled");
+        }
+      });
+      socket.on('Oscore', function (s) {
+        $('.oscore span').html(s.oScore);
+      })
+      socket.on('win',function (w) {
+        $('.msg').html('برنده: '+w.winner+' با امتیاز:'+w.score);
+        //$('.timer').html('');
+        $("#score").attr("disabled","disabled");
+      })
+      $("#score").click(function () {
+        var score = $(this).html();
+        score = +score + 1;
+        $(this).html(score);
+        socket.emit('score', score);
+      });
+      $("#exit").click(function () {
+        var user = $('#g').val();
+        var score = $('#s').val();
+        socket.emit('close', {user});
+        $('.msg').html("لغو شد");
+        $("#p").attr("disabled",false);
+        $("#exit").css("display","none");
+      });
+
+    });
+    </script>
+  
+
+</body></html>

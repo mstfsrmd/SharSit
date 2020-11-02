@@ -13,6 +13,48 @@
     <div class="asyncInfo '+uinf+'AS"><div class="Anm"><div class="Aimg"><img src="../src/profile.png" alt=""></div><div class="Aname"><h1 class="'+sfn[i]+'un">Mostafa Sarmad+c</h1><p>@mstfsrmd</p></div><div class="Abio"><p>I use Sharsit!</p></div><div class="Aflw"><div class="Aflr"><p class="">1</p><p>Followers</p></div><div class="Aflg"><p class="">8</p><p>Followings</p></div></div><div class="ABut"><button class="AFollowB" type="button" name="button">Follow</button></div></div></div>
 
     <div class="menuicon"><span class="glyphicon">&#xe104;</span></div>
+    <div class="ctrl">
+
+      <div class="cback">
+        <div class="cbicon">
+          <i class="material-icons" style="font-size:50px;">&#xe5c4;</i>
+        </div>
+      </div>
+      <div class="cmain">
+        <div class="cmhead">
+          <h1>Setting</h1>
+        </div>
+        <div class="inUinfo">
+          <form class="inupdateprof">
+            <div class="lin">
+              <div class="d" style="width: 250px" id="inuserfn">
+                <input style="background-color:white;height: 50px; width:250px;" class="in" id="inusrfn" type="text" name="usrfn" placeholder="Enter your first name">
+              </div>
+              <div class="d" style="width: 250px" id="inuserln">
+                <input style="background-color:white;height: 50px; width:250px;" class="in" id="inusrln" type="text" name="usrln" placeholder="Enter your last name">
+              </div>
+              <div class="d" style="width: 250px" id="inuuser">
+                <input style="background-color:white;height: 50px; width:250px;" class="in" id="usrnameu" type="text" name="user" value="">
+              </div>
+            </div>
+
+            <div class="rin">
+              <div class="d" style="width: 250px" id="inuemail">
+                <input style="background-color:white;height: 50px; width:250px;" class="in" id="emailu" type="email" name="email" disabled value="">
+              </div>
+              <div class="d" style="width: 250px;" id="inbio">
+                <textarea style="resize:none; background-color:white;height: 50px; width:250px;" class="in" id="inbios" maxlength="100" type="text" name="bio" placeholder="change your bio"></textarea>
+              </div>
+              <div class="chars">
+                <span id="char">100</span> <span>/100</span><br>
+              </div>
+            </div>
+
+            <button id="inSs2"><div style="z-index:1; position:relative">Change!</div><div id="inSsi2"></div></button><br>
+          </form>
+        </div>
+      </div>
+    </div>
     <div class="menu"><div class="secr"><div class="rsect"><div class="rtsecr"><div class="profCont"><div class="pimg"><img class="ppicture" src="../src/profile.png" alt="Your picture"></div><div class="Uinfo"><h1><i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i></h1><h3></h3></div></div></div><div class="rtsecl"><div class="usrInfo"><span>Bio</span><p></p></div><div class="usrInfo flw"><div class="flwr"><span id="followers">0</span><br><span>Follower</span></div><div class="flwg"><span id="followings">0</span><br><span>following</span></div></div></div></div><div class="rsecb"></div></div><div class="secl"><div class="controlnav"><div class="cn setting"><i style="font-size:44px" class="fa">&#xf013;</i></div><div class="cn profileset"><i style="font-size:44px" class="fa">&#xf2c0;</i></div><div class="cn saved"><i style="font-size:44px" class="fa">&#xf097;</i></div><div class="cn notif"><i style="font-size:44px" class="fa">&#xf0a2;</i></div><div class="cn flfg"><i class="material-icons" id="j">&#xe915;</i></div></div></div></div>
     <div class="blackArea"></div>
     <div class="writePost">
@@ -56,15 +98,24 @@
       <div class="postArea">
         <div class="Post">
           <div class="posterInfo">
+            <div class="PInf">
               <div class="Pimg">
                 <img src="../src/profile.png" alt="">
               </div>
               <div class="Pname">
                 <h1 class="'+sfn[i]+'un">Mostafa Sarmad</h1>
-                <p>@mstfsrmd</p></div></div><div class="content">GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG<div class="postDate"><time>2020-10-13 12:32</time></div></div>
-                <div class="media">
-                  <div class="mediaCont">
-                    <img class="writePostMedia" src="../src/victory.jpg" alt="">
+                <p>@mstfsrmd</p>
+              </div>
+            </div>
+            <div class="postInter">
+            <div class="postIndex"></div>
+              <div class="material-icons">&#xe5d3;</div>
+            </div>
+          </div>
+          <div class="content">GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG<div class="postDate"><time>2020-10-13 12:32</time></div></div>
+              <div class="media">
+                <div class="mediaCont">
+                  <img class="writePostMedia" src="../src/victory.jpg" alt="">
                   </div>
                   <div class="mediaCont">
                     <img class="writePostMedia" src="../src/victory.jpg" alt="">
@@ -98,7 +149,25 @@
       </div>
     </div>
     <div class="rnav">
-      <div class="rnavCont"><div class="youLike"><h1 class="yLHead">People to follow</h1><div class="yLcont"><div class="CS">Coming Soon !</div></div></div><div class="trends"><h1 class="tHead">Trends now</h1><div class="Tcont"><div class="CS">Coming Soon !</div></div></div></div>
+      <div class="rnavCont">
+        <div class="youLike">
+          <h1 class="yLHead">People to follow</h1>
+          <div class="yLcont">
+            <div class="CS">Coming Soon !</div>
+          </div>
+        </div>
+        <div class="trends">
+          <h1 class="tHead">Trends now</h1>
+          <div class="Tcont">
+            <div class="hash">
+              <h2>#SharSit</h2>
+              <p>12.4k posts</p>
+              <div class="lds-hourglass"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="lnav">
       <div class="Search"><input id="search" type="search" name="" value="" placeholder="Global Search..." autocomplete="off"></div>
