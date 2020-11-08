@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+    <div class="bigpic"><img class="bigPic" src="" alt=""></div>
     <div class="asyncInfo '+uinf+'AS"><div class="Anm"><div class="Aimg"><img src="../src/profile.png" alt=""></div><div class="Aname"><h1 class="'+sfn[i]+'un">Mostafa Sarmad+c</h1><p>@mstfsrmd</p></div><div class="Abio"><p>I use Sharsit!</p></div><div class="Aflw"><div class="Aflr"><p class="">1</p><p>Followers</p></div><div class="Aflg"><p class="">8</p><p>Followings</p></div></div><div class="ABut"><button class="AFollowB" type="button" name="button">Follow</button></div></div></div>
 
     <div class="menuicon"><span class="glyphicon">&#xe104;</span></div>
@@ -55,8 +56,73 @@
         </div>
       </div>
     </div>
-    <div class="menu"><div class="secr"><div class="rsect"><div class="rtsecr"><div class="profCont"><div class="pimg"><img class="ppicture" src="../src/profile.png" alt="Your picture"></div><div class="Uinfo"><h1><i style="font-size:24px;color:#c60021;display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i></h1><h3></h3></div></div></div><div class="rtsecl"><div class="usrInfo"><span>Bio</span><p></p></div><div class="usrInfo flw"><div class="flwr"><span id="followers">0</span><br><span>Follower</span></div><div class="flwg"><span id="followings">0</span><br><span>following</span></div></div></div></div><div class="rsecb"></div></div><div class="secl"><div class="controlnav"><div class="cn setting"><i style="font-size:44px" class="fa">&#xf013;</i></div><div class="cn profileset"><i style="font-size:44px" class="fa">&#xf2c0;</i></div><div class="cn saved"><i style="font-size:44px" class="fa">&#xf097;</i></div><div class="cn notif"><i style="font-size:44px" class="fa">&#xf0a2;</i></div><div class="cn flfg"><i class="material-icons" id="j">&#xe915;</i></div></div></div></div>
+
+
+
+    <div class="DAConf">
+      <p>
+        Are you sure you want to delete your account?<br>
+        If you are sure, please <b>TYPE</b> this phrase in the box below and confirm:<br>
+        <span style="color:red;">"I want to delete my account"</span>.
+      </p>
+      <div class="dd" style="background-color: red;" id="confirmBox">
+        <input style="background-color:#ffcdc6; color:#ba1700;" class="in" id="cbox" type="text" name="usrfn">
+        <input style="background-color:#ffcdc6; color:#ba1700;" class="in" id="pbox" type="text" name="usrfn">
+      </div>
+      <div class="delbut">
+        <button class="yesdel" name="button" disabled>DELETE MY ACCOUNT</button>
+        <button class="nodel" name="button">Cancel</button>
+      </div>
+    </div>
+
+
+
+
+
+  <div class="saveCh"><p>Save Changes?</p><div class="choooose"><button class="yessave" name="button">Yes</button><button class="nosave" name="button">No</button></div></div>
+  <div class="menu">
+    <div class="profCont">
+      <img src="../src/logo.png" alt="">
+
+    </div>
+    <div class="Usinfo">
+      <div class="Usinc"><textarea maxlength="16" class="Usin1" name="name" >Mostafa</textarea><textarea class="Usin2" name="name" >Sarmad</textarea></div>
+      <div class="usrloc">
+        <textarea id="Usiu" disabled name="usrname">@mstfsrmd</textarea>
+        <textarea id="Usil" name="loc">Tehran, Iran</textarea>
+      </div>
+      <textarea class="bioChang" name="bio" placeholder="I use SharSit!" maxlength="100" type="text"></textarea>
+      <i id="mycert" style="cursor:default;font-size:35px;color:var(--changeColor);display: inline-block;padding:0 5px; bottom:.5px;" class="fa">&#xf058;</i>
+    </div>
+    <div class="flrflg">
+      <div class="flrM">
+        <p>19</p>
+        <p>Followers</p>
+      </div>
+      <div class="flgM">
+        <p>59</p>
+        <p>Followings</p>
+      </div>
+    </div>
+    <div class="deleteAc">
+      <p>Requires more attention</p><button type="button" name="button">DELETE MY ACCOUNT</button></div></div>
+
+
     <div class="blackArea"></div>
+    <div class="emojibox">
+      <nav class"emojinavbar">
+        <ul>
+          <li class=""></li>
+          <li class=""></li>
+          <li class=""></li>
+          <li class=""></li>
+        </ul>
+      </nav>
+      <div class="emojiindex">
+        <div class="emojis">😂</div>
+
+      </div>
+    </div>
     <div class="writePost">
       <div class="writePost_main">
         <textarea rows="1" cols="80" placeholder="What is your situation...?"></textarea>
@@ -64,22 +130,7 @@
           <span class="placeholder" style="color: #999;">What is your situation...?</span>
         </div>
         <div class="media">
-          <div class="mediaCont">
-            <div class="delPic">&times</div>
-            <img id="writePostMedia" src="../src/main.jpg" alt="">
-          </div>
-          <div class="mediaCont">
-            <div class="delPic">&times</div>
-            <img id="writePostMedia" src="../src/j.jpg" alt="">
-          </div>
-          <div class="mediaCont">
-            <div class="delPic">&times</div>
-            <img id="writePostMedia" src="../src/nat.jpg" alt="">
-          </div>
-          <div class="mediaCont">
-            <div class="delPic">&times</div>
-            <img id="writePostMedia" src="../src/trump.jpg" alt="">
-          </div>
+
         </div>
       </div>
       <button class="sendPost" type="button" name="button">SharSit!</button>
@@ -112,15 +163,104 @@
               <div class="material-icons">&#xe5d3;</div>
             </div>
           </div>
-          <div class="content">GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG<div class="postDate"><time>2020-10-13 12:32</time></div></div>
-              <div class="media">
-                <div class="mediaCont">
-                  <img class="writePostMedia" src="../src/victory.jpg" alt="">
-                  </div>
-                  <div class="mediaCont">
-                    <img class="writePostMedia" src="../src/victory.jpg" alt="">
-                  </div>
-                </div>
+          <div class="content">GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+            <div class="postDate">
+              <time>2020-10-13 12:32</time>
+            </div>
+          </div>
+          <div class="media">
+            <div class="mediaCont">
+              <img class="writePostMedia" src="../src/victory.jpg" alt="">
+            </div>
+          </div>
+          <div class="postAction">
+            <div class="postLike act">
+              <i style='font-size:30px;color:#999;display:block;' class='far w Lk'>&#xf004;
+                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
+              </i><div class="LCC">0</div>
+            </div>
+            <div class="postReply act">
+              <i style='font-size:30px;color:#999;display:block;' class='far w Rp'>&#xf075;
+                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
+              </i><div class="RCC">0</div>
+            </div>
+            <div class="postSave act">
+              <i style="font-size:30px;color:#999;display:block;" class="fa w Sv">&#xf097;
+                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
+              </i><div class="SCC">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="Post">
+          <div class="posterInfo">
+            <div class="PInf">
+              <div class="Pimg">
+                <img src="../src/profile.png" alt="">
+              </div>
+              <div class="Pname">
+                <h1 class="'+sfn[i]+'un">Mostafa Sarmad</h1>
+                <p>@mstfsrmd</p>
+              </div>
+            </div>
+            <div class="postInter">
+            <div class="postIndex"></div>
+              <div class="material-icons">&#xe5d3;</div>
+            </div>
+          </div>
+          <div class="content">GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+            <div class="postDate">
+              <time>2020-10-13 12:32</time>
+            </div>
+          </div>
+          <div class="media">
+            <div class="mediaCont">
+              <img class="writePostMedia" src="../src/victory.jpg" alt="">
+            </div>
+          </div>
+          <div class="postAction">
+            <div class="postLike act">
+              <i style='font-size:30px;color:#999;display:block;' class='far w Lk'>&#xf004;
+                <i style='font-size:30px;color:#c60021;display:block;' class='fas bl' id="like">&#xf004;</i>
+              </i><div class="LCC">0</div>
+            </div>
+            <div class="postReply act">
+              <i style='font-size:30px;color:#999;display:block;' class='far w Rp'>&#xf075;
+                <i style='font-size:30px;color:#996633;display:block;' class='fas bl' id="reply">&#xf075;</i>
+              </i><div class="RCC">0</div>
+            </div>
+            <div class="postSave act">
+              <i style="font-size:30px;color:#999;display:block;" class="fa w Sv">&#xf097;
+                <i style="font-size:30px;color:#00802b;display:block;" class="fa bl" id="save">&#xf02e;</i>
+              </i><div class="SCC">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="Post">
+          <div class="posterInfo">
+            <div class="PInf">
+              <div class="Pimg">
+                <img src="../src/profile.png" alt="">
+              </div>
+              <div class="Pname">
+                <h1 class="'+sfn[i]+'un">Mostafa Sarmad</h1>
+                <p>@mstfsrmd</p>
+              </div>
+            </div>
+            <div class="postInter">
+            <div class="postIndex"></div>
+              <div class="material-icons">&#xe5d3;</div>
+            </div>
+          </div>
+          <div class="content">GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+            <div class="postDate">
+              <time>2020-10-13 12:32</time>
+            </div>
+          </div>
+          <div class="media">
+            <div class="mediaCont">
+              <img class="writePostMedia" src="../src/victory.jpg" alt="">
+            </div>
+          </div>
           <div class="postAction">
             <div class="postLike act">
               <i style='font-size:30px;color:#999;display:block;' class='far w Lk'>&#xf004;
@@ -140,20 +280,45 @@
           </div>
         </div>
       </div>
-      <div class="writeReply">
-        <div class="writeReply_input">
-          <textarea class="replyText" id="replyText" rows="1" cols="80"></textarea>
-          <button class="sendReply" type="button">Send!</button>
-            <div class="closeReply"><p class="CR">&times</p></div>
-        </div>
-      </div>
     </div>
     <div class="rnav">
       <div class="rnavCont">
         <div class="youLike">
-          <h1 class="yLHead">People to follow</h1>
+          <h1 class="yLHead">News for you</h1>
           <div class="yLcont">
-            <div class="CS">Coming Soon !</div>
+            <div class="nameCont">
+              <div class="biden">
+                253
+              </div>
+              <div class="biden254">
+                254
+              </div>
+              <div class="wintext">270</div>
+              <div class="trump">
+                214
+              </div>
+            </div>
+            <div class="voteCont">
+              <div class="win"></div>
+              <div class="Bvot">
+
+              </div>
+              <div class="Tvot">
+
+              </div>
+            </div>
+            <div class="nameContn">
+              <div class="bidenn">Joseph R. Biden Jr.</div>
+              <div class="trumpn">Donald J. Trump</div>
+            </div>
+            <div class="allvote">
+              <div class="bidenv">72,075,712 votes (50.4%)</div>
+              <div class="add">72,075,712 votes (50.4%)</div>
+              <div class="trumpv">68,383,472 votes (47.8%)</div>
+            </div>
+            <div class="News_hed">
+              <span class="livenews"><span style="font-size:70px;">.</span>Live</span> With New Tallies Expected in Key States, Biden Narrows Gap in Georgia <a class="News_hed_a" href="https://www.reuters.com/">www.reuters.com</a>
+            </div>
           </div>
         </div>
         <div class="trends">
@@ -179,15 +344,6 @@
 
     </div>
 
-    <div class="SRes '+sun[i]+'" SResId = '+sun[i]+'>
-      <div class="Uimg '+sun[i]+'SRimg">
-        <img src="'+srcOk+'" alt="">
-      </div>
-      <div class="Uname '+sun[i]+'Un" info="'+sun[i]+'">
-        <h1 class="'+sun[i]+'un">'+sfn[i]+' '+sln[i]+'</h1>
-        <p>@'+sun[i]+'</p>
-      </div>
-    </div>
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
