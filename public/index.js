@@ -11,6 +11,8 @@ $(document).ready(function () {
   var bio;
   var rooms ={};
   var usrroom = [];
+  var forbid = 0;
+  var flwforbid = 0;
   /*,\n👷','\n👷‍♀️','\n💂','\n💂‍♀️','\n🕵','\n🕵️‍♀️','\n👶','\n👦','\n👧','\n👨','\n👩','\n👴','\n👵','\n👱','\n👱‍♀️','\n👼','\n🤰','\n🤳','\n👸','\n🤴','\n🕺','\n💃','\n👯','\n👯‍♂️','\n🙆','\n🙆‍♂️','\n🙅','\n🙅‍♂️','\n💁','\n💁‍♂️','\n🙋','\n🙋‍♂️','\n🤷','\n🤷‍♂️','\n💆','\n💆‍♂️','\n💇','\n💇‍♂️','\n🙎','\n🙎‍♂️','\n🙍','\n🙍‍♂️','\n🙇','\n🙇‍♀️','\n🖤','\n💛','\n💙','\n💜','\n💚','\n🧡','\n❤️️','\n💔','\n💗','\n💓','\n💕','\n💖','\n💞','\n💘','\n💝','\n❣️','\n💌','\n💋','\n😺','\n😸','\n😻','\n😽','\n😼','\n🙀','\n😿','\n😹','\n😾','\n🙈','\n🙉','\n🙊','\n💀','\n👽','\n👂','\n👀','\n👃','\n👅','\n👄','\n👁','\n👤','\n👥','\n🗣','\n💬','\n💭','\n🗨','\n🗯','\n🚶','\n🚶‍','\n🏃','\n🏃‍♀️','\n👫','\n👬','\n👭','\n💏','\n💑','\n👪','\n👨‍👨‍👦','\n👨‍👧',‍'\n👨‍👨‍👧‍👧','\n👨‍👩‍👦‍👦','\n👨‍👩‍👧','\n👨‍👩‍👧‍👦','\n👨‍👩‍👧‍👧','\n👩‍👩‍👦','\n👩‍👩‍👦‍👦','\n👩‍👩‍👧','\n👩‍👩‍👧‍👦','\n👻','\n🎅','\n🎅','\n🎎','\n👁‍','\n🗨','\n🗿','\n👹','\n👺','\n🤩','\n🤨','\n🤯','\n🤪','\n🤬','\n🤮','\n🤫','\n🤭','\n🧐','\n🧒','\n🧑','\n🧓','\n🧕','\n🧔','\n🤱','\n🧙','\n🧙',‍'\n🧚','\n🧚‍','\n🧛','\n🧛‍♂️','\n🧜','\n🧝','\n🧝‍♀️','\n🧞','\n🧞‍♀️','\n🧖','\n🧗','\n🧘','\n🧘‍♂️ ','\n🧟','\n🧟‍♀️','\n🥰️','\n🥵️','\n🥶️','\n🥴️','\n🥳️','\n🥺️','\n🦵️','\n🦶️','\n🦷','️\n🦴','️\n👨‍🦰️','\n👨‍🦱️','\n👨‍🦳️','\n👨‍🦲️','\n👩‍🦰️','\n👩‍🦱️','\n👩‍🦳','️\n👩‍🦲️','\n🦸‍♂️️','\n🦸‍♀️️','\n🦹‍♂️️','\n🦹‍'*/
   var emoji = ['\n😂','\n😄','\n😃','\n😀','\n😊','\n😉','\n😍','\n😘','\n😚','\n😗','\n😙','\n😜','\n😝','\n😛','\n😳','\n😁','\n😔','\n😌','\n😒','\n😞','\n😣','\n😢','\n😭','\n😪','\n😥','\n😰','\n😅','\n😓','\n😩','\n😫','\n😨','\n😱','\n😠','\n😡','\n😤','\n😖','\n😆','\n😋','\n😷','\n😎','\n😴','\n😵','\n😲','\n😟','\n😦','\n😧','\n😈','\n👿','\n😮','\n😬','\n😐','\n😕','\n😯','\n😶','\n😇','\n😏','\n😑','\n🙃','\n🙄','\n🤐','\n🤑','\n🤒','\n🤓','\n🤔','\n🤕','\n🙁','\n🙂','\n🤗','\n🤣','\n🤠','\n🤥','\n🤤','\n🤢','\n🤧','\n👰','\n🤦','\n🤦‍♀️','\n🤡','\n🤖','\n👲','\n👳','\n👳‍♀️','\n👮'];
   var color = ['#232b2b','#453832','#cf8a06','#9a9500','#efc050','#964f4c','#c60021','#019875','#ff6f61','#5f4b8b','#88b04b','#ad5e99','#009473','#dd4124','#7bc4c4','#0f4c81', '#1da1f2'];
@@ -259,7 +261,7 @@ $(document).ready(function () {
       $("body").css("overflow","hidden");
       $(".SignInFrom").css('display','none');
       $(".maincont").css('display','block');
-      $(".maincont").append('<div class="bigpic"><img class="bigPic" src="" alt=""></div><div class="timelineicon"><i id="timelineicon" class="material-icons">&#xe8f9;</i></div><div class="homeicon"><i class="fa" id="homeicon">&#xf015;</i></div><div class="menuicon"><i class="fa" id="menuicon">&#xf0c9;</i></div><div class="DAConf"><p>Are you sure you want to delete your account?<br>If you are sure, please <b>TYPE</b> this phrase in the box below and confirm:<br><span style="color:red;">"I want to delete my account"</span>.</p><div class="dd" style="background-color: red;" id="confirmBox"><input style="background-color:#ffcdc6; color:#ba1700;" class="in" id="cbox" type="text" name="usrfn" placeholder="Enter Confirm Pharse Here"></div><div class="dd" style="background-color: red;" id="passconfirmBox"><input style="background-color:#ffcdc6; color:#ba1700;" class="in" id="pbox" type="text" name="usrfn" placeholder="Enter Your Password Here" required></div><div class="delbut"><button class="yesdel" name="button" disabled>DELETE MY ACCOUNT</button><button class="nodel" name="button">Cancel</button></div></div><div class="saveCh"><p>Save Changes?</p><div class="choooose"><button class="yessave" name="button">Yes</button><button class="nosave" name="button">No</button></div></div><div class="menu"><div class="profCont"><img src="'+checkRes.src+'" alt=""></div><div class="Usinfo"><div class="Usinc"><textarea class="Usin1" name="name" maxlength="14" placeholder="'+checkRes.f+'"></textarea><textarea class="Usin2" name="name" placeholder="'+checkRes.l+'" maxlength="12"></textarea>'+c+'</div><div class="usrloc"><textarea id="Usiu" name="usrname" disabled placeholder="@'+checkRes.uSr+'"></textarea><textarea id="Usil" name="loc" placeholder="'+checkRes.loc+'"></textarea></div><textarea class="bioChang" name="bio" placeholder="'+b+'" maxlength="100" type="text"></textarea></div><div class="flrflg"><div class="flrM"><p>'+checkRes.fr+'</p><p>Followers</p></div><div class="flgM"><p>'+checkRes.fg+'</p><p>Followings</p></div></div><div class="deleteAc"><p>Requires more attention</p><button class="RqDelAc" type="button" name="button">DELETE MY ACCOUNT</button></div></div><div class="blackArea"></div><div class="blackArea2"></div><div class="blackArea4"></div><div class="blackArea3"><div class="sk-folding-cube"><div class="sk-cube1 sk-cube"></div><div class="sk-cube2 sk-cube"></div><div class="sk-cube4 sk-cube"></div><div class="sk-cube3 sk-cube"></div></div></div><div class="emojibox"><nav class"emojinavbar"><ul><li class=""></li><li class=""></li><li class=""></li><li class=""></li></ul></nav><div class="emojiindex"></div></div><div class="writePost"><div class="writePost_main"><textarea class="txtarea" max = "300" rows="1" cols="80" placeholder="What is your situation...?"></textarea><div class="postCon"></div><div class="media"></div></div><button class="sendPost" type="button" name="button">SharSit!</button><div class="attach"><div class="emoji"><i style="font-size:34px; color: white;line-height: 69px;" class="far">&#xf118;</i></div><div class="file"><form><input class="fileUp" type="file" name="" value=""><button id ="sEnd">Send</button></form></div><div class="fileSkin"><i style="font-size:34px; color: white;line-height: 69px;" class="fas">&#xf0c6;</i></div></div></div><div class="mainsec"><div class="postArea '+checkRes.uSr+'pA" ></div></div><div class="rnav"><div class="rnavCont"><div class="youLike"><h1 class="yLHead">News for you</h1><div class="yLcont"><div class="lds-ripple"><div></div><div></div></div></div></div><div class="trends"><h1 class="tHead">Trends now</h1><div class="Tcont"></div></div></div></div><div class="lnav"><div class="Search"><input id="search" type="search" name="" value="" placeholder="Search SharSit..." autocomplete="off"></div><div class="SResC"><div class="SRC"></div></div><div class="new"><div class="newcont"><i style="font-size:50px;text-shadow: 7px 7px 7px rgba(0,0,0,.4);" class="fas">&#xf5ad;</i></div></div></div>')
+      $(".maincont").append('<div class="actionCont"></div><div class="Searchmin"><input id="searchmin" type="search" name="" value="" placeholder="Search SharSit..." autocomplete="off"></div><div class="SResCmin"><div class="SRCmin"></div></div><div class="ascont"><div class="asyncInfo"></div></div><div id="postIndex"></div><div class="bigpic"><img class="bigPic" src="" alt=""></div><div class="timelineicon"><i id="timelineicon" class="material-icons">&#xe8f9;</i></div><div class="homeicon"><i class="fa" id="homeicon">&#xf015;</i></div><div class="menuicon"><i class="fa" id="menuicon">&#xf0c9;</i></div><div class="srchicon"><i class="material-icons" id="srchicon">&#xe8b6;</i></div><div class="DAConf"><p>Are you sure you want to delete your account?<br>If you are sure, please <b>TYPE</b> this phrase in the box below and confirm:<br><span style="color:red;">"I want to delete my account"</span>.</p><div class="dd" style="background-color: red;" id="confirmBox"><input style="background-color:#ffcdc6; color:#ba1700;" class="in" id="cbox" type="text" name="usrfn" placeholder="Enter Confirm Pharse Here"></div><div class="dd" style="background-color: red;" id="passconfirmBox"><input style="background-color:#ffcdc6; color:#ba1700;" class="in" id="pbox" type="text" name="usrfn" placeholder="Enter Your Password Here" required></div><div class="delbut"><button class="yesdel" name="button" disabled>DELETE MY ACCOUNT</button><button class="nodel" name="button">Cancel</button></div></div><div class="saveCh"><p>Save Changes?</p><div class="choooose"><button class="yessave" name="button">Yes</button><button class="nosave" name="button">No</button></div></div><div class="menu"><div class="mncont"><div class="profCont"><img src="'+checkRes.src+'" alt=""></div><div class="Usinfo"><div class="Usinc"><textarea class="Usin1" name="name" maxlength="14" placeholder="'+checkRes.f+'"></textarea><textarea class="Usin2" name="name" placeholder="'+checkRes.l+'" maxlength="12"></textarea>'+c+'</div><div class="usrloc"><textarea id="Usiu" name="usrname" disabled placeholder="@'+checkRes.uSr+'"></textarea><textarea id="Usil" name="loc" placeholder="'+checkRes.loc+'"></textarea></div><textarea class="bioChang" name="bio" placeholder="'+b+'" maxlength="100" type="text"></textarea></div><div class="flrflg"><div class="flrM"><p>'+checkRes.fr+'</p><p>Followers</p></div><div class="flgM"><p>'+checkRes.fg+'</p><p>Followings</p></div></div><div class="deleteAc"><p>Requires more attention</p><button class="RqDelAc" type="button" name="button">DELETE MY ACCOUNT</button></div></div></div><div class="blackArea"></div><div class="blackArea2"></div><div class="blackArea4"></div><div class="blackArea3"><div class="sk-folding-cube"><div class="sk-cube1 sk-cube"></div><div class="sk-cube2 sk-cube"></div><div class="sk-cube4 sk-cube"></div><div class="sk-cube3 sk-cube"></div></div></div><div class="emojibox"><nav class"emojinavbar"><ul><li class=""></li><li class=""></li><li class=""></li><li class=""></li></ul></nav><div class="emojiindex"></div></div><div class="writePost"><div class="writePost_main"><textarea class="txtarea" max = "300" rows="1" cols="80" placeholder="What is your situation...?"></textarea><div class="postCon"></div><div class="media"></div></div><button class="sendPost" type="button" name="button">SharSit!</button><div class="attach"><div class="emoji"><i style="font-size:34px; color: white;line-height: 69px;" class="far">&#xf118;</i></div><div class="file"><form><input class="fileUp" type="file" name="" value=""><button id ="sEnd">Send</button></form></div><div class="fileSkin"><i style="font-size:34px; color: white;line-height: 69px;" class="fas">&#xf0c6;</i></div></div></div><div class="mainsec"><div class="postArea '+checkRes.uSr+'pA" ></div></div><div class="rnav"><div class="rnavCont"><div class="youLike"><h1 class="yLHead">News for you</h1><div class="yLcont"><div class="lds-ripple"><div></div><div></div></div></div></div><div class="trends"><h1 class="tHead">Trends now</h1><div class="Tcont"></div></div></div></div><div class="lnav"><div class="Search"><input id="search" type="search" name="" value="" placeholder="Search SharSit..." autocomplete="off"></div><div class="SResC"><div class="SRC"></div></div><div class="new"><div class="newcont"><i style="font-size:50px;text-shadow: 7px 7px 7px rgba(0,0,0,.4);" class="fas">&#xf5ad;</i></div></div></div>')
       $('.blackArea3').css({'z-index':'2', 'opacity':'.4'});
     }else {
       $('.Nerror').html(checkRes.checkRes);
@@ -285,7 +287,7 @@ $(document).ready(function () {
         plnameOk = 'user';}
       if (pfname[i] =='' && plname[i] !='') {pfnameOk = ''; plnameOk = plname[i];}
       if (pfname[i] !='' && plname[i] == '') {plnameOk = ''; pfnameOk = pfname[i];}
-      if (pfname[i] !='' && plname[i] !='') {plnameOk = plname[i]; pfnameOk = pfname[i]};
+      if (pfname[i] !='' && plname[i] !='') {plnameOk = plname[i]; pfnameOk = pfname[i]}
       if (img[i]) {
       }
       if (+pl[i] > 999 && +pl[i] < 1100) {
@@ -299,7 +301,7 @@ $(document).ready(function () {
       }
       pcont[i] = pcont[i].replace(/(^|\s)(#[a-z\d-_!?]+)/ig, "$1<span class='hash_tag'>$2</span>");
       pcont[i] = pcont[i].replace(/(^|\s)(@[a-z\d-_!?]+)/ig, "$1<span class='at_sign pHin' info='$2'>$2</span>");
-      $('.postArea').prepend('<div class="Post '+puser[i]+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+srcOk+'" alt=""></div><div class="Pname pHin" info="'+puser[i]+'"><h1>'+pfnameOk+' '+plnameOk+pcertOk+'</h1><p>@'+puser[i]+'</p></div></div><div class="postInter" iId="'+postId[i]+'"><div class="postIndex '+postId[i]+'ind"></div><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div></div><div class="mediaPost '+postId[i]+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+puser[i]+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+puser[i]+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">'+pr[i]+'</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+puser[i]+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
+      $('.postArea').prepend('<div class="Post '+puser[i]+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+srcOk+'" alt=""></div><div class="Pname pHin" info="'+puser[i]+'"><h1>'+pfnameOk+' '+plnameOk+pcertOk+'</h1><p>@'+puser[i]+'</p></div></div><div class="postInter" iId="'+postId[i]+'"><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div></div><div class="mediaPost '+postId[i]+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+puser[i]+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+puser[i]+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">'+pr[i]+'</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+puser[i]+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
       if (isL[i]) {
         $('.'+postId[i]+'IAL').css('opacity','1');
       }
@@ -322,6 +324,7 @@ $(document).ready(function () {
     socket.emit('goHome', {storedUsername, rooM});
   });
   socket.on('Homepostload', function (p) {
+    forbid = 0;
     var img = p.im;
     var pcont = p.p, pdate = p.d, pl = p.lk, pr = p.rp, pr = p.rp, postId = p.pi, src = p.s;
     var puser = p.u, pfname = p.f, plname =p.l, pHcert = p.c, isL = p.isLikeHome;
@@ -348,7 +351,7 @@ $(document).ready(function () {
       }
       pcont[i] = pcont[i].replace(/(^|\s)(#[a-z\d-_!?]+)/ig, "$1<span class='hash_tag'>$2</span>");
       pcont[i] = pcont[i].replace(/(^|\s)(@[a-z\d-_!?]+)/ig, "$1<span class='at_sign pHin' info='$2'>$2</span>");
-      $('.'+puser+'pA').prepend('<div class="Post '+puser+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img claas="'+postId[i]+'pImg" src="'+src+'" alt=""></div><div class="Pname pHin" info="'+p.u+'"><h1>'+pfname+' '+plname+pHcert+'</h1><p>@'+p.u+'</p></div></div><div class="postInter" iId="'+postId[i]+'"><div class="postIndex '+postId[i]+'ind"></div><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div></div><div class="mediaPost '+postId[i]+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+puser+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+puser+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">'+pr[i]+'</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+puser+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
+      $('.'+puser+'pA').prepend('<div class="Post '+puser+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img claas="'+postId[i]+'pImg" src="'+src+'" alt=""></div><div class="Pname pHin" info="'+p.u+'"><h1>'+pfname+' '+plname+pHcert+'</h1><p>@'+p.u+'</p></div></div><div class="postInter" iId="'+postId[i]+'"><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div></div><div class="mediaPost '+postId[i]+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+puser+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+puser+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">'+pr[i]+'</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+puser+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
       if (isL[i]) {
         $('.'+postId[i]+'IAL').css('opacity','1');
       }
@@ -372,6 +375,7 @@ $(document).ready(function () {
     $('.blackArea3').css({'z-index':'2', 'opacity':'.4'});
   });
   socket.on('Timepostload', function (p) {
+    forbid = 0;
     $('.blackArea3').css({'z-index':'-2', 'opacity':'0'});
     $(".mainsec").empty();
     $('.mainsec').append('<div class="postArea '+puser+'pA" ></div>');
@@ -402,7 +406,7 @@ $(document).ready(function () {
       if (pfname[i] !='' && plname[i] !='') {plnameOk = plname[i]; pfnameOk = pfname[i]};
       pcont[i] = pcont[i].replace(/(^|\s)(#[a-z\d-_!?]+)/ig, "$1<span class='hash_tag'>$2</span>");
       pcont[i] = pcont[i].replace(/(^|\s)(@[a-z\d-_!?]+)/ig, "$1<span class='at_sign pHin' info='$2'>$2</span>");
-      $('.postArea').prepend('<div class="Post '+puser[i]+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+srcOk+'" alt=""></div><div class="Pname pHin" info="'+puser[i]+'"><h1>'+pfnameOk+' '+plnameOk+pcertOk+'</h1><p>@'+puser[i]+'</p></div></div><div class="postInter" iId="'+postId[i]+'"><div class="postIndex '+postId[i]+'ind"></div><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div></div><div class="mediaPost '+postId[i]+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+puser[i]+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+puser[i]+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">'+pr[i]+'</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+puser[i]+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
+      $('.postArea').prepend('<div class="Post '+puser[i]+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+srcOk+'" alt=""></div><div class="Pname pHin" info="'+puser[i]+'"><h1>'+pfnameOk+' '+plnameOk+pcertOk+'</h1><p>@'+puser[i]+'</p></div></div><div class="postInter" iId="'+postId[i]+'"><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div></div><div class="mediaPost '+postId[i]+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+puser[i]+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+puser[i]+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">'+pr[i]+'</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+puser[i]+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
       if (isL[i]) {
         $('.'+postId[i]+'IAL').css('opacity','1');
       }
@@ -501,7 +505,7 @@ $(document).ready(function () {
     if (!fname && lname) fname = '';
     if (fname && !lname) lname = '';
     var postuserId = postId.slice(0, postId.indexOf('2'));
-    $('.postArea').prepend('<div class="Post '+postId+'PoSt" poId="'+postId+'"><div class="posterInfo '+postId+'pInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+src+'" alt=""></div><div class="Pname '+postId+'pNam pHin" info="'+post.u+'"><h1>'+fname+' '+lname+c+'</h1><p>@'+post.u+'</p></div></div><div class="postInter" iId="'+postId+'"><div class="postIndex '+postId+'ind"></div><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content '+postId+'pContant"></div><div class="postDate '+postId+'date"><time></time></div><div class="media '+postId+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+postuserId+' pId="'+postId+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId+'IAL" id="like" act="liking" pId="'+postId+'">&#xf004;</i></i><div class="LCC '+postId+'L">0</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+postuserId+' pId="'+postId+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId+'IAR" id="reply" act="replying" pId="'+postId+'">&#xf075;</i></i><div class="RCC '+postId+'R">0</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+postuserId+' pId="'+postId+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId+'IAS" id="save" act="saving" pId="'+postId+'">&#xf02e;</i></i><div class="SCC '+postId+'S">0</div></div></div></div>')
+    $('.postArea').prepend('<div class="Post '+postId+'PoSt" poId="'+postId+'"><div class="posterInfo '+postId+'pInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+src+'" alt=""></div><div class="Pname '+postId+'pNam pHin" info="'+post.u+'"><h1>'+fname+' '+lname+c+'</h1><p>@'+post.u+'</p></div></div><div class="postInter" iId="'+postId+'"><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content '+postId+'pContant"></div><div class="postDate '+postId+'date"><time></time></div><div class="media '+postId+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+postuserId+' pId="'+postId+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId+'IAL" id="like" act="liking" pId="'+postId+'">&#xf004;</i></i><div class="LCC '+postId+'L">0</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+postuserId+' pId="'+postId+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId+'IAR" id="reply" act="replying" pId="'+postId+'">&#xf075;</i></i><div class="RCC '+postId+'R">0</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+postuserId+' pId="'+postId+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId+'IAS" id="save" act="saving" pId="'+postId+'">&#xf02e;</i></i><div class="SCC '+postId+'S">0</div></div></div></div>')
     $('.'+postId+'pContant').prepend(postContent.replace(/(?:\r\n|\r|\n)/g, "<br />"));
     $('.'+postId+'date time').html(postdate);
     if (postContent.indexOf('@') != -1) {
@@ -542,6 +546,21 @@ $(document).ready(function () {
       $('.SRC').empty();
     }
   });
+  $('.maincont').on('keyup', '#searchmin',function () {
+    var searchRes = $('#searchmin').val().trim();
+    if (searchRes.split('')[0] == '@') {
+      $('#searchmin').css('color','#999');
+    }else {
+      $('#searchmin').css('color','black');
+    }
+    var searchRes = searchRes.replace('@','');
+    $('.SRCmin').empty();
+    if (searchRes != '') {
+      socket.emit('searchRes', searchRes);
+    }else {
+      $('.SRCmin').empty();
+    }
+  });
   socket.on('sresult', function (s) {
     var sun = s.sun;
     var sfn = s.sfn;
@@ -567,16 +586,36 @@ $(document).ready(function () {
         if (head.split('').length > 11) {
           sln[i] = sln[i].slice(0, 5) + '...';
         }
-        $('.SRC').append('<div class="SRes '+sun[i]+'" SResId = '+sun[i]+'><div class="Uimg '+sun[i]+'SRimg"><img src="'+srcOk+'" alt=""></div><div class="Uname '+sun[i]+'Un" info="'+sun[i]+'"><h1 class="'+sun[i]+'un">'+sfn[i]+' '+sln[i]+'</h1><p>@'+sun[i]+'</p></div></div>')
-        if (scn[i] == 1) {
-          $('.'+sun[i]+'un').append('<i style="font-size:24px;color:var(--changeColor);display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>')
+        if ($('.SRC').css('display')!='none') {
+          $('.SRC').append('<div class="SRes '+sun[i]+'" SResId = '+sun[i]+'><div class="Uimg '+sun[i]+'SRimg"><img src="'+srcOk+'" alt=""></div><div class="Uname '+sun[i]+'Un" info="'+sun[i]+'"><h1 class="'+sun[i]+'un">'+sfn[i]+' '+sln[i]+'</h1><p>@'+sun[i]+'</p></div></div>')
+          if (scn[i] == 1) {
+            $('.'+sun[i]+'un').append('<i style="font-size:24px;color:var(--changeColor);display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>')
+          }
+        }else {
+          $('.SRCmin').append('<div class="SResmin '+sun[i]+'" SResId = '+sun[i]+'><div class="Uimg '+sun[i]+'SRimg"><img src="'+srcOk+'" alt=""></div><div class="Uname '+sun[i]+'Un" info="'+sun[i]+'"><h1 class="'+sun[i]+'un">'+sfn[i]+' '+sln[i]+'</h1><p>@'+sun[i]+'</p></div></div>')
+          if (scn[i] == 1) {
+            $('.'+sun[i]+'un').append('<i style="font-size:24px;color:var(--changeColor);display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>')
+          }
         }
+
       }
     }
   });
 
   //choose a user
   $(".maincont"). on('click', '.SRes', function (e) {
+    var sResUser = $(this).attr('SResId');
+    if (!rooms[storedUsername]) {
+      console.log('ok');
+    }else {
+      usrroom = []
+      socket.emit('leave', rooms[storedUsername]);
+      delete rooms[storedUsername];
+    }
+    socket.emit('selectedusr', {sResUser, storedUsername});
+    $('.blackArea3').css({'z-index':'2', 'opacity':'.4'});
+  });
+  $(".maincont"). on('click', '.SResmin', function (e) {
     var sResUser = $(this).attr('SResId');
     if (!rooms[storedUsername]) {
       console.log('ok');
@@ -625,6 +664,7 @@ $(document).ready(function () {
 
   //getting choosen user posts
   socket.on('Cpostload', function (res) {
+    forbid = 0;
     $('.mainsec').empty();
     var img = res.im;
     var cpContent = res.p, pl = res.lk, pr = res.rp, src = res.s;
@@ -646,7 +686,7 @@ $(document).ready(function () {
       }
       cpContent[i] =cpContent[i].replace(/(^|\s)(#[a-z\d-_!?]+)/ig, "$1<span class='hash_tag'>$2</span>");
       cpContent[i] =cpContent[i].replace(/(^|\s)(@[a-z\d-_!?]+)/ig, "$1<span class='at_sign pHin' info='$2'>$2</span>");
-      $('.'+res.su+'pA').prepend('<div class="Post '+res.su+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+src+'" alt=""></div><div class="Pname pHin" info="'+res.su+'"><h1>'+res.f+' '+res.l+cpCert+'</h1><p>@'+res.su+'</p></div></div><div class="postInter" iId="'+postId[i]+'"><div class="postIndex '+postId[i]+'ind"></div><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+cpContent[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+cpDate[i].replace('T','<br/>').replace('.000Z','')+'</time></div></div><div class="mediaPost '+postId[i]+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+res.su+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+res.su+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">'+pr[i]+'</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+res.su+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
+      $('.'+res.su+'pA').prepend('<div class="Post '+res.su+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+src+'" alt=""></div><div class="Pname pHin" info="'+res.su+'"><h1>'+res.f+' '+res.l+cpCert+'</h1><p>@'+res.su+'</p></div></div><div class="postInter" iId="'+postId[i]+'"><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+cpContent[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+cpDate[i].replace('T','<br/>').replace('.000Z','')+'</time></div></div><div class="mediaPost '+postId[i]+'IMP"></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+res.su+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+res.su+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">'+pr[i]+'</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+res.su+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
       if (isL[i]) {
         $('.'+postId[i]+'IAL').css('opacity','1');
       }
@@ -678,14 +718,40 @@ $(document).ready(function () {
     $('.SRC').empty();
   },500)
   });
-
+  $('.maincont').on('focus', '#searchmin',function () {
+    $(".Searchmin").css({'z-index':'2'});
+    $("#searchmin").css({'width': '100%','padding': '5px 20px','border-bottom-right-radius':'0px','border-bottom-left-radius':'0px'});
+    setTimeout(function () {
+      $(".SResCmin").css({'height':'70%'});
+      $(".SRCmin").css('display','block');
+    }, 500);
+  });
+  $('.maincont').on('blur', '#searchmin',function () {
+    setTimeout(function () {
+    $(".SResCmin").css({'height':'0%'});
+    $(".SRCmin").css('display','none');
+    $("#searchmin").val('');
+    $('.SRCmin').empty();
+    setTimeout(function () {
+      $("#searchmin").css({'width': '0','padding': '0','border-bottom-right-radius':'10px','border-bottom-left-radius':'10px'});
+      setTimeout(function () {
+        $(".Searchmin").css({'z-index':'-2'});
+      }, 500);
+    }, 500);
+  },500)
+  });
+  $('.maincont').on('click', '#srchicon',function () {
+    $("#searchmin").trigger('focus');
+  });
   //follow handle
   $(".maincont").on('click', '.FollowB', function () {
     var userFA = $(this).attr('flId');
     userFA = userFA.replace('fL', '');
-    if ($(".FollowB").html() == 'Follow') {
+    if ($(".FollowB").html() == 'Follow' && flwforbid == 0) {
+      flwforbid = 1;
       socket.emit('flw', {userFA, storedUsername});
-    }else {
+    }else if ($(".FollowB").html() == 'Following' && flwforbid == 0){
+      flwforbid = 1;
       socket.emit('unflw', {userFA, storedUsername});
     }
   });
@@ -703,6 +769,7 @@ $(document).ready(function () {
   });
   //following result
   socket.on('flwSuc', function (fu) {
+    flwforbid = 0;
     $(".FollowB").css({'background-color':'#f6f6f6','border':'solid var(--changeColor)', 'color':'var(--changeColor)'});
     $(".FollowB").html('Following');
     var what1 = $('#followers'+fu+'').html();
@@ -712,6 +779,7 @@ $(document).ready(function () {
   });
   //Unfollowing result
   socket.on('unflwSuc', function (fu) {
+    flwforbid = 0;
     $(".FollowB").css({'background-color':' var(--changeColor)', 'border':'none', 'color':'white'});
     $(".FollowB").html('Follow');
     var what1 = $('#followers'+fu+'').html();
@@ -739,25 +807,60 @@ $(document).ready(function () {
 
   //menu opening
   $('.maincont').on('click', '#menuicon', function () {
-    $('.menu').css('display','flex');
+    if (window.matchMedia('(max-width: 1000px)').matches) {
+      $('.menu').css('display','block');
+      $('.menu').css('width','500px');
+      $('.mncont').css('display','flex');
+    }else {
+      $('.menu').css('width','500px');
+      $('.menu').css('display','flex');
+    }
     $('.blackArea').css({'z-index':'2', 'opacity':'.4'});
   });
   $('.maincont').on('click', '.blackArea', function () {
-    $('.blackArea').css({'opacity':'0','z-index':'-2'});
-    $('.menu').css('display','none');
+    if (window.matchMedia('(max-width: 1000px)').matches) {
+      $('.menu').css('width','0%');
+      $('.mncont').css('display','none');
+    }else {
+      $('.menu').css('display','none');
+    }
     $('.DAConf').css('display', 'none');
+    $('.blackArea').css({'opacity':'0','z-index':'-2'});
     $('#cbox').val('');
   });
+  var w = $(window).width();
+  $(window).resize(function () {
+    if (w != $(this).width()) {
+      w = $(this).width();
+      if (window.matchMedia('(max-width: 1000px)').matches) {
+        $('.menu').css('width','0%');
+        $('.mncont').css('display','none');
+      }else {
+        $('.menu').css('display','none');
+      }
+      $("#searchmin").trigger('blur');
+      $('.DAConf').css('display', 'none');
+      $('.blackArea').css({'opacity':'0','z-index':'-2'});
+      $('#cbox').val('');
+    }
+  });
 
-  $(".maincont").on('mousemove', '.pHin, .asyncInfo', function (e) {
+
+  $(".maincont").on('mouseover', '.pHin', function (e) {
     var uinf = $(this).attr('info');
     if (uinf.indexOf('@') != -1) {
       uinf = uinf.replace('@','');
     }
-    socket.emit('AS', uinf);
+    socket.emit('AS', {uinf, storedUsername});
     var x = e.pageX;
     var y = e.pageY;
-    $('.asyncInfo').css({'top':y+30,'left':x+20})
+    $('.ascont').css({'display':'block'})
+    if (y < 430) {
+      $('.ascont').css({'top':y+50,'left':'850px'})
+    }else {
+      $('.ascont').css({'top':y+50,'left':'850px'})
+    }
+
 
   });
   socket.on('ASr', function (asr) {
@@ -765,6 +868,7 @@ $(document).ready(function () {
     var ln= asr.lnam; var c = asr.cert;
     var loc = asr.loc; var bio = asr.bio;
     var fr = asr.flwr; var fg = asr.flwg, src = asr.src;
+    var isf = asr.isflw;
     var f,l;
     if (src == '') {
       src = 'profile.png'
@@ -782,13 +886,18 @@ $(document).ready(function () {
     if (c == 1) {
       c = '<i style="font-size:24px;color:var(--changeColor);display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
     }else {c = ''}
-    if ($('.asyncInfo').length == 0) {
-      $('body').append('<div class="asyncInfo '+u+'AS"><div class="Anm"><div class="Aimg"><img src="'+src+'" alt=""></div><div class="Aname"><h1 class="un">'+f+' '+l+' '+c+'</h1><p>@'+u+'</p><p><i style="font-size:17px;color:#999;margin-left:3px;" class="fa">&#xf041;</i> '+loc+'</p></div><div class="Abio"><p>'+bio+'</p></div><div class="Aflw"><div class="Aflr"><p class="">'+fr+'</p><p>Followers</p></div><div class="Aflg"><p class="">'+fg+'</p><p>Followings</p></div></div></div></div>');
+    $('.asyncInfo').attr('id', ''+u+'AS');
+    $('.asyncInfo').append('<div class="Anm"><div class="Ahed"><div class="Aimg"><img src="'+src+'" alt=""></div></div><div class="Aname"><h1 class="un">'+f+' '+l+' '+c+'</h1><p>@'+u+'</p><p><i style="font-size:17px;color:#999;margin-left:3px;" class="fa">&#xf041;</i> '+loc+'</p></div><div class="Abio"><p>'+bio+'</p></div><div class="Aflw"><div class="Aflr"><p class="">'+fr+'</p><p>Followers</p></div><div class="Aflg"><p class="">'+fg+'</p><p>Followings</p></div></div></div>');
+    if (isf) {
+      $('.Ahed').append('<div class="uflwbut">Following</div>');
+    }else if (!isf && u!= storedUsername){
+      $('.Ahed').append('<div class="flwbut">Follow</div>');
     }
-
   });
-  $(".maincont").on('mouseout', '.pHin, .asyncInfo', function (e) {
-      $('.asyncInfo').remove();
+  $(".maincont").on('mouseout', '.ascont, .asyncInfo', function (e) {
+      $('.ascont').css({'display':'none'})
+      $('.asyncInfo').empty();
+      $('.asyncInfo').removeAttr('id');
   });
 
   //go to user if name clicked
@@ -811,15 +920,18 @@ $(document).ready(function () {
   });
 
   //handle post action
+  var likstop = 0;
   $(".maincont").on('click', '.w', function (event) {
     event.stopPropagation();
     var act = $(this).attr('act');
     var pId = $(this).attr('pId');
     var uId = $(this).attr('uId');
     if (act == 'liking') {
-      if ($('.'+pId+'IAL').css('opacity') == 0) {
+      if ($('.'+pId+'IAL').css('opacity') == 0 && likstop == 0) {
+        likstop = 1;
         socket.emit('like', {pId, uId, storedUsername});
-      }else {
+      }else if ($('.'+pId+'IAL').css('opacity') == 1 && likstop == 0){
+        likstop = 1;
         socket.emit('unlike', {pId, uId, storedUsername});
       }
     }
@@ -832,6 +944,7 @@ $(document).ready(function () {
     }
   });
   socket.on('liked', function (res) {
+    likstop = 0;
     $('.'+res.pId+'IAL').css({'opacity':'1'});
   });
   socket.on('likedN', function (res) {
@@ -842,6 +955,7 @@ $(document).ready(function () {
 
   //post unlike handle
   socket.on('unliked', function (res) {
+    likstop = 0;
     $('.'+res.pId+'IAL').css({'opacity':'0'});
   });
   socket.on('unlikedN', function (res) {
@@ -879,7 +993,7 @@ $(document).ready(function () {
     else if (!post.f && post.l) post.f = '';
     else if (post.f && !post.l) post.l = '';
     var postuserId = postId.slice(0, postId.indexOf('2'));
-    $('.postArea').prepend('<div class="Post '+postId+'PoSt" poId="'+postId+'"><div class="posterInfo '+postId+'pInfo"><div class="PInf"><div class="Pimg '+postId+'pImag"><img class="'+postId+'pImg" src="'+src+'" alt=""></div><div class="Pname '+postId+'pNam pHin" info="'+post.replier+'"><h1>'+post.f+' '+post.l+cpCert+'</h1><p>@'+post.replier+' replying to '+post.uId+'</p></div></div><div class="postInter" iId="'+postId+'"><div class="postIndex '+postId+'ind"></div><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content '+postId+'pContant"><div class="postDate '+postId+'date"><time></time></div></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+postuserId+' pId="'+postId+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId+'IAL" act="liking" pId="'+postId+'">&#xf004;</i></i><div class="LCC '+postId+'L">0</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+postuserId+' pId="'+postId+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId+'IAR" act="replying" pId="'+postId+'">&#xf075;</i></i><div class="RCC '+postId+'R">0</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+postuserId+' pId="'+postId+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId+'IAS" act="saving" pId="'+postId+'">&#xf02e;</i></i><div class="SCC '+postId+'S">0</div></div></div></div>')
+    $('.postArea').prepend('<div class="Post '+postId+'PoSt" poId="'+postId+'"><div class="posterInfo '+postId+'pInfo"><div class="PInf"><div class="Pimg '+postId+'pImag"><img class="'+postId+'pImg" src="'+src+'" alt=""></div><div class="Pname '+postId+'pNam pHin" info="'+post.replier+'"><h1>'+post.f+' '+post.l+cpCert+'</h1><p>@'+post.replier+' replying to '+post.uId+'</p></div></div><div class="postInter" iId="'+postId+'"><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content '+postId+'pContant"><div class="postDate '+postId+'date"><time></time></div></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+postuserId+' pId="'+postId+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId+'IAL" act="liking" pId="'+postId+'">&#xf004;</i></i><div class="LCC '+postId+'L">0</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+postuserId+' pId="'+postId+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId+'IAR" act="replying" pId="'+postId+'">&#xf075;</i></i><div class="RCC '+postId+'R">0</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+postuserId+' pId="'+postId+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId+'IAS" act="saving" pId="'+postId+'">&#xf02e;</i></i><div class="SCC '+postId+'S">0</div></div></div></div>')
     $('.'+postId+'pContant').prepend(postContent.replace(/(?:\r\n|\r|\n)/g, "<br />"));
     $('.'+postId+'date').html(postdate);
   });
@@ -898,56 +1012,60 @@ $(document).ready(function () {
     socket.emit('clickedPost', {poId, storedUsername});
   });
   socket.on('ClPsRes', function (rep) {
-    $('.postArea').empty();
-    var pI = rep.postId, uI = rep.userId, rfname = rep.fknga, rlname= rep.lknga, rcert = rep.crtfca;
-    var rcont = rep.mpcontent, rl = rep.mplike, rr = rep.mpreply, rdate = rep.mpdatetime, rsrc = rep.rsrca;
-    if (!rsrc) {
-      rsrc = 'profile.png';
-    }else {
-      rsrc = rsrc;
-    }
-    if (rcert == 1){ rcert = '<i style="font-size:24px;color:var(--changeColor);display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
-    }else{
-      rcert = '';}
-    if (!rfname=='' && !rlname=='') {
-      rname = 'SharSit';
-      rlname = 'user';}
-    else if (rfname =='' && rlname !='') {rfname = ''; rlname = rlname;}
-    else if (rfname !='' && rlname == '') {rlname = ''; rfname = rfname;}
-    rcont = rcont.replace(/(^|\s)(#[a-z\d-_!?]+)/ig, "$1<span class='hash_tag'>$2</span>");
-    rcont =rcont.replace(/(^|\s)(@[a-z\d-_!?]+)/ig, "$1<span class='at_sign pHin' info='$2'>$2</span>");
-    $('.postArea').prepend('<div class="Post '+pI+'PoSt" poId="'+pI+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId+'pImag"><img class="'+postId+'pImag" src="'+rsrc+'" alt=""></div><div class="Pname pHin" info="'+uI+'"><h1>'+rfname+' '+rlname+rcert+'</h1><p>@'+uI+'</p></div></div><div class="postInter" iId="'+pI+'"><div class="postIndex '+pI+'ind"></div><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+rcont.replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+rdate.replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+uI+' pId="'+pI+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+pI+'IAL" id="like">&#xf004;</i></i><div class="LCC '+pI+'L">'+rl+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+uI+' pId="'+pI+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+pI+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+pI+'R">0</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+uI+' pId="'+pI+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+pI+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+pI+'S">0</div></div></div></div></div>');
-    var postId = rep.replyId; var pcert = rep.replyt;
-    var pcont = rep.replyC; var pfname = rep.replyf;
-    var plname = rep.replyl; var isL = '';
-    var puser = rep.replier; var pr = rep.replyR, pcertOk, pfnameOk, plnameOk;
-    var pdate = rep.replyD, psrc = rep.replyS, psrcOk;
-    var pl = rep.replyL;
-    for (var i = 0; i < pcont.length; i++) {
-      if (!pcont[i]) {
-        continue;
-      }
-      if (psrc[i] == '') {
-        psrcOk = 'profile.png';
+    if (forbid == 0) {
+      $('.postArea').empty();
+      var pI = rep.postId, uI = rep.userId, rfname = rep.fknga, rlname= rep.lknga, rcert = rep.crtfca;
+      var rcont = rep.mpcontent, rl = rep.mplike, rr = rep.mpreply, rdate = rep.mpdatetime, rsrc = rep.rsrca;
+      if (!rsrc) {
+        rsrc = 'profile.png';
       }else {
-        psrcOk = psrc[i];
+        rsrc = rsrc;
       }
-    pcont[i] = pcont[i].replace(/(^|\s)(#[a-z\d-_!?]+)/ig, "$1<span class='hash_tag'>$2</span>");
-    pcont[i] =pcont[i].replace(/(^|\s)(@[a-z\d-_!?]+)/ig, "$1<span class='at_sign pHin' info='$2'>$2</span>");
-      if (pcert[i] == 1){ pcertOk = '<i style="font-size:24px;color:var(--changeColor);display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
+      if (rcert == 1){ rcert = '<i style="font-size:24px;color:var(--changeColor);display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
       }else{
-        pcertOk = '';}
-      if (pfname[i]=='' && !plname[i]=='') {
-        pfnameOk = 'SharSit';
-        plnameOk = 'user';}
-      if (pfname[i] =='' && plname[i] !='') {pfnameOk = ''; plnameOk = plname[i];}
-      if (pfname[i] !='' && plname[i] == '') {plnameOk = ''; pfnameOk = pfname[i];}
-      if (pfname[i] !='' && plname[i] !='') {plnameOk = plname[i]; pfnameOk = pfname[i]};
-      $('.postArea').append('<div class="Post '+puser[i]+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+psrcOk+'" alt=""></div><div class="Pname pHin" info="'+puser[i]+'"><h1>'+pfnameOk+' '+plnameOk+pcertOk+'</h1><p>@'+puser[i]+'<br>Replying to <b style="color: var(--changeColor); " class="replyTo">@'+uI+'</b></p></div></div><div class="postInter" iId="'+postId[i]+'"><div class="postIndex '+postId[i]+'ind"></div><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+puser[i]+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+puser[i]+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">0</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+puser[i]+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
-      if (isL[i]) {
-        $('.'+postId[i]+'IAL').css('opacity','1');
+        rcert = '';}
+      if (!rfname=='' && !rlname=='') {
+        rname = 'SharSit';
+        rlname = 'user';}
+      else if (rfname =='' && rlname !='') {rfname = ''; rlname = rlname;}
+      else if (rfname !='' && rlname == '') {rlname = ''; rfname = rfname;}
+      rcont = rcont.replace(/(^|\s)(#[a-z\d-_!?]+)/ig, "$1<span class='hash_tag'>$2</span>");
+      rcont =rcont.replace(/(^|\s)(@[a-z\d-_!?]+)/ig, "$1<span class='at_sign pHin' info='$2'>$2</span>");
+      $('.postArea').prepend('<div class="Post '+pI+'PoSt" poId="'+pI+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId+'pImag"><img class="'+postId+'pImag" src="'+rsrc+'" alt=""></div><div class="Pname pHin" info="'+uI+'"><h1>'+rfname+' '+rlname+rcert+'</h1><p>@'+uI+'</p></div></div><div class="postInter" iId="'+pI+'"><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+rcont.replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+rdate.replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+uI+' pId="'+pI+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+pI+'IAL" id="like">&#xf004;</i></i><div class="LCC '+pI+'L">'+rl+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+uI+' pId="'+pI+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+pI+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+pI+'R">0</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+uI+' pId="'+pI+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+pI+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+pI+'S">0</div></div></div></div></div>');
+      var postId = rep.replyId; var pcert = rep.replyt;
+      var pcont = rep.replyC; var pfname = rep.replyf;
+      var plname = rep.replyl; var isL = '';
+      var puser = rep.replier; var pr = rep.replyR, pcertOk, pfnameOk, plnameOk;
+      var pdate = rep.replyD, psrc = rep.replyS, psrcOk, isLike = rep.isLikeReply;
+      var pl = rep.replyL;
+      for (var i = 0; i < pcont.length; i++) {
+        if (!pcont[i]) {
+          continue;
+        }
+        if (psrc[i] == '') {
+          psrcOk = 'profile.png';
+        }else {
+          psrcOk = psrc[i];
+        }
+      pcont[i] = pcont[i].replace(/(^|\s)(#[a-z\d-_!?]+)/ig, "$1<span class='hash_tag'>$2</span>");
+      pcont[i] =pcont[i].replace(/(^|\s)(@[a-z\d-_!?]+)/ig, "$1<span class='at_sign pHin' info='$2'>$2</span>");
+        if (pcert[i] == 1){ pcertOk = '<i style="font-size:24px;color:var(--changeColor);display: inline-block;padding:0 5px;position:relative; bottom:.5px;" class="fa">&#xf058;</i>';
+        }else{
+          pcertOk = '';}
+        if (pfname[i]=='' && !plname[i]=='') {
+          pfnameOk = 'SharSit';
+          plnameOk = 'user';}
+        if (pfname[i] =='' && plname[i] !='') {pfnameOk = ''; plnameOk = plname[i];}
+        if (pfname[i] !='' && plname[i] == '') {plnameOk = ''; pfnameOk = pfname[i];}
+        if (pfname[i] !='' && plname[i] !='') {plnameOk = plname[i]; pfnameOk = pfname[i]};
+        $('.postArea').append('<div class="Post '+puser[i]+'PoSt" poId="'+postId[i]+'"><div class="posterInfo"><div class="PInf"><div class="Pimg '+postId[i]+'pImag"><img class="'+postId[i]+'pImg" src="'+psrcOk+'" alt=""></div><div class="Pname pHin" info="'+puser[i]+'"><h1>'+pfnameOk+' '+plnameOk+pcertOk+'</h1><p>@'+puser[i]+'<br>Replying to <b style="color: var(--changeColor); " class="replyTo">@'+uI+'</b></p></div></div><div class="postInter" iId="'+postId[i]+'"><i style="font-size:35px;" class="material-icons iicon">&#xe5d3;</i></div></div><div class="content">'+pcont[i].replace(/(?:\r\n|\r|\n)/g, "<br />")+'<div class="postDate"><time>'+pdate[i].replace('T','<br/>').replace('.000Z','')+'</time></div><div class="postAction"><div class="postLike act"><i style="font-size:30px;color:#999;display:block;" class="far w Lk" act="liking" uId='+puser[i]+' pId="'+postId[i]+'">&#xf004;<i style="font-size:30px;color:var(--changeColor);display:block;" class="fas bl interA '+postId[i]+'IAL" id="like">&#xf004;</i></i><div class="LCC '+postId[i]+'L">'+pl[i]+'</div></div><div class="postReply act"><i style="font-size:30px;color:#999;display:block;" class="far w Rp" act="replying" uId='+puser[i]+' pId="'+postId[i]+'">&#xf075;<i style="font-size:30px;color:#996633;display:block;" class="fas bl interA '+postId[i]+'IAR" id="reply">&#xf075;</i></i><div class="RCC '+postId[i]+'R">0</div></div><div class="postSave act"><i style="font-size:30px;color:#999;display:block;" class="fa w Sv" act="saving" uId='+puser[i]+' pId="'+postId[i]+'">&#xf097;<i style="font-size:30px;color:#00802b;display:block;" class="fa bl interA '+postId[i]+'IAS" id="save">&#xf02e;</i></i><div class="SCC '+postId[i]+'S">0</div></div></div></div></div>');
+        if (isLike[i]) {
+          $('.'+postId[i]+'IAL').css('opacity','1');
+        }
       }
+      forbid++;
     }
+
   })
 
   $('.maincont').on('input paste', '.txtarea', function (e) {
@@ -1021,20 +1139,81 @@ $(document).ready(function () {
 
   $('.maincont').on('click', '.postInter', function (event) {
     event.stopPropagation();
+    var x = event.pageX;
+    var y = event.pageY;
     var iid = $(this).attr('iId');
-    $('.'+iid+'ind').css('display', 'flex');
+    if (y < 430) {
+      $('#postIndex').css({'top':y-10,'left':x-240})
+    }else {
+      $('#postIndex').css({'top':y-390,'left':x-240})
+    }
+    $('#postIndex').addClass(''+iid+'ind');
+    $('#postIndex').css('display', 'flex');
+    $('.'+iid+'ind').css('opacity', '1');
     $('.blackArea4').css({'z-index':'2', 'opacity':'.4'});
     var u = iid.slice(0, iid.indexOf('2'));
     if (u == storedUsername) {
-      //socket.emit('deletePost', {storedUsername, iid})
+      $('#postIndex').prepend('<div class="pIapp" id="pIdel" dId="'+iid+'">Delete Sit<i class="material-icons pIicon">&#xe92b;</i></div>');
+      $('#postIndex').append('<div class="pIapp" id="pIst">Sit Statistics<i style="font-size:24px" class="fa pIicon">&#xf201;</i></div>');
+      $('#postIndex').append('<div class="pIapp" id="pIlc">Lock Sit<i style="font-size:24px" class="fa pIicon">&#xf023;</i></div>');
+    }else {
+      socket.emit('flwPI', {storedUsername, iid, u});
+      $('#postIndex').prepend('<div class="pIapp" id="pIrprt">Report<i style="font-size:24px" class="fa pIicon">&#xf0e3;</i></div>');
+      $('#postIndex').append('<div class="pIapp" id="pIblk">Block @'+u+'<i class="material-icons pIicon">&#xe14b;</i></div>');
+      $('#postIndex').append('<div class="pIapp" id="pIblk">Not Interested<i style="font-size:24px" class="fa pIicon">&#xf119;</i></div>');
+      $('#postIndex').append('<div class="pIapp" id="pIshr">Share<i style="font-size:24px" class="fa pIicon">&#xf064;</i></div>');
     }
 
   });
+  $('.maincont').on('click', '#pIdel', function (event) {
+    $('.blackArea4').trigger('click');
+  })
   $('.maincont').on('click', '.blackArea4', function () {
     $('.blackArea4').css({'z-index':'-2', 'opacity':'0'});
-    $('.postIndex').css('display', 'none');
-
+    $('#postIndex').css('opacity', '0');
+    setTimeout(function () {
+        $('#postIndex').removeAttr('class');
+        $('#postIndex').css('display', 'none');
+        $('#postIndex').empty();
+    }, 400);
   });
+
+
+  socket.on('isflw', function (e) {
+    $('#postIndex').prepend('<div class="pIapp" id="pIflw">Follow<i style="font-size:24px" class="fa pIicon">&#xf234;</i></div>');
+  })
+  socket.on('noflw', function (e) {
+    $('#postIndex').prepend('<div class="pIapp" id="pIuflw">Unfollow<i style="font-size:24px" class="fa pIicon">&#xf235;</i></div>');
+  })
+  socket.on('isblk', function (e) {
+    $('#postIndex').prepend('<div class="pIapp" id="pIblk">Unblock<i class="material-icons pIicon">&#xe92b;</i></div>');
+  })
+  socket.on('noblc', function (e) {
+    $('#postIndex').prepend('<div class="pIapp" id="pIblk">Block<i class="material-icons pIicon">&#xe92b;</i></div>');
+  })
+
+  $('.maincont').on('click', '#pIdel', function (event) {
+    var iid = $(this).attr('did');
+    var del = confirm('Are you sure?');
+    if (del) {
+      socket.emit('deletePost', {storedUsername, iid});
+    }
+  })
+  $('.maincont').on('click', '#pIflw', function (event) {
+    var userFA = $('#postIndex').attr('class');
+    userFA = userFA.slice(0, userFA.indexOf('2'));
+    socket.emit('flw', {storedUsername, userFA});
+    $('#pIflw').remove();
+    $('#postIndex').prepend('<div class="pIapp" id="pIuflw">Unfollow<i style="font-size:24px" class="fa pIicon">&#xf235;</i></div>');
+  })
+  $('.maincont').on('click', '#pIuflw', function (event) {
+    var userFA = $('#postIndex').attr('class');
+    userFA = userFA.slice(0, userFA.indexOf('2'));
+    socket.emit('unflw', {storedUsername, userFA});
+    $('#pIuflw').remove();
+    $('#postIndex').prepend('<div class="pIapp" id="pIflw">Follow<i style="font-size:24px" class="fa pIicon">&#xf234;</i></div>');
+  })
+
   socket.on('deletedPost',function (del) {
     $('.Post[poid='+del.pId+']').remove();
   })
@@ -1208,9 +1387,9 @@ $(document).ready(function () {
       $('.nodel').css({'width':'300px','background-color': '#ba1700', 'color':'white', 'border': 'none'});
     }
   });
-  $('.maincont').on('paste', '#cbox', function (event) {
+  /*$('.maincont').on('paste', '#cbox', function (event) {
     event.preventDefault();
-  });
+  });*/
   $('.maincont').on('click', '.yesdel', function () {
     if ($('#pbox').val() == '') {
       $('#pbox').trigger('focus')
@@ -1268,6 +1447,7 @@ $(document).ready(function () {
   $('.maincont').on('click', '.emojis', function () {
     var enteremoj = $(this).text();
     enteremoj = enteremoj.replace('\n', '');
+    $('.postCon').append(enteremoj);
     $('.writePost_main textarea').val($('.writePost_main textarea').val()+enteremoj);
   });
 

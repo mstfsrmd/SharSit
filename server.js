@@ -14,7 +14,7 @@ const cheerio = require('cheerio');
 
 //server connection
 console.log('Connecting to server...');
-http.listen(process.env.PORT || 3000, function () {
+http.listen(process.env.PORT || 80, function () {
   console.log('Server is ready');
 });
 
@@ -1326,7 +1326,9 @@ io.on('connection', function (socket) {
 
   //reading async info
   socket.on('AS', function (resu) {
-    function AIQuery(result) {
+    var isflw;
+    var result = resu.uinf, mid = resu.storedUsername;
+    (function AIQuery(result, mid) {
       return new Promise(function(resolve, reject) {
         var si = 'SELECT * FROM users WHERE username ="'+result+'"';
         con1.query(si, function (err , res) {
@@ -1342,14 +1344,36 @@ io.on('connection', function (socket) {
           var flwg = res.map(res => res.following);
           var bio = res.map(res => res.bio);
           var src = res.map(res => res.profile);
-          resolve({user, fnam, lnam, cert, loc, flwr, flwg, bio, src})
+          resolve([result, mid, user, fnam, lnam, cert, loc, flwr, flwg, bio, src])
         });
-      });
-    }
-    async function startAI() {
-      socket.emit('ASr', await AIQuery(resu));
-    }
-    startAI();
+      }).then(function ([result, mid, user, fnam, lnam, cert, loc, flwr, flwg, bio, src]) {
+        return new Promise(function(resolve, reject) {
+          conSpIsF = mysql.createConnection({
+            host:'localhost',
+            user:'root',
+            password:'Mo137777',
+            database: mid,
+            charset : 'utf8mb4'
+          });
+          var ismyflw = 'select * from '+mid+'following WHERE username ="'+result+'"';
+          conSpIsF.query(ismyflw, function (errisf, resisf) {
+            if (errisf) return console.log(errisf);
+            else {
+              if (resisf != '') {
+                isflw = true;
+                resolve([isflw, user, fnam, lnam, cert, loc, flwr, flwg, bio, src])
+              }
+              else {
+                isflw = false;
+                resolve([isflw, user, fnam, lnam, cert, loc, flwr, flwg, bio, src])
+              }
+            }
+          })
+        }).then(function () {
+          return socket.emit('ASr', {isflw, user, fnam, lnam, cert, loc, flwr, flwg, bio, src});
+        })
+      })
+    })(result, mid);
   });
 
 
@@ -1791,6 +1815,26 @@ con1.query(row, function (err, res) {
   }
 })*/
 
+  socket.on('flwPI', function (p) {
+    var postId = p.iid, myId = p.storedUsername, user = p.u;
+    conSpFp = mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Mo137777',
+      database: myId
+    });
+    var flw = 'SELECT * FROM '+myId+'following WHERE username = "'+user+'"';
+    conSpFp.query(flw, function (errflw, resflw) {
+      if(errflw) return console.log(errflw);
+      else {
+        if (resflw == '') {
+          socket.emit('isflw');
+        }else {
+          socket.emit('noflw');
+        }
+      }
+    })
+  })
 
 
 
